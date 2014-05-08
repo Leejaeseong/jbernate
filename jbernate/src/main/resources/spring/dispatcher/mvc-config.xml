@@ -12,7 +12,7 @@
 	<!-- 컨트롤러만 로딩함 : url접근 시작점은 컨트롤러만 가능
 		- use-default-filters : @Component @Repository, @Service, or @controller 자동 인식 여부
 	-->
-    <context:component-scan base-package="com.jbernate.controller" use-default-filters="false">
+    <context:component-scan base-package="com.jbernate.*.controller" use-default-filters="false">
 		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
 	
@@ -44,7 +44,7 @@
 		<property name="defaultViews">	<!-- viewResolvers에서 view를 찾지 못했을 경우 사용되는 default view -->
 			<list>
 				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>	<!-- Json view -->
-				<bean class="com.jbernate.view.common.JSONPView">
+				<bean class="com.jbernate.common.view.JSONPView">
                 	<property name="contentType" value="javascript/jsonp; charset=utf-8"/>	<!-- Jsonp view -->
             	</bean>
 			</list>

@@ -13,5 +13,9 @@ public class ConstantUtil {
 	
 	/** 식별자 > 페이지 > TEST */
 	public static final String ID_PAGE_TEST			= "T";
+
+	// 형식 ///////////////////////////////////////////////////////////////////////////
 	
+	/** 형식 > 날짜 */
+	public static final String FORMAT_DATE			= "yyyy-MM-dd";
 }

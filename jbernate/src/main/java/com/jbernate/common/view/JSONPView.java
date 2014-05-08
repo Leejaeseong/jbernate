@@ -1,4 +1,4 @@
-package com.jbernate.view.common;
+package com.jbernate.common.view;
 
 import java.io.Writer;
 import java.util.Map;
