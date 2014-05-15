@@ -19,5 +19,24 @@ COMMENT ON COLUMN TT_ONE_TABLE.T_CLOB is 'CLOB형';
 COMMENT ON COLUMN TT_ONE_TABLE.T_BLOB is 'BLOB형';
 
 
-
 ALTER TABLE TT_ONE_TABLE ADD CONSTRAINT IDX_TT_ONE_TABLE_PK PRIMARY KEY (SEQ);
+
+/**********************************/
+/* View Name: 테스트_단일테이블  */
+/**********************************/
+CREATE OR REPLACE VIEW TT_ONE_TABLE_V(
+	SEQ
+		, V_VARCHAR
+		, V_DATE
+		, V_CLOB
+		, V_BLOB
+)
+AS
+	SELECT 
+		SEQ
+		, T_VARCHAR
+		, T_DATE
+		, T_CLOB
+		, T_BLOB
+	FROM TT_ONE_TABLE
+;

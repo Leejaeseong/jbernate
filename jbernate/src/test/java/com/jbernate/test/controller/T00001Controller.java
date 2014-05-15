@@ -10,9 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jbernate.util.ConstantUtil;
-import com.jbernate.util.ControllerUtil;
-import com.jbernate.util.LoggerUtil;
+import com.jbernate.common.util.ConstantUtil;
+import com.jbernate.common.util.ControllerUtil;
+import com.jbernate.common.util.LoggerUtil;
 
 /**
  * 컨트롤러 테스트
@@ -20,13 +20,12 @@ import com.jbernate.util.LoggerUtil;
 @Controller
 @RequestMapping( value = ConstantUtil.PATH_CONTROLLER_TEST + "/" + ConstantUtil.ID_PAGE_TEST + "00001" )
 public class T00001Controller {
-	
 	@RequestMapping( method = RequestMethod.GET )
 	public String root(	HttpSession session
 						, Model model
 						, HttpServletRequest request
 	) {
-		LoggerUtil.trace( 	"logger.trace!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+		LoggerUtil.trace( "logger.trace111" );
 
 		return ControllerUtil.getViewName( getClass() );
 	}

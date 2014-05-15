@@ -1,4 +1,4 @@
-package com.jbernate.test.domain;
+package com.jbernate.test.domain.table;
 
 import java.io.Serializable;
 import java.sql.Blob;
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.jbernate.util.ConstantUtil;
+import com.jbernate.common.util.ConstantUtil;
 
 @Entity                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 @Table( name = "TT_ONE_TABLE" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

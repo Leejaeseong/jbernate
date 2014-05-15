@@ -1,4 +1,4 @@
-package com.jbernate.util;
+package com.jbernate.common.util;
 
 /**
  * 상수 정의

@@ -16,12 +16,21 @@
 		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
 	
-	<!-- 정적 리소스는 컨트롤러등을 거치지 않고 바로 서비스 하기 위한 설정 -->
-	<mvc:default-servlet-handler/>
+	<!-- 정적 리소스는 컨트롤러등을 거치지 않고 바로 서비스 하기 위한 설정, 별도로 <mvc:resources.../> 를 설정해 주지 않아도 됨 -->
+	<mvc:default-servlet-handler/>	
 	
 	<!-- Annotation( @RequestMapping등 ) 사용가능하도록 설정 -->
    	<mvc:annotation-driven />
    
+   	<!-- Tiles Layout 정의파일 위치 설정 -->
+   	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">	<!-- Tiles2 Configurer -->
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/views/tiles/tiles-def.xml</value>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- URL 확장자와 AcceptHeader를 사용하는 ViewResolver -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="mediaTypes">	<!-- 확장자에 따른 Mapping -->
@@ -34,11 +43,23 @@
 		</property>
 		<property name="viewResolvers">	<!-- View를 찾기위해 사용하는 ViewResolver -->
 			<list>
+				<bean id="tiles2ViewResolver" class="org.springbyexample.web.servlet.view.tiles2.TilesUrlBasedViewResolver">
+					<property name="viewClass" value="org.springbyexample.web.servlet.view.tiles2.DynamicTilesView" />
+					<property name="prefix" value="/WEB-INF/views/"/>
+					<property name="suffix" value=".jsp"/>
+					<property name="tilesDefinitionName" value="default"/>
+					<property name="tilesBodyAttributeName" value="body"/>
+					<property name="tilesDefinitionDelimiter" value="."/>
+					<property name="contentType" value="text/html; charset=UTF-8"/>
+					<property name="order" value="1" />					
+				</bean>
+				<!--  
 				<bean id="InternalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 					<property name="prefix" value="/WEB-INF/views/" />
 					<property name="suffix" value=".jsp" />
-					<property name="order" value="1" />
+					<property name="order" value="2" />
 				</bean>				
+				-->
 			</list>
 		</property>
 		<property name="defaultViews">	<!-- viewResolvers에서 view를 찾지 못했을 경우 사용되는 default view -->

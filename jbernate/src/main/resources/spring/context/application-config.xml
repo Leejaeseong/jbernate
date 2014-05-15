@@ -22,8 +22,8 @@
     
 	<!-- 설정파일 경로 지정 -->
 	<context:property-placeholder location="classpath:/property/*.properties" />
-    
-    <!-- 트랜잭션을 annotation 기반으로 제어가능, 즉 클래스와 메소드에 @Transactional 사용 가능  -->
+	
+	<!-- 트랜잭션을 annotation 기반으로 제어가능, 즉 클래스와 메소드에 @Transactional 사용 가능  -->
 	<tx:annotation-driven />
 	
 	<!-- ////////////////////////////////////////////////////////////////////////////////////// -->
@@ -49,9 +49,9 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>	<!-- DB 종류 설정( database.properties 파일 참고 ) -->
+				<prop key="hibernate.format_sql">true</prop>				<!-- Formatting된 SQL 로그 -->
 				<!--  
-				<prop key="hibernate.show_sql">true</prop>			
-				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.use_sql_comments">true</prop>
 				<prop key="hibernate.registerColumnType" />
 				-->
