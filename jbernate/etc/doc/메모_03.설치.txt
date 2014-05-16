@@ -1,0 +1,8 @@
+▣ 설치 관련 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	■ STS : http://spring.io/tools/sts/all
+	■ 버전 정보
+		- 작업 OS : windows7 Professional K 64bit
+		- 작업 DB : OracleXE112_Win32( VirtualBox 사용 )
+		- jdk : jdk-7u45
+		- tomcat : 7.0.47
+		- Eclipse : spring-tool-suite-3.4.0

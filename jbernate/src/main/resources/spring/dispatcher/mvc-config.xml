@@ -65,7 +65,7 @@
 		<property name="defaultViews">	<!-- viewResolvers에서 view를 찾지 못했을 경우 사용되는 default view -->
 			<list>
 				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>	<!-- Json view -->
-				<bean class="com.jbernate.common.view.JSONPView">
+				<bean class="com.jbernate.cm.view.JSONPView">
                 	<property name="contentType" value="javascript/jsonp; charset=utf-8"/>	<!-- Jsonp view -->
             	</bean>
 			</list>

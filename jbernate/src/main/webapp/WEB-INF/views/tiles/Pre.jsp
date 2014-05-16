@@ -13,7 +13,8 @@
 	<script src="/js/jquery-ui-1.10.4.js"></script>
 	
 	<!-- jquery grid -->
-	<link rel="stylesheet" type="text/css" media="screen" href="/css/ui.jqgrid.css" />	
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/ui-lightness/jquery-ui-1.10.4.min.css" />	
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/ui-lightness/ui.jqgrid.css" />	
 	<script src="/js/jqgrid-i18n/grid.locale-kr.js" type="text/javascript"></script>
 	<script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 </head>

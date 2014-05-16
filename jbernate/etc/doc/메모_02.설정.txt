@@ -1,0 +1,8 @@
+▣ 설정 관련 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	■ Eclipse 프로젝트 생성 : http://marobiana.tistory.com/88
+		- new spring project > Simple Projects > Simple Spring Web Maven
+		- Spring Version : 3.2.3 ( sts 3.4.0 에서 지원하는 최신버전 )
+		- 톰켓에서 모듈 못 찾을 시 프로젝트 우클릭 > Maven > Update Project
+	■ Eclipse 언어 설정 : Preferences > General > Workspace > Text file encoding = UTF-8
+	■ Server 설정
+		- Eclipse Servers > server.xml 에서 URIEncoding="UTF-8" 설정
