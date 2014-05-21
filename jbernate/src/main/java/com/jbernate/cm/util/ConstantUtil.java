@@ -10,6 +10,9 @@ public class ConstantUtil {
 	public static final String PATH_CONTROLLER_TEST	= "/tt";
 	
 	// ▣ 식별자 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	/** 식별자 > DB > Jbernate 본인 객체 */
+	public static final String ID_DB_OBJECTOWN			= "jbernate";
+	
 	/** 식별자 > 페이지 > TEST */
 	public static final String ID_PAGE_TEST			= "T";
 	

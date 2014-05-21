@@ -1,6 +1,5 @@
 package com.jbernate.tt.testcase.crud;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,19 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.service.CmCrudService;
-import com.jbernate.cm.util.LoggerUtil;
+import com.jbernate.cm.util.BeanUtil;
+import com.jbernate.cm.util.LogUtil;
 import com.jbernate.tt.domain.table.TtOneTable;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations = { "classpath:spring/context/application-config.xml" } )
 @TransactionConfiguration( transactionManager = "transactionManager", defaultRollback = false )
 @Transactional
-public class CmCrudTest {
+public class CrudOneTableTest {
 
-	@Autowired CmCrudService commonCrudService;
+	@Autowired CmCrudService cService;
 	
 	@Test
-	public void crudTest() {
+	public void crudOneTableTest() {
 		// 추가 ////////////////////////////////////////////////////////////////////////////////
 		TtOneTable entity = new TtOneTable();
 		entity.settVarchar( "테스트 : " + new Date().toString() );
@@ -42,28 +42,42 @@ public class CmCrudTest {
 		for( int i = 0; i < bLen; i++ ) { b[ i ] = 'A'; }
 		entity.settBlob( b );
 	
-		long seq = (Long)commonCrudService.create( null, entity );
-		LoggerUtil.trace( "Created seq = " + seq );
+		long seq = (Long)cService.create( null, entity );
+		LogUtil.trace( "Created seq = " + seq );
 		
 		// 조회 ////////////////////////////////////////////////////////////////////////////////
-		List<WhereBean> wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "seq", seq, WhereBean.Clause.EQ ) );
-		List<OrderBean> obList = new ArrayList<OrderBean>();
-		obList.add( new OrderBean( "seq" , OrderBean.Type.DESC ) );
-		
 		@SuppressWarnings("unchecked")
-		List<TtOneTable> list = commonCrudService.list( null, entity, wbList, obList );
+		List<TtOneTable> list = cService.list( null, entity, BeanUtil.oneWhere( "seq", seq, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
 		
-		LoggerUtil.trace( "list.size() = " + list.size() );
+		LogUtil.trace( "list.size() = " + list.size() );
 		if( list.size() > 0 ) {
 			entity = list.get( 0 );
 			
 			// 수정 ////////////////////////////////////////////////////////////////////////////
 			entity.settDate( new Date() );
-			commonCrudService.update( null, entity );
+			cService.update( null, entity );
 		}
 		
 		// 삭제 ////////////////////////////////////////////////////////////////////////////////
-		commonCrudService.delete( null, entity );
+		cService.delete( null, entity );
+	}
+	
+	//@Test
+	public void crudOneTableGetTest() {
+		Object obj = cService.get( null, new TtOneTable( 102L ) );
+	}
+	
+	//@Test
+	public void crudOneTableDeleteTmpTest() {
+		TtOneTable entity = new TtOneTable( 102L );
+		cService.delete( null, entity );
+	}
+	
+	//@Test
+	public void crudOneTableSelectTmpTest() {
+		TtOneTable entity = new TtOneTable();
+		@SuppressWarnings("unchecked")
+		List<TtOneTable> list = cService.list( null, entity );
+		LogUtil.trace( "size = " + list.size() );
 	}
 }

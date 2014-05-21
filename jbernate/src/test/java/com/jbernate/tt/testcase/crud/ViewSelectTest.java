@@ -1,6 +1,5 @@
 package com.jbernate.tt.testcase.crud;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -14,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.service.CmCrudService;
-import com.jbernate.cm.util.LoggerUtil;
+import com.jbernate.cm.util.BeanUtil;
+import com.jbernate.cm.util.LogUtil;
 import com.jbernate.tt.domain.view.TtOneTableV;
 
 @RunWith( SpringJUnit4ClassRunner.class )
@@ -23,28 +23,22 @@ import com.jbernate.tt.domain.view.TtOneTableV;
 @Transactional
 public class ViewSelectTest {
 
-	@Autowired CmCrudService commonCrudService;
+	@Autowired CmCrudService cService;
 	
 	@Test
 	public void viewSelectTest() {
 		TtOneTableV entity = new TtOneTableV();
-		
-		List<WhereBean> wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "seq", 1L, WhereBean.Clause.EQ ) );
-		List<OrderBean> obList = new ArrayList<OrderBean>();
-		obList.add( new OrderBean( "seq" , OrderBean.Type.DESC ) );
-		
 		@SuppressWarnings("unchecked")
-		List<TtOneTableV> list = commonCrudService.list( null, entity, wbList, obList );
+		List<TtOneTableV> list = cService.list( null, entity, BeanUtil.oneWhere( "seq", 1L, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
 		
-		LoggerUtil.trace( "list.size() = " + list.size() );
+		LogUtil.trace( "list.size() = " + list.size() );
 		if( list.size() > 0 ) {
 			entity = list.get( 0 );
-			LoggerUtil.trace( "entity.getSeq() = " 				+ entity.getSeq() );
-			LoggerUtil.trace( "entity.getvDate() = " 			+ entity.getvDate() );
-			LoggerUtil.trace( "entity.getvVarchar() = " 		+ entity.getvVarchar() );
-			LoggerUtil.trace( "entity.getvClob().length() = " 	+ entity.getvClob().length() );
-			LoggerUtil.trace( "entity.getvBlob().length() = " 	+ entity.getvBlob().length );
+			LogUtil.trace( "entity.getSeq() = " 			+ entity.getSeq() );
+			LogUtil.trace( "entity.getvDate() = " 			+ entity.getvDate() );
+			LogUtil.trace( "entity.getvVarchar() = " 		+ entity.getvVarchar() );
+			LogUtil.trace( "entity.getvClob().length() = " 	+ entity.getvClob().length() );
+			LogUtil.trace( "entity.getvBlob().length() = " 	+ entity.getvBlob().length );
 		}
 	}
 }

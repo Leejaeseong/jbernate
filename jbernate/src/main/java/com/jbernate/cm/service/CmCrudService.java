@@ -37,6 +37,14 @@ public interface CmCrudService {
 	// 조회 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
+	 * 시퀀스만으로 오브젝트 조회
+	 * @param request	HttpServletRequest
+	 * @param entity	객체( 순번(PK) 가 설정된 상태의 객체 )
+	 * @return			PK로 검색된 Object 객체
+	 */
+	Object get( HttpServletRequest request, Object entity );
+	
+	/**
 	 * 조회
 	 * @param request	HttpServletRequest	
 	 * @param entity	객체
@@ -103,5 +111,5 @@ public interface CmCrudService {
 	 * @return				List<Object>
 	 */
 	@SuppressWarnings("rawtypes")
-	List queryList( HttpServletRequest request, String query );
+	List queryList( HttpServletRequest request, String query );	
 }

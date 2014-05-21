@@ -1,5 +1,6 @@
 <%--
-	jqGrid 기본 로딩
+	기능 : jqGrid 기본 로딩
+	비고 : BasicController를 통해서 /tt/T00003/load 로 jqGrid 기본 레이아웃이 로딩되는지 확인	
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

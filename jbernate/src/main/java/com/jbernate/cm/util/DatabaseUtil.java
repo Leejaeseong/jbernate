@@ -43,7 +43,7 @@ public class DatabaseUtil {
 		if( entity instanceof String ){
 			tvName = (String)entity;
 			try{
-				LoggerUtil.trace(ConstantUtil.ID_PACKAGE_PREFIX 
+				LogUtil.trace(ConstantUtil.ID_PACKAGE_PREFIX 
 							+ "." + ( StringUtil.nvl( tvName ).length() > 2 ? tvName.substring( 0, 2 ).toLowerCase() : "" )
 							+ ".domain.view." 
 							+ tvName);

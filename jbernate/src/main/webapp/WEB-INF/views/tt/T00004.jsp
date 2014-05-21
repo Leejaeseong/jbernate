@@ -1,5 +1,8 @@
 <%--
-	jqGrid json 데이터
+	기능 : jqGrid json 데이터
+	비고 : jqGrid 기본 레이아웃이 로딩된 후 Json 데이터를 통해 데이터를 가져올 수 있는지 확인
+	페이지 로딩 URL : /tt/T00004/load ( BasicController )
+	데이터 로딩 URL : /tt/T00004/list ( BasicController )
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

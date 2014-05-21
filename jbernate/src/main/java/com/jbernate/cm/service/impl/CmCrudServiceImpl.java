@@ -1,5 +1,6 @@
 package com.jbernate.cm.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,9 @@ import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.dao.CmCrudDao;
 import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.util.LogUtil;
+import com.jbernate.tt.domain.table.Tt11Master;
+import com.jbernate.tt.domain.table.Tt11Slave1;
 
 /**
  * 공통 CRUD 서비스 구현체
@@ -20,7 +24,7 @@ import com.jbernate.cm.service.CmCrudService;
 @Transactional
 public class CmCrudServiceImpl implements CmCrudService{
 
-	@Autowired CmCrudDao commonCrudDao;
+	@Autowired CmCrudDao cmCrudDao;
 	
 	/**
 	 * 삽입
@@ -29,7 +33,7 @@ public class CmCrudServiceImpl implements CmCrudService{
 	 * @return			삽입 후 PK 반환
 	 */
 	@Override
-	public Object create( HttpServletRequest request, Object entity ) {	return commonCrudDao.create( request, entity );	}
+	public Object create( HttpServletRequest request, Object entity ) {	return cmCrudDao.create( request, entity );	}
 	
 	/**
 	 * 수정
@@ -37,7 +41,7 @@ public class CmCrudServiceImpl implements CmCrudService{
 	 * @param entity	객체
 	 */
 	@Override
-	public void update( HttpServletRequest request, Object entity ) {	commonCrudDao.update( request, entity );	}
+	public void update( HttpServletRequest request, Object entity ) {	cmCrudDao.update( request, entity );	}
 	
 	/**
 	 * 삭제
@@ -45,9 +49,20 @@ public class CmCrudServiceImpl implements CmCrudService{
 	 * @param entity	객체
 	 */
 	@Override
-	public void delete( HttpServletRequest request, Object entity ) {	commonCrudDao.delete( request, entity );	}
+	public void delete( HttpServletRequest request, Object entity ) {	cmCrudDao.delete( request, entity );	}
 	
 	// 조회 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * 시퀀스만으로 오브젝트 조회
+	 * @param request	HttpServletRequest
+	 * @param entity	객체( 순번(PK) 가 설정된 상태의 객체 )
+	 * @return			PK로 검색된 Object 객체
+	 */
+	@Override
+	public Object get( HttpServletRequest request, Object entity ) {
+		return cmCrudDao.get( request, entity );
+	}
 	
 	/**
 	 * 조회
@@ -125,7 +140,7 @@ public class CmCrudServiceImpl implements CmCrudService{
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List list( HttpServletRequest request, Object entity, List<WhereBean> wbList, List<OrderBean> obList, int cPage, int cntPerPage ){
-		return commonCrudDao.list( request, entity, wbList, obList, cPage, cntPerPage );
+		return cmCrudDao.list( request, entity, wbList, obList, cPage, cntPerPage );
 	}
 	/**
 	 * 조회 : 사용자 정의 쿼리로 직접 조회
@@ -136,6 +151,6 @@ public class CmCrudServiceImpl implements CmCrudService{
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List queryList( HttpServletRequest request, String query ) {
-		return commonCrudDao.queryList( request, query );
+		return cmCrudDao.queryList( request, query );
 	}
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jbernate.cm.util.ConstantUtil;
 import com.jbernate.cm.util.ControllerUtil;
-import com.jbernate.cm.util.LoggerUtil;
+import com.jbernate.cm.util.LogUtil;
 
 /**
  * 컨트롤러 테스트
@@ -23,7 +23,7 @@ public class T00002Controller {
 						, Model model
 						, HttpServletRequest request
 	) {
-		LoggerUtil.trace( 	"logger.trace!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+		LogUtil.trace( "logger.trace!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
 		
 		return ControllerUtil.getViewName( getClass() );
 	}

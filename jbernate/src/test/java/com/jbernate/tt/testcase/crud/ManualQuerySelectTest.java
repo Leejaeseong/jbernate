@@ -11,7 +11,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jbernate.cm.service.CmCrudService;
-import com.jbernate.cm.util.LoggerUtil;
+import com.jbernate.cm.util.LogUtil;
 
 /**
  * 수동 쿼리 실행 시 특정 Entity로 casting이 안되고
@@ -23,19 +23,19 @@ import com.jbernate.cm.util.LoggerUtil;
 @Transactional
 public class ManualQuerySelectTest {
 
-	@Autowired CmCrudService commonCrudService;
+	@Autowired CmCrudService cService;
 	
 	@Test
 	public void manualQuerySelectTest() {
 		@SuppressWarnings("unchecked")
-		List<Object> list = commonCrudService.queryList( null, "SELECT '테스트 입니다' AS vVarchar, 1 AS seq FROM TtOneTableV" );
+		List<Object> list = cService.queryList( null, "SELECT '테스트 입니다' AS vVarchar, 1 AS seq FROM TtOneTableV" );
 		
-		LoggerUtil.trace( "list.size() = " + list.size() );
+		LogUtil.trace( "list.size() = " + list.size() );
 		
 		for( int i = 0; i < list.size(); i++ ) {
 			Object[] entity = (Object[])list.get( i );
 			for( int j = 0; j < entity.length; j++ ) {
-				LoggerUtil.trace( "entity[" + i + "][" + j + "] = "	+ entity[ j ] );			
+				LogUtil.trace( "entity[" + i + "][" + j + "] = "	+ entity[ j ] );			
 			}			
 		}
 	}

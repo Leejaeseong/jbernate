@@ -53,13 +53,6 @@
 					<property name="contentType" value="text/html; charset=UTF-8"/>
 					<property name="order" value="1" />					
 				</bean>
-				<!--  
-				<bean id="InternalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="prefix" value="/WEB-INF/views/" />
-					<property name="suffix" value=".jsp" />
-					<property name="order" value="2" />
-				</bean>				
-				-->
 			</list>
 		</property>
 		<property name="defaultViews">	<!-- viewResolvers에서 view를 찾지 못했을 경우 사용되는 default view -->

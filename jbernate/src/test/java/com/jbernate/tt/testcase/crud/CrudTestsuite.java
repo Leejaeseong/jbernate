@@ -9,9 +9,11 @@ import com.jbernate.tt.temp.StringTest1;
 @RunWith(Suite.class)
 @SuiteClasses(
 	{ 
-		CmCrudTest.class
+		CrudOneTableTest.class
 		, ViewSelectTest.class
 		, ManualQuerySelectTest.class
+		, Crud11Test.class
+		, Crud1nTest.class
 	}
 )
 public class CrudTestsuite {

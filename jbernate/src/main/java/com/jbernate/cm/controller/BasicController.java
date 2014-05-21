@@ -1,5 +1,6 @@
 package com.jbernate.cm.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.jbernate.cm.service.CmCrudService;
 import com.jbernate.cm.util.ControllerUtil;
 import com.jbernate.cm.util.DatabaseUtil;
-import com.jbernate.cm.util.LoggerUtil;
+import com.jbernate.cm.util.LogUtil;
 import com.jbernate.cm.util.StringUtil;
+import com.jbernate.tt.domain.table.Tt11Master;
+import com.jbernate.tt.domain.table.Tt11Slave1;
 
 /**
  * 공통으로 사용되는 컨트롤러 기능
@@ -39,7 +42,7 @@ public class BasicController {
 			, Model model, HttpServletRequest request 
 		) {
 		
-		LoggerUtil.trace( pageId + " page : loaded( By BasicController > load method" );
+		LogUtil.trace( pageId + " page : loaded( By BasicController > load method" );
 		
 		return ControllerUtil.getViewName( request );
 	}
@@ -58,15 +61,17 @@ public class BasicController {
 	public String list( @PathVariable( "pageId" ) String pageId
 			, @RequestParam( value = "viewNm", required = false ) 	String viewNm
 			, Model model, HttpServletRequest request 
-		) {
+		) throws Exception{
 		
-			LoggerUtil.trace( pageId + " page : loaded( By BasicController > list method" );
-			
-			List list = cService.list( request, StringUtil.isBlank( viewNm ) ? DatabaseUtil.getEntityName( viewNm ) : pageId );
-			
-			model.addAttribute( "viewData", list );
-			
-			LoggerUtil.trace( pageId + " data count = " + list.size() );
+		LogUtil.trace( pageId + " page : loaded( By BasicController > list method" );
+		
+		List list = cService.list( request, StringUtil.isBlank( viewNm ) ? DatabaseUtil.getEntityName( viewNm ) : pageId );
+		
+		model.addAttribute( "viewData", list );
+		
+		LogUtil.trace( pageId + " data count = " + list.size() );
+		
 		return ControllerUtil.getViewName( request );
+
 	}
 }
