@@ -22,6 +22,7 @@ import com.jbernate.cm.dao.CmCrudDao;
 import com.jbernate.cm.util.ConstantUtil;
 import com.jbernate.cm.util.DatabaseUtil;
 import com.jbernate.cm.util.LogUtil;
+import com.jbernate.tt.domain.table.Tt11Master;
 
 /**
  * 공통 CRUD DAO 인터페이스
@@ -59,22 +60,21 @@ public class CmCrudDaoImpl implements CmCrudDao{
 	 * 	DEL_FLAG 컬럼이 존재하면 DEL_FLAG를 바꾸는 update를 수행하고
 	 *  DEL_FLAG 컬럼이 없으면 삭제를 수행
 	 * 삭제 갯수 반환되는 함수는 Deprecated 됨
+	 * 
+	 * 삭제 시 get을 하는 이유는 객체 값에 seq만 넘어온 경우 DEL_FLAG 값 변경 시 다른 값들이 지워질 수 있기 때문
+	 * get 시 1:1관계에서는 오류가 발생할 수 있는데( insert 후 바로 삭제 하는 경우 ) 이 때에는 merge 실행 후 삭제나 DEL_FLAG값을 변경하여 준다
+	 * 	=> merge가 실행되기 때문에 삭제 전에 객체에 값을 설정한 경우 그 값이 update될수 있음에 주의
+	 *  
 	 * @param request	HttpServletRequest
 	 * @param entity	객체
 	 */
 	@Override
 	public void delete( HttpServletRequest request, Object entity ) {
+		Object obj = entity;	// get에 실패할 경우 대비한 entity 복사
 		entity = this.get( request, entity );
-		/*
-		@SuppressWarnings("unchecked")
-		List<Tt11Slave1> list = this.list( request, entity, BeanUtil.oneWhere( "seq.seq", 94L, WhereBean.Clause.EQ ) );
-		if( list.size() > 0 ){
-			entity = list.get( 0 );
+		if( entity == null ) {	// get에 실패한 경우 merge 실행
+			entity = DatabaseUtil.getHibernateSession( sessionFactory ).merge( obj );
 		}
-		
-		entity = this.get( request, entity );
-		entity = new Tt11Slave1( new Tt11Master( 95L ) ); 
-		 */
 		
 		try {
 			if( entity.getClass().getDeclaredMethod( "setDelFlag", new String().getClass() ) != null ){
@@ -83,6 +83,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 				this.update( request, entity );
 			}
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// DEL_FLAG 컬럼이 없는 경우 실 데이터 삭제
 			LogUtil.warn( "DEL_FLAG column is not exist at delete function");
 			DatabaseUtil.getHibernateSession( sessionFactory ).delete( entity );
 		}
@@ -130,6 +131,15 @@ public class CmCrudDaoImpl implements CmCrudDao{
 	
 	/**
 	 * 시퀀스만으로 오브젝트 조회
+	 * 
+	 * ▣ 시퀀스가 인공키( Long형 )이면 바로 검색이 되지만
+	 *		, 1:1 관계처럼 테이블 객체이면 한번 더 탐색해서 찾아야 함
+	 * ▣ 결국 최종 seq만 얻어낼 수 있다면 get으로 값 가져올 수 있음
+	 *	  , 1:1관계에서 한 세션 내에서는 Master+Slave insert 후 Slave를 바로 get으로 가져오지 못함, 굳이 필요하다면 list로 값 얻기가 가능
+	 *		( insert/update를 하였다는건 slave정보를 가지고 있는 상태인데 또 get을 하는 형태의 app구성은 불필요 하기도 함 ) 
+	 * ▣ ※ 1:1:1... 관계는 Master - Slave1( pk = Master ) - Slave2( pk = Master ) 형태만 지원...
+	 *	  					 Master - Slave1( pk = Master ) - Slave2( pk = Slave1 ) 형태는 필요도 없고, DB 구성도 저런 방식은 지양
+	 *
 	 * @param request	HttpServletRequest
 	 * @param entity	객체( 순번(PK) 가 설정된 상태의 객체 )
 	 * @return			PK로 검색된 Object 객체
@@ -140,48 +150,24 @@ public class CmCrudDaoImpl implements CmCrudDao{
 		try {
 			m = entity.getClass().getDeclaredMethod( "getSeq" );
 			Object obj = m.invoke( entity );
-			return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), (Serializable)obj );
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			LogUtil.error( "Sequence column is not exist");
-			e.printStackTrace();
-		}
-		
-		/*
-		Method m = null;
-		long seq = 0;
-		try {
-			m = entity.getClass().getDeclaredMethod( "getSeq" );
-			Object obj = entity;
 			
-			// 시퀀스가 인공키( Long형 )이면 바로 검색이 되지만
-			// , 1:1 관계처럼 테이블 객체이면 객체를 계속 참조하여 찾아야 함
-			// 결국 최종 seq만 얻어낼 수 있다면 get으로 값 가져올 수 있음
 			if( m.getReturnType() != java.lang.Long.class ) {
-				for( int i = 0; i < 100; i++ ) {	// 1:1 Join 깊이가 최대 100개까지 처리
-					obj = m.invoke( obj );
+				for( int i = 0; i < ConstantUtil.LIMIT_LOOP_CNT; i++ ) {	// 1:1:1... Join인 경우 루프를 돌며 seq값을 찾음 
 					Method tempM = obj.getClass().getDeclaredMethod( "getSeq" );
 					if( tempM.getReturnType() == java.lang.Long.class ){
-						seq = (Long)tempM.invoke( obj );	// seq값 추출
+						obj = tempM.invoke( obj );	// seq값 추출
 						break;
 					}
 				}
+			}else {
+				// seq값이 없으면( 1:1 관계가 아니면 ) seq값 추출
+				if( obj == null )	obj = m.invoke( entity );
 			}
 			
-			// seq값이 없으면( 1:1 관계가 아니면 ) seq값 추출
-			if( seq == 0 )	seq = (Long)m.invoke( entity );
-			
-			return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), new Long( seq ) );
-			
-			//return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), (Serializable)m.invoke( obj ) );
-			
-			//return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), 4L );			
-			//return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), (Serializable)new Tt11Master( 4L ).getSeq() );
-			//return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), 4L );
+			return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), (Serializable)obj );
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.error( "Sequence column is not exist");
-			e.printStackTrace();
 		}
-		 */
 		return null;
 	}
 	

@@ -26,4 +26,7 @@ public class ConstantUtil {
 	// ▣ 제약 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	/** 제약 > 자바스크립트 Alert 함수 출력 시긴 글 자르기 크기 */
 	public static final int LIMIT_JS_ALERT_STRING_CNT	= 1000;
+	
+	/** 제약 > Loop 횟수 Max값 limit */
+	public static final int LIMIT_LOOP_CNT	= 100;
 }
