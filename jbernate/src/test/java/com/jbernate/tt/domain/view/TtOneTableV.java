@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.jbernate.cm.util.ConstantUtil;
+import com.jbernate.cm.util.ConstUtil;
 
 @Entity( name = "com.jbernate.tt.domain.view.TtOneTableV" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 @Table( name = "TT_ONE_TABLE_V" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
@@ -30,73 +30,67 @@ public class TtOneTableV implements Serializable{
 	
 	// Sequence
 	@Id
-	@Column( name = "SEQ", precision = 16, scale = 0 )
+	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
 	private Long seq;
 	
 	// 문자형
-	@Column( name = "V_VARCHAR")
-	@Size( min = 0, max = 200 )
+	@Column( name = "V_VARCHAR", columnDefinition = "NVARCHAR2(200) NULL", length = 200 )
 	private String vVarchar;
 	
 	// 날짜
-	@Column( name = "V_DATE" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+	@Column( name = "V_DATE", columnDefinition = "DATE NULL" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 	@Temporal( TemporalType.TIMESTAMP )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-	@DateTimeFormat( pattern=ConstantUtil.FORMAT_DATE )
+	@DateTimeFormat( pattern=ConstUtil.FORMAT_DATE )
 	private Date vDate;
 	
 	// CLOB형
-	@Column( name = "V_CLOB")
+	@Column( name = "V_CLOB", columnDefinition = "CLOB NULL" )
 	@Lob
 	private String vClob;
 	
 	// BLOB형
-	@Column( name = "V_BLOB")
+	@Column( name = "V_BLOB", columnDefinition = "BLOB NULL" )
 	@Lob
 	private byte[] vBlob;
 
 	// 삭제여부
-	@Column( name = "DEL_FLAG")
-	@Size( min = 0, max = 1 )
+	@Column( name = "DEL_FLAG", columnDefinition = "VARCHAR2(1) NULL", length = 1 )
 	private String delFlag;
 	
 	// 생성일
-	@Column( name = "CRE_DATE" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+	@Column( name = "CRE_DATE", columnDefinition = "DATE NULL" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 	@Temporal( TemporalType.TIMESTAMP )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-	@DateTimeFormat( pattern=ConstantUtil.FORMAT_DATE )
+	@DateTimeFormat( pattern=ConstUtil.FORMAT_DATE )
 	private Date creDate;
 
 	// 생성자
-	@Column( name = "CRE_ID", precision = 16, scale = 0 )
+	@Column( name = "CRE_ID", columnDefinition = "NUMBER(16) NULL", precision = 16, scale = 0 )
 	private Long creId;
 	
 	// 생성객체
-	@Column( name = "CRE_OBJ")
-	@Size( min = 0, max = 100 )
+	@Column( name = "CRE_OBJ", columnDefinition = "NVARCHAR2(100) NULL", length = 100 )
 	private String creObj;
 	
 	// 생성자IP
-	@Column( name = "CRE_IP")
-	@Size( min = 0, max = 64 )
+	@Column( name = "CRE_IP", columnDefinition = "VARCHAR2(64) NULL", length = 64 )
 	private String creIp;
 	
 	// 수정일
-	@Column( name = "MOD_DATE" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+	@Column( name = "MOD_DATE", columnDefinition = "DATE NULL" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 	@Temporal( TemporalType.TIMESTAMP )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-	@DateTimeFormat( pattern=ConstantUtil.FORMAT_DATE )
+	@DateTimeFormat( pattern=ConstUtil.FORMAT_DATE )
 	private Date modDate;
 
 	// 수정자
-	@Column( name = "MOD_ID", precision = 16, scale = 0 )
+	@Column( name = "MOD_ID", columnDefinition = "NUMBER(16) NULL", precision = 16, scale = 0 )
 	private Long modId;
 	
 	// 수정객체
-	@Column( name = "MOD_OBJ")
-	@Size( min = 0, max = 100 )
+	@Column( name = "MOD_OBJ", columnDefinition = "NVARCHAR2(100) NULL", length = 100 )
 	private String modObj;
 	
 	// 수정자IP
-	@Column( name = "MOD_IP")
-	@Size( min = 0, max = 64 )
+	@Column( name = "MOD_IP", columnDefinition = "VARCHAR2(64) NULL", length = 64 )
 	private String modIp;
 
 	public Long getSeq() {

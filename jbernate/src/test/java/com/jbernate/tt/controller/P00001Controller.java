@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jbernate.cm.util.ConstantUtil;
+import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.ControllerUtil;
 import com.jbernate.cm.util.LogUtil;
 
@@ -16,10 +16,10 @@ import com.jbernate.cm.util.LogUtil;
  * 컨트롤러 테스트
  */
 @Controller
-@RequestMapping( value = ConstantUtil.PATH_CONTROLLER_TEST + "/" + ConstantUtil.ID_PAGE_TEST + "00001" )
-public class T00001Controller {
+@RequestMapping( value = ConstUtil.PATH_CONTROLLER_TEST + "/" + ConstUtil.ID_PAGE_PREFIX + "00001" )
+public class P00001Controller {
 	@RequestMapping( method = RequestMethod.GET )
-	public String root(	HttpSession session
+	public String load(	HttpSession session
 						, Model model
 						, HttpServletRequest request
 	) {

@@ -15,28 +15,27 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jbernate.cm.util.ConstUtil;
 
-@Entity( name = "com.jbernate.tt.domain.table.TtOneTable" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-@Table( name = "TT_ONE_TABLE" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-@SequenceGenerator( name = "TT_ONE_TABLE_S", sequenceName = "TT_ONE_TABLE_S", initialValue = 1, allocationSize = 1 )
-public class TtOneTable implements Serializable{
+@Entity( name = "com.jbernate.tt.domain.table.Tt11Master" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+@Table( name = "TT_11_MASTER" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+@SequenceGenerator( name = "TT_11_MASTER_S", sequenceName = "TT_11_MASTER_S", initialValue = 1, allocationSize = 1 )
+public class Tt11Master implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	public TtOneTable(){};
+	public Tt11Master(){};
 	
-	public TtOneTable( Long seq ){
+	public Tt11Master( Long seq ){
 		this.seq = seq;
 	}
 	
 	// Sequence
 	@Id
-	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "TT_ONE_TABLE_S" )
-	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE",  precision = 16, scale = 0 )
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "TT_11_MASTER_S" )
+	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
 	private Long seq;
 	
 	// 문자형
@@ -58,11 +57,11 @@ public class TtOneTable implements Serializable{
 	@Column( name = "T_BLOB", columnDefinition = "BLOB NULL" )
 	@Lob
 	private byte[] tBlob;
-
+	
 	// 삭제여부
 	@Column( name = "DEL_FLAG", columnDefinition = "VARCHAR2(1) NULL", length = 1 )
 	private String delFlag;
-		
+	
 	// 생성일
 	@Column( name = "CRE_DATE", columnDefinition = "DATE NULL" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 	@Temporal( TemporalType.TIMESTAMP )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -210,5 +209,5 @@ public class TtOneTable implements Serializable{
 	public void setModIp(String modIp) {
 		this.modIp = modIp;
 	}
-		
+	
 }

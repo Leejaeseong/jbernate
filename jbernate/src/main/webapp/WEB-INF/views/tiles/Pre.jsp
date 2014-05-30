@@ -7,16 +7,22 @@
 	
 	<title>jbernate</title>
 	
-	<!-- jquery ui -->
-	<link href="/css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+	<!-- jquery > core -->
 	<script src="/js/jquery-1.10.2.js"></script>
+	
+	<!-- jquery > ui -->
+	<link href="/css/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
 	<script src="/js/jquery-ui-1.10.4.js"></script>
 	
-	<!-- jquery grid -->
+	<!-- jquery > grid -->
 	<link rel="stylesheet" type="text/css" media="screen" href="/css/ui-lightness/jquery-ui-1.10.4.min.css" />	
 	<link rel="stylesheet" type="text/css" media="screen" href="/css/ui-lightness/ui.jqgrid.css" />	
 	<script src="/js/jqgrid-i18n/grid.locale-kr.js" type="text/javascript"></script>
 	<script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+	
+	<!-- common -->
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/common.css" />
+	
 </head>
 
 <body>

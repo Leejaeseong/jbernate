@@ -3,17 +3,17 @@ package com.jbernate.cm.util;
 /**
  * String 관련 공통 유틸
  */
-public class StringUtil {
+public class StrUtil {
 
 	/**
 	 * 공백이나 널인지 여부
-	 * @param str	대상 문자
+	 * @param str	대상 문자 객체
 	 * @return		true	: 문자 존재
 	 * 				false	: 공백이나 null 
 	 */
-	public static boolean isBlank( String str ) {
-		if( str == null || str.equals( "" ) ) 	return false;
-		else									return true;
+	public static boolean chkBlank( Object str ) {
+		if( str == null || str.toString().equals( "" ) ) 	return false;
+		else												return true;
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class StringUtil {
 	 * 				ex3 : delim = "_" ) "_"			=> ""
 	 */
 	public static String makeJavaNameRule( String str, String delim ) {
-		if( !isBlank( str ) ) return str;
+		if( !chkBlank( str ) ) return str;
 		// 끝에 delim으로 종료되면 delim 부분 제거
 		if( str.length() > delim.length() && str.endsWith( delim ) )	str = str.substring( 0, str.lastIndexOf( delim ) );
 		
@@ -94,7 +94,7 @@ public class StringUtil {
 	 * @return		잘려진 글자
 	 */
 	public static String cutString( String str, int size ) {
-		if( !isBlank( str ) || str.length() <= size ) 	return str;
+		if( !chkBlank( str ) || str.length() <= size ) 	return str;
 		else											return str.substring( 0, size );
 	}
 }

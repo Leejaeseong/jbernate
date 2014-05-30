@@ -59,25 +59,24 @@
     	<url-pattern>/*</url-pattern>
   	</filter-mapping>
   	
-	<error-page>	<!-- Redirection error -->
+	<error-page>     <!-- Redirection error -->
 		<error-code>302</error-code>
-		<location>/WEB-INF/views/common/Error.jsp</location>
+		<location>/WEB-INF/views/cm/Error.jsp</location>
 	</error-page>
-	<error-page>	<!-- Bad request error -->
+	<error-page>     <!-- Bad request error -->
 		<error-code>400</error-code>
-		<location>/WEB-INF/views/common/Error.jsp</location>
+		<location>/WEB-INF/views/cm/Error.jsp</location>
 	</error-page>
-	<error-page>	<!-- Forbidden error -->
+	<error-page>     <!-- Forbidden error -->
 		<error-code>403</error-code>
-		<location>/WEB-INF/views/common/Error.jsp</location>
+		<location>/WEB-INF/views/cm/Error.jsp</location>
 	</error-page>
-	<error-page>	<!-- Page not found error -->
+	<error-page>     <!-- Page not found error -->
 		<error-code>404</error-code>
-		<location>/WEB-INF/views/common/Error.jsp</location>
+		<location>/WEB-INF/views/cm/Error.jsp</location>
 	</error-page>
-	<error-page>	<!-- Internal error -->
+	<error-page>     <!-- Internal error -->
 		<error-code>500</error-code>
-		<location>/WEB-INF/views/common/Error.jsp</location>
+		<location>/WEB-INF/views/cm/Error.jsp</location>
 	</error-page>
-
 </web-app>

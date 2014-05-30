@@ -4,12 +4,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.jbernate.tt.domain.table.TtOneTable;
-
 /**
  * Database관련 필요 Util
  */
-public class DatabaseUtil {
+public class DbUtil {
 
 	/**
 	 * Hibernate 세션 얻기
@@ -43,14 +41,14 @@ public class DatabaseUtil {
 		if( entity instanceof String ){
 			tvName = (String)entity;
 			try{
-				LogUtil.trace(ConstantUtil.ID_PACKAGE_PREFIX 
-							+ "." + ( StringUtil.nvl( tvName ).length() > 2 ? tvName.substring( 0, 2 ).toLowerCase() : "" )
+				LogUtil.trace(ConstUtil.ID_PACKAGE_PREFIX 
+							+ "." + ( StrUtil.nvl( tvName ).length() > 2 ? tvName.substring( 0, 2 ).toLowerCase() : "" )
 							+ ".domain.view." 
 							+ tvName);
 				
 				clazz 	= Class.forName( 
-							ConstantUtil.ID_PACKAGE_PREFIX 
-							+ "." + ( StringUtil.nvl( tvName ).length() > 2 ? tvName.substring( 0, 2 ).toLowerCase() : "" )
+							ConstUtil.ID_PACKAGE_PREFIX 
+							+ "." + ( StrUtil.nvl( tvName ).length() > 2 ? tvName.substring( 0, 2 ).toLowerCase() : "" )
 							+ ".domain.view." 
 							+ tvName );
 			} catch ( Exception e ) {
@@ -62,9 +60,9 @@ public class DatabaseUtil {
 		}
 				
 		// 패키지명을 포함하면 끝의 클래스 이름만 추출하여 Alias로 활용
-		if( StringUtil.isBlank( tvName ) && tvName.indexOf( "." ) != -1 ) tvName = tvName.substring( tvName.lastIndexOf( "." ) + 1 );	
+		if( StrUtil.chkBlank( tvName ) && tvName.indexOf( "." ) != -1 ) tvName = tvName.substring( tvName.lastIndexOf( "." ) + 1 );	
 		
-		return DatabaseUtil.getHibernateSession( sessionFactory ).createCriteria( clazz, StringUtil.firstLowStr( tvName ) );
+		return DbUtil.getHibernateSession( sessionFactory ).createCriteria( clazz, StrUtil.firstLowStr( tvName ) );
 		
 		/*
 		Class clazz = null;
@@ -93,7 +91,7 @@ public class DatabaseUtil {
 	 * @return			Entity 명
 	 */
 	public static String getEntityName( String objName ) {
-		return StringUtil.firstUpperStr( StringUtil.makeJavaNameRule( objName.toLowerCase() ) );
+		return StrUtil.firstUpperStr( StrUtil.makeJavaNameRule( objName.toLowerCase() ) );
 	}
 	
 }

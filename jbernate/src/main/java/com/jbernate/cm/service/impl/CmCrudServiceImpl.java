@@ -1,6 +1,5 @@
 package com.jbernate.cm.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +12,6 @@ import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.dao.CmCrudDao;
 import com.jbernate.cm.service.CmCrudService;
-import com.jbernate.cm.util.LogUtil;
-import com.jbernate.tt.domain.table.Tt11Master;
-import com.jbernate.tt.domain.table.Tt11Slave1;
 
 /**
  * 공통 CRUD 서비스 구현체

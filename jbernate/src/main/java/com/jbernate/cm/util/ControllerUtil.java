@@ -19,7 +19,7 @@ public class ControllerUtil {
 	
 	/**
 	 * URL full path중 return 하는 view 이름 얻기
-	 * 예를들어 /tt/T00003/load 처럼 /domain/{pageID}/{명령어} 로 들어오는 방식일 때 처리
+	 * 예를들어 /tt/00003/load 처럼 /domain/{pageID}/{명령어} 로 들어오는 방식일 때 처리
 	 * @param request	HttpSerbletRequest	
 	 * @return String	ex) /aaa/bbb/ccc/load => /bbb/ccc
 	 */

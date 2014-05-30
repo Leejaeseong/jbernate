@@ -21,8 +21,8 @@
 	
 	<!-- Annotation( @RequestMapping등 ) 사용가능하도록 설정 -->
    	<mvc:annotation-driven />
-   
-   	<!-- Tiles Layout 정의파일 위치 설정 -->
+
+	<!-- Tiles Layout 정의파일 위치 설정 -->
    	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">	<!-- Tiles2 Configurer -->
 		<property name="definitions">
 			<list>
@@ -58,11 +58,30 @@
 		<property name="defaultViews">	<!-- viewResolvers에서 view를 찾지 못했을 경우 사용되는 default view -->
 			<list>
 				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>	<!-- Json view -->
-				<bean class="com.jbernate.cm.view.JSONPView">
-                	<property name="contentType" value="javascript/jsonp; charset=utf-8"/>	<!-- Jsonp view -->
+				<bean class="com.jbernate.cm.resolver.JSONPView">
+                	<property name="contentType" value="javascript/jsonp; charset=utf-8"/>			<!-- Jsonp view -->
             	</bean>
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Exception resolver -->
+	<bean id="exceptionResolver" class="com.jbernate.cm.resolver.BaseExceptionResolver">
+		<property name="view" value="cm/Error"/>
+	</bean>
+	
+	<!-- Validator annotation 활성화 
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+	-->
+    <bean id="validator" class="com.jbernate.cm.validator.SbValidator"/>
 
+	<!-- 메시지 리소스 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8"/> 
+        <property name="basenames">
+        	<list>
+        		<value>message\validation</value>
+        	</list>  
+        </property>  
+    </bean>  
 </beans>

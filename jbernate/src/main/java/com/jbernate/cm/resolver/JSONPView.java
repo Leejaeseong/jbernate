@@ -1,4 +1,4 @@
-package com.jbernate.cm.view;
+package com.jbernate.cm.resolver;
 
 import java.io.Writer;
 import java.util.Map;

@@ -8,36 +8,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jbernate.cm.util.ConstUtil;
 
-@Entity( name = "com.jbernate.tt.domain.table.TtOneTable" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-@Table( name = "TT_ONE_TABLE" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-@SequenceGenerator( name = "TT_ONE_TABLE_S", sequenceName = "TT_ONE_TABLE_S", initialValue = 1, allocationSize = 1 )
-public class TtOneTable implements Serializable{
+@Entity( name = "com.jbernate.tt.domain.table.Tt1nSlave" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+@Table( name = "TT_1N_SLAVE1" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+@SequenceGenerator( name = "TT_1N_SLAVE1_S", sequenceName = "TT_1N_SLAVE1_S", initialValue = 1, allocationSize = 1 )
+public class Tt1nSlave1 implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+
+	public Tt1nSlave1(){};
 	
-	public TtOneTable(){};
-	
-	public TtOneTable( Long seq ){
+	public Tt1nSlave1( Long seq ){
 		this.seq = seq;
 	}
 	
 	// Sequence
 	@Id
-	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "TT_ONE_TABLE_S" )
-	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE",  precision = 16, scale = 0 )
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "TT_1N_SLAVE1_S" )
+	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
 	private Long seq;
+	
+	@ManyToOne                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+	@JoinColumn( name = "FK_MASTER", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL" )                                                                                                                                                                                                                                                                                                                                                                                                                                             
+	private Tt1nMaster fkMaster;
 	
 	// 문자형
 	@Column( name = "T_VARCHAR", columnDefinition = "NVARCHAR2(200) NULL", length = 200 )
@@ -58,11 +63,11 @@ public class TtOneTable implements Serializable{
 	@Column( name = "T_BLOB", columnDefinition = "BLOB NULL" )
 	@Lob
 	private byte[] tBlob;
-
+	
 	// 삭제여부
 	@Column( name = "DEL_FLAG", columnDefinition = "VARCHAR2(1) NULL", length = 1 )
 	private String delFlag;
-		
+	
 	// 생성일
 	@Column( name = "CRE_DATE", columnDefinition = "DATE NULL" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 	@Temporal( TemporalType.TIMESTAMP )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
@@ -105,6 +110,14 @@ public class TtOneTable implements Serializable{
 
 	public void setSeq(Long seq) {
 		this.seq = seq;
+	}
+
+	public Tt1nMaster getFkMaster() {
+		return fkMaster;
+	}
+
+	public void setFkMaster(Tt1nMaster fkMaster) {
+		this.fkMaster = fkMaster;
 	}
 
 	public String gettVarchar() {
@@ -210,5 +223,6 @@ public class TtOneTable implements Serializable{
 	public void setModIp(String modIp) {
 		this.modIp = modIp;
 	}
+
 		
 }

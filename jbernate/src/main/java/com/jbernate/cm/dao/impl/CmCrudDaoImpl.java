@@ -19,10 +19,9 @@ import org.springframework.stereotype.Repository;
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.dao.CmCrudDao;
-import com.jbernate.cm.util.ConstantUtil;
-import com.jbernate.cm.util.DatabaseUtil;
+import com.jbernate.cm.util.ConstUtil;
+import com.jbernate.cm.util.DbUtil;
 import com.jbernate.cm.util.LogUtil;
-import com.jbernate.tt.domain.table.Tt11Master;
 
 /**
  * 공통 CRUD DAO 인터페이스
@@ -41,7 +40,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 	@Override
 	public Object create( HttpServletRequest request, Object entity ) {
 		entity = setCreateCmCol( request, entity );	// 공통 컬럼 설정
-		return DatabaseUtil.getHibernateSession( sessionFactory ).save( entity );	
+		return DbUtil.getHibernateSession( sessionFactory ).save( entity );	
 	}
 	
 	/**
@@ -52,7 +51,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 	@Override
 	public void update( HttpServletRequest request, Object entity ) {
 		entity = setUpdateCmCol( request, entity );	// 공통 컬럼 설정
-		DatabaseUtil.getHibernateSession( sessionFactory ).update( entity );
+		DbUtil.getHibernateSession( sessionFactory ).update( entity );
 	}
 	
 	/**
@@ -73,7 +72,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 		Object obj = entity;	// get에 실패할 경우 대비한 entity 복사
 		entity = this.get( request, entity );
 		if( entity == null ) {	// get에 실패한 경우 merge 실행
-			entity = DatabaseUtil.getHibernateSession( sessionFactory ).merge( obj );
+			entity = DbUtil.getHibernateSession( sessionFactory ).merge( obj );
 		}
 		
 		try {
@@ -85,7 +84,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// DEL_FLAG 컬럼이 없는 경우 실 데이터 삭제
 			LogUtil.warn( "DEL_FLAG column is not exist at delete function");
-			DatabaseUtil.getHibernateSession( sessionFactory ).delete( entity );
+			DbUtil.getHibernateSession( sessionFactory ).delete( entity );
 		}
 	}
 	
@@ -101,7 +100,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 		try {			
 			m = entity.getClass().getDeclaredMethod( "setCreDate", new Date().getClass() );		m.invoke( entity, new Date() );											// 생성일 설정
 			m = entity.getClass().getDeclaredMethod( "setCreId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 생성자 설정 
-			m = entity.getClass().getDeclaredMethod( "setCreObj", new String().getClass() );	m.invoke( entity, ConstantUtil.ID_DB_OBJECTOWN );						// 생성객체 설정
+			m = entity.getClass().getDeclaredMethod( "setCreObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );						// 생성객체 설정
 			m = entity.getClass().getDeclaredMethod( "setCreIp", new String().getClass() );		m.invoke( entity, request.getRemoteAddr() );							// 생성자 IP 설정
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.warn( "Common create column is not exist");
@@ -120,7 +119,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 		try {			
 			m = entity.getClass().getDeclaredMethod( "setModDate", new Date().getClass() );		m.invoke( entity, new Date() );											// 수정일 설정
 			m = entity.getClass().getDeclaredMethod( "setModId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 수정자 설정
-			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, ConstantUtil.ID_DB_OBJECTOWN );						// 수정객체 설정
+			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );						// 수정객체 설정
 			m = entity.getClass().getDeclaredMethod( "setModIp", new String().getClass() );		m.invoke( entity, request.getRemoteAddr() );							// 수정자 IP 설정
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.warn( "Common update column is not exist");
@@ -152,7 +151,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 			Object obj = m.invoke( entity );
 			
 			if( m.getReturnType() != java.lang.Long.class ) {
-				for( int i = 0; i < ConstantUtil.LIMIT_LOOP_CNT; i++ ) {	// 1:1:1... Join인 경우 루프를 돌며 seq값을 찾음 
+				for( int i = 0; i < ConstUtil.LIMIT_LOOP_CNT; i++ ) {	// 1:1:1... Join인 경우 루프를 돌며 seq값을 찾음 
 					Method tempM = obj.getClass().getDeclaredMethod( "getSeq" );
 					if( tempM.getReturnType() == java.lang.Long.class ){
 						obj = tempM.invoke( obj );	// seq값 추출
@@ -164,7 +163,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 				if( obj == null )	obj = m.invoke( entity );
 			}
 			
-			return DatabaseUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), (Serializable)obj );
+			return DbUtil.getHibernateSession( sessionFactory ).get( entity.getClass(), (Serializable)obj );
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.error( "Sequence column is not exist");
 		}
@@ -249,7 +248,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List list( HttpServletRequest request, Object entity, List<WhereBean> wbList, List<OrderBean> obList, int cPage, int cntPerPage ){
-		Criteria criteria = DatabaseUtil.getCriteria( entity, sessionFactory );		// 테이블 Criteria 얻기
+		Criteria criteria = DbUtil.getCriteria( entity, sessionFactory );		// 테이블 Criteria 얻기
 		
 		if( wbList != null )	criteria = addWhereCriteria( criteria, wbList );	// 조건항목 존재 시 조건 Criteria 추가
 		if( obList != null )	criteria = addOrderCriteria( criteria, obList );	// 정렬항목 존재 시 정렬 Criteria 추가
@@ -271,7 +270,7 @@ public class CmCrudDaoImpl implements CmCrudDao{
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List queryList( HttpServletRequest request, String query ) {
-		return DatabaseUtil.getHibernateSession( sessionFactory ).createQuery( query ).list();		
+		return DbUtil.getHibernateSession( sessionFactory ).createQuery( query ).list();		
 	}
 	
 	/**
