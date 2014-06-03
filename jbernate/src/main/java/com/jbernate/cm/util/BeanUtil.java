@@ -57,14 +57,20 @@ public class BeanUtil {
 		return list;
 	}
 	
+	/**
+	 * 공통적으로 모델에 삽입하는 항목 설정
+	 * @param thiz		호출하는 Class
+	 * @param session	HttpSession
+	 * @param model		Model
+	 * @param request	HttpServletRequest
+	 * @return			공통 정보가 추가된 model
+	 */
 	public static Model getCommonModel(
 			Object thiz
 			, HttpSession session
 			, Model model
-			, HttpServletRequest request
-			, Sb sb) {
+			, HttpServletRequest request ) {
 		
-		model.addAttribute( "sb"		, sb );
 		model.addAttribute( "pgmId"		, ControllerUtil.getViewName( thiz.getClass() ) );
 		model.addAttribute( "submitUrl"	, "/" + ControllerUtil.getViewName( thiz.getClass() ) + "/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_SUBMIT );
 		

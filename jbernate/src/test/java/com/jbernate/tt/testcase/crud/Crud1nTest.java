@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.tt.domain.table.Tt1nMaster;
@@ -25,7 +25,7 @@ import com.jbernate.tt.domain.table.Tt1nSlave1;
 @Transactional
 public class Crud1nTest {
 
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
 	
 	@Test
 	public void crud1n1TableTest() {
@@ -35,7 +35,7 @@ public class Crud1nTest {
 		master.settVarchar( "테스트 = " + new Date().toString() );
 		master.settClob( "테스트~~~~~~~~~~~~~~~~~~~~~~~~" );
 		master.settBlob( new byte[]{'t','e','s','t','~','~','~','~','~','~'} );
-		long seq = (Long)cService.create( null, master );
+		long seq = (Long)cmService.create( null, master );
 		
 		// Slave 추가 ////////////////////////////////////////////////////////////////////////////////
 		Tt1nSlave1 slave1 = new Tt1nSlave1();
@@ -44,11 +44,11 @@ public class Crud1nTest {
 		slave1.settVarchar( "테스트 = " + new Date().toString() );
 		slave1.settClob( "테스트~~~~~~~~~~~~~~~~~~~~~~~~" );
 		slave1.settBlob( new byte[]{'t','e','s','t','~','~','~','~','~','~'} );
-		seq = (Long)cService.create( null, slave1 );
+		seq = (Long)cmService.create( null, slave1 );
 		
 		// Slave 검색 하여 Master까지 출력 ///////////////////////////////////////////////////////////
 		@SuppressWarnings("unchecked")
-		List<Tt1nSlave1> list = cService.list( null, slave1, BeanUtil.oneWhere( "seq", seq, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
+		List<Tt1nSlave1> list = cmService.list( null, slave1, BeanUtil.oneWhere( "seq", seq, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
 		if( list.size() > 0 ) {
 			slave1 = list.get( 0 );
 			LogUtil.trace( "seq = " + slave1.getSeq() );
@@ -56,10 +56,10 @@ public class Crud1nTest {
 			
 			// 수정 ////////////////////////////////////////////////////////////////////////////
 			slave1.setModDate( new Date() );
-			cService.update( null, slave1 );
+			cmService.update( null, slave1 );
 		}
 		
 		// 삭제 ////////////////////////////////////////////////////////////////////////////////
-		cService.delete( null, slave1 );
+		cmService.delete( null, slave1 );
 	}
 }

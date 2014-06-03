@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.tt.domain.table.Tt11Master;
 import com.jbernate.tt.domain.table.Tt11Slave1;
@@ -19,7 +19,7 @@ import com.jbernate.tt.testcase.service.Crud11TestService;
 @Transactional
 public class Crud11TestServiceImpl implements Crud11TestService{
 
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
 	
 	/**
 	 * 테스트케이스에서 Transaction 테스트
@@ -39,7 +39,7 @@ public class Crud11TestServiceImpl implements Crud11TestService{
 		master.settVarchar( "테스트 = " + new Date().toString() );
 		master.settClob( "테스트~~~~~~~~~~~~~~~~~~~~~~~~" );
 		master.settBlob( new byte[]{'t','e','s','t','~','~','~','~','~','~'} );
-		long seq = (Long)cService.create( null, master );
+		long seq = (Long)cmService.create( null, master );
 		LogUtil.trace( "master 추가된 데이터 = " + seq );
 
 		// Slave1 추가 ////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ public class Crud11TestServiceImpl implements Crud11TestService{
 		slave1.settClob( "테스트~~~~~~~~~~~~~~~~~~~~~~~~" );
 		slave1.settBlob( new byte[]{'t','e','s','t','~','~','~','~','~','~'} );
 		slave1.setSeq( new Tt11Master( seq ) );
-		cService.create( null, slave1 );
+		cmService.create( null, slave1 );
 	}
 
 }

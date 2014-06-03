@@ -32,7 +32,6 @@ public class DbUtil {
 		try {
 			return DatabaseUtil.getHibernateSession( sessionFactory ).createCriteria( Class.forName( (String) entity ), StringUtil.firstLowStr( tvName ) );
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}*/

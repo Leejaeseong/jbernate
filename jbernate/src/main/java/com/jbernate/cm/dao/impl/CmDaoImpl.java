@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
-import com.jbernate.cm.dao.CmCrudDao;
+import com.jbernate.cm.dao.CmDao;
 import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.DbUtil;
 import com.jbernate.cm.util.LogUtil;
@@ -27,7 +27,7 @@ import com.jbernate.cm.util.LogUtil;
  * 공통 CRUD DAO 인터페이스
  */
 @Repository
-public class CmCrudDaoImpl implements CmCrudDao{
+public class CmDaoImpl implements CmDao{
 
 	@Autowired SessionFactory sessionFactory;
 	

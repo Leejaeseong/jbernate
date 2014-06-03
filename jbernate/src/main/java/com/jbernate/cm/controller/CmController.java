@@ -1,11 +1,14 @@
 package com.jbernate.cm.controller;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,23 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jbernate.cm.bean.Sb;
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.ControllerUtil;
 import com.jbernate.cm.util.DbUtil;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.cm.util.StrUtil;
+import com.jbernate.tt.service.P00005Service;
 
 /**
  * 공통으로 사용되는 컨트롤러 기능
  * 각 도메인에서 extends하여 사용한다( 이 클래스에서 RequestMapping value를 "/"로 사용하면 resource파일도 Servlet으로 실행되어 버림 )
  */
 @Controller
-public class BasicController {
+public class CmController {
 
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
+	@Autowired AutowireCapableBeanFactory factory;
+	@Autowired ApplicationContext appContext;
 	
 	/**
 	 * 페이지 로딩
@@ -47,10 +52,16 @@ public class BasicController {
 		
 		LogUtil.trace( pgmId + " program : loaded( By BasicController > load method" );
 		
-		Sb sb = new Sb();
+		P00005Service service = (P00005Service)appContext.getBean( P00005Service.class );
+		model = service.load( session, request, model );	
+		
+		//Object sBean = appContext.getBean( Class.forName( "com.jbernate.tt.service.P00005Service" ) );
+		Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) ) );
+		Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, Model.class );
+		model = (Model)m.invoke( sBean, session, request, model );
 		
 		// 모델 공통부분 설정
-		model = BeanUtil.getCommonModel( this, session, model, request, sb );
+		model = BeanUtil.getCommonModel( this, session, model, request );
 		
 		return ControllerUtil.getViewName( request );
 	}
@@ -77,7 +88,7 @@ public class BasicController {
 		LogUtil.trace( pgmId + " program : loaded( By BasicController > list method" );
 		
 		@SuppressWarnings("rawtypes")
-		List list = cService.list( request, StrUtil.chkBlank( viewNm ) ? DbUtil.getEntityName( viewNm ) : pgmId );
+		List list = cmService.list( request, StrUtil.chkBlank( viewNm ) ? DbUtil.getEntityName( viewNm ) : pgmId );
 		
 		model.addAttribute( "viewData", list );
 		

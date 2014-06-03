@@ -21,10 +21,21 @@ public class ControllerUtil {
 	 * URL full path중 return 하는 view 이름 얻기
 	 * 예를들어 /tt/00003/load 처럼 /domain/{pageID}/{명령어} 로 들어오는 방식일 때 처리
 	 * @param request	HttpSerbletRequest	
-	 * @return String	ex) /aaa/bbb/ccc/load => /bbb/ccc
+	 * @return String	ex) /aaa/bbb/ccc/load => bbb/ccc
 	 */
 	public static String getViewName( HttpServletRequest request ) {
 		String[] arr = request.getRequestURI().split( "/" );
 		return arr[ arr.length - 3 ] + "/" + arr[ arr.length - 2 ];
+	}
+	
+	/**
+	 * URL full path를 사용하여 full class path 추출 
+	 * @param request	HttpServletRequest
+	 * @param domain	영역에 해당하는 패키지명 아래 예시에서는 service 라고 가정
+	 * @return String	ex) /tt/P00005/load => com.jbernate.tt.service.P00005
+	 */
+	public static String getClassPathByUrl( HttpServletRequest request, String domain ) {
+		String[] arr = request.getRequestURI().split( "/" );
+		return ConstUtil.ID_PACKAGE_PREFIX + "." + arr[ arr.length - 3 ] + "." + domain + "." + arr[ arr.length - 2 ];
 	}
 }

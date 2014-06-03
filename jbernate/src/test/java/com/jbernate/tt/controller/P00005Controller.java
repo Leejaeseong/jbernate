@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.jbernate.cm.bean.Sb;
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.ArrUtil;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.ConstUtil;
@@ -33,7 +33,7 @@ import com.jbernate.tt.domain.table.TtOneTable;
 @SessionAttributes( value = "sb" )
 public class P00005Controller {
 	
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
 	@Autowired SbValidator sbValidator;
 	
 	/*
@@ -46,7 +46,7 @@ public class P00005Controller {
 		
 		TtOneTable ttOneTable = new TtOneTable();
 		@SuppressWarnings("unchecked")
-		List<TtOneTable> list = cService.list( request, ttOneTable );
+		List<TtOneTable> list = cmService.list( request, ttOneTable );
 		if( ArrUtil.chkBlank( list ) ) {
 			ttOneTable = list.get( 0 );
 		}
@@ -55,7 +55,7 @@ public class P00005Controller {
 		sb.setTtOneTable( ttOneTable );
 		
 		// 모델 공통부분 설정
-		model = BeanUtil.getCommonModel( this, session, model, request, sb );
+		model = BeanUtil.getCommonModel( this, session, model, request );
 		
 		return ControllerUtil.getViewName( getClass() );
 	}

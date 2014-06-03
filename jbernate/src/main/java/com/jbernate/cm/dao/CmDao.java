@@ -1,4 +1,4 @@
-package com.jbernate.cm.service;
+package com.jbernate.cm.dao;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
 
 /**
- * 공통 CRUD 서비스 인터페이스
+ * 공통 CRUD DAO 인터페이스
  */
-public interface CmCrudService {
+public interface CmDao {
 
 	/**
 	 * 삽입
@@ -26,7 +26,7 @@ public interface CmCrudService {
 	 * @param entity	객체
 	 */
 	void update( HttpServletRequest request, Object entity );
-	
+
 	/**
 	 * 삭제
 	 * @param request	HttpServletRequest
@@ -48,7 +48,7 @@ public interface CmCrudService {
 	 * 조회
 	 * @param request	HttpServletRequest	
 	 * @param entity	객체
-	 * @return			List<Object>
+	 * @return			List
 	 */
 	@SuppressWarnings("rawtypes")
 	List list( HttpServletRequest request, Object entity );
@@ -58,7 +58,7 @@ public interface CmCrudService {
 	 * @param entity		객체
 	 * @param cPage			현재 페이지 번호
 	 * @param cntPerPage	한 페이지 당 데이터 출력 개수
-	 * @return				List<Object>
+	 * @return				List
 	 */
 	@SuppressWarnings("rawtypes")
 	List list( HttpServletRequest request, Object entity, int cPage, int cntPerPage );
@@ -67,7 +67,7 @@ public interface CmCrudService {
 	 * @param request		HttpServletRequest	
 	 * @param entity		객체
 	 * @param wbList		조건문 목록 List<WhereBean>
-	 * @return				List<Object>
+	 * @return				List
 	 */
 	@SuppressWarnings("rawtypes")
 	List list( HttpServletRequest request, Object entity, List<WhereBean> wbList );
@@ -78,7 +78,7 @@ public interface CmCrudService {
 	 * @param wbList		조건문 목록 List<WhereBean>
 	 * @param cPage			현재 페이지 번호
 	 * @param cntPerPage	한 페이지 당 데이터 출력 개수
-	 * @return				List<Object>
+	 * @return				List
 	 */
 	@SuppressWarnings("rawtypes")
 	List list( HttpServletRequest request, Object entity, List<WhereBean> wbList, int cPage, int cntPerPage );
@@ -88,7 +88,7 @@ public interface CmCrudService {
 	 * @param entity		객체
 	 * @param wbList		조건문 목록 List<WhereBean>
 	 * @param obList		정렬 목록 List<OrderBean>
-	 * @return				List<Object>
+	 * @return				List
 	 */
 	@SuppressWarnings("rawtypes")
 	List list( HttpServletRequest request, Object entity, List<WhereBean> wbList, List<OrderBean> obList );
@@ -100,7 +100,7 @@ public interface CmCrudService {
 	 * @param obList		정렬 목록 List<OrderBean>
 	 * @param cPage			현재 페이지 번호
 	 * @param cntPerPage	한 페이지 당 데이터 출력 개수
-	 * @return				List<Object>
+	 * @return				List
 	 */
 	@SuppressWarnings("rawtypes")
 	List list( HttpServletRequest request, Object entity, List<WhereBean> wbList, List<OrderBean> obList, int cPage, int cntPerPage );
@@ -111,5 +111,5 @@ public interface CmCrudService {
 	 * @return				List<Object>
 	 */
 	@SuppressWarnings("rawtypes")
-	List queryList( HttpServletRequest request, String query );	
+	List queryList( HttpServletRequest request, String query );
 }

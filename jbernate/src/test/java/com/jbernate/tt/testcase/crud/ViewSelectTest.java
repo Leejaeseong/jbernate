@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.tt.domain.view.TtOneTableV;
@@ -23,13 +23,13 @@ import com.jbernate.tt.domain.view.TtOneTableV;
 @Transactional
 public class ViewSelectTest {
 
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
 	
 	@Test
 	public void viewSelectTest() {
 		TtOneTableV entity = new TtOneTableV();
 		@SuppressWarnings("unchecked")
-		List<TtOneTableV> list = cService.list( null, entity, BeanUtil.oneWhere( "seq", 1L, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
+		List<TtOneTableV> list = cmService.list( null, entity, BeanUtil.oneWhere( "seq", 1L, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
 		
 		LogUtil.trace( "list.size() = " + list.size() );
 		if( list.size() > 0 ) {

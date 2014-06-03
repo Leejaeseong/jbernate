@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.tt.domain.table.TtOneTable;
@@ -24,7 +24,7 @@ import com.jbernate.tt.domain.table.TtOneTable;
 @Transactional
 public class CrudOneTableTest {
 
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
 	
 	@Test
 	public void crudOneTableTest() {
@@ -42,12 +42,12 @@ public class CrudOneTableTest {
 		for( int i = 0; i < bLen; i++ ) { b[ i ] = 'A'; }
 		entity.settBlob( b );
 	
-		long seq = (Long)cService.create( null, entity );
+		long seq = (Long)cmService.create( null, entity );
 		LogUtil.trace( "Created seq = " + seq );
 		
 		// 조회 ////////////////////////////////////////////////////////////////////////////////
 		@SuppressWarnings("unchecked")
-		List<TtOneTable> list = cService.list( null, entity, BeanUtil.oneWhere( "seq", seq, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
+		List<TtOneTable> list = cmService.list( null, entity, BeanUtil.oneWhere( "seq", seq, WhereBean.Clause.EQ ), BeanUtil.oneOrder( "seq", OrderBean.Type.DESC ) );
 		
 		LogUtil.trace( "list.size() = " + list.size() );
 		if( list.size() > 0 ) {
@@ -55,29 +55,29 @@ public class CrudOneTableTest {
 			
 			// 수정 ////////////////////////////////////////////////////////////////////////////
 			entity.settDate( new Date() );
-			cService.update( null, entity );
+			cmService.update( null, entity );
 		}
 		
 		// 삭제 ////////////////////////////////////////////////////////////////////////////////
-		cService.delete( null, entity );
+		cmService.delete( null, entity );
 	}
 	
 	//@Test
 	public void crudOneTableGetTest() {
-		Object obj = cService.get( null, new TtOneTable( 102L ) );
+		Object obj = cmService.get( null, new TtOneTable( 102L ) );
 	}
 	
 	//@Test
 	public void crudOneTableDeleteTmpTest() {
 		TtOneTable entity = new TtOneTable( 102L );
-		cService.delete( null, entity );
+		cmService.delete( null, entity );
 	}
 	
 	//@Test
 	public void crudOneTableSelectTmpTest() {
 		TtOneTable entity = new TtOneTable();
 		@SuppressWarnings("unchecked")
-		List<TtOneTable> list = cService.list( null, entity );
+		List<TtOneTable> list = cmService.list( null, entity );
 		LogUtil.trace( "size = " + list.size() );
 	}
 }

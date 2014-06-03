@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jbernate.cm.service.CmCrudService;
+import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.LogUtil;
 
 /**
@@ -23,19 +23,19 @@ import com.jbernate.cm.util.LogUtil;
 @Transactional
 public class ManualQuerySelectTest {
 
-	@Autowired CmCrudService cService;
+	@Autowired CmService cmService;
 	
 	@Test
 	public void manualQuerySelectTest() {
 		@SuppressWarnings("unchecked")
-		List<Object> list = cService.queryList( null, "SELECT '테스트 입니다' AS vVarchar, 1 AS seq FROM TtOneTableV" );
+		List<Object> list = cmService.queryList( null, "SELECT '테스트 입니다' AS vVarchar, 1 AS seq FROM com.jbernate.tt.domain.view.TtOneTableV" );
 		
 		LogUtil.trace( "list.size() = " + list.size() );
 		
 		for( int i = 0; i < list.size(); i++ ) {
 			Object[] entity = (Object[])list.get( i );
 			for( int j = 0; j < entity.length; j++ ) {
-				LogUtil.trace( "entity[" + i + "][" + j + "] = "	+ entity[ j ] );			
+				LogUtil.trace( "entity[" + i + "][" + j + "] = " + entity[ j ] );			
 			}			
 		}
 	}
