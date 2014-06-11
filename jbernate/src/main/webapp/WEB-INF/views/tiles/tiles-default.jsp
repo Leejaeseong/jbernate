@@ -15,5 +15,3 @@
 <% if( request.getAttribute( "noLayoutTemplate" ) == null ) { %>
 <t:insertAttribute name="post"/>
 <% } %>
-
-</html>

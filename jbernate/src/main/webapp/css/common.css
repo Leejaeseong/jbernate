@@ -18,3 +18,8 @@ a{text-decoration: none;}
 
 /* input > type=text */
 input[type="text"]{width:500px;}
+
+/* table */
+table{ padding: 0px; border-spacing: 1px; background-color: #969292; width: 100%; }
+table tr .header{ text-align: center; vertical-align: middle; background-color: #F0F3F4; height: 20px; }
+table tr td{ background-color: #FFFFFF; }

@@ -1,5 +1,6 @@
 package com.jbernate.cm.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,8 +109,17 @@ public interface CmDao {
 	 * 조회 : 사용자 정의 쿼리로 직접 조회
 	 * @param request		HttpServletRequest	
 	 * @param query			사용자 직접 쿼리 조회
-	 * @return				List<Object>
+	 * @return				List<Object> : Bean에 매핑되지 않은 순수 Object형태임
 	 */
 	@SuppressWarnings("rawtypes")
 	List queryList( HttpServletRequest request, String query );
+	/**
+	 * 조회 : Native 쿼리로 직접 조회( DB 직접 쿼리 )
+	 * @param request	HttpServletRequest
+	 * @param query		Navie DB 직접 쿼리 : 파라미터 부분은 ":파라미터명" 형태로 붙여야 함
+	 * @param param		파라미터
+	 * @return			List<Object> : Bean에 매핑되지 않은 순수 Object형태임
+	 */
+	@SuppressWarnings("rawtypes")
+	List queryList( HttpServletRequest request, String query, HashMap param );
 }

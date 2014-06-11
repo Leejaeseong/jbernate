@@ -7,15 +7,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ControllerUtil {
 	
-	/**
+	/** Deprecated : getViewName( HttpServletRequest request ) 로 통일, request로 하면 해당 클래스에서 직접호출하지 않고 다른 클래스에서 해당 클래스를 호출하는 경우에도 정합성이 보장되므로 이것보다 나음
 	 * Controller에서 return 하는 view 이름 얻기 
 	 * @param clazz		Class 객체
 	 * @return			ex) com.jbernate.tt.controller.T00002Controller => tt/T0002 반환
-	 */
 	public static String getViewName( Class<?> clazz ) {
 		String[] arr = clazz.getName().split( "\\." );
 		return arr[ 2 ] + "/" + arr[ 4 ].substring( 0, arr[ 4 ].indexOf( "Controller" ) );
 	}
+	 */
 	
 	/**
 	 * URL full path중 return 하는 view 이름 얻기

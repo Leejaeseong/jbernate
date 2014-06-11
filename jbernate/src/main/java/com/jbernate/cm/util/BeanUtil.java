@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 import com.jbernate.cm.bean.OrderBean;
-import com.jbernate.cm.bean.Sb;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.bean.WhereBean.Clause;
 
@@ -58,7 +57,7 @@ public class BeanUtil {
 	}
 	
 	/**
-	 * 공통적으로 모델에 삽입하는 항목 설정
+	 * 공통적으로 모델에 삽입하는 항목 설정 : 해당클래스에서 직접 호출하였을 경우
 	 * @param thiz		호출하는 Class
 	 * @param session	HttpSession
 	 * @param model		Model
@@ -66,14 +65,33 @@ public class BeanUtil {
 	 * @return			공통 정보가 추가된 model
 	 */
 	public static Model getCommonModel(
-			Object thiz
-			, HttpSession session
+			HttpSession session
 			, Model model
 			, HttpServletRequest request ) {
 		
-		model.addAttribute( "pgmId"		, ControllerUtil.getViewName( thiz.getClass() ) );
-		model.addAttribute( "submitUrl"	, "/" + ControllerUtil.getViewName( thiz.getClass() ) + "/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_SUBMIT );
+		model = BeanUtil.getCommonModelPgmId( ControllerUtil.getViewName( request ), model );	// pgmId : 프로그램 ID
+		model = BeanUtil.getCommonModelSubmitUrl( "/" + ControllerUtil.getViewName( request ) + "/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_SUBMIT, model );	// submitUrl : Submit할 주소
 		
 		return model;
 	}
+	
+	/**
+	 * pgmId속성을 Model에 추가
+	 * @param pgmId	model에 삽입할 pgmId 속성
+	 * @param model	Model
+	 * @return		pgmId속성이 삽입된 Model
+	 */
+	public static Model getCommonModelPgmId( String pgmId, Model model ) {
+		return model.addAttribute( "pgmId" , pgmId );
+	}
+	/**
+	 * submitUrl속성을 Model에 추가
+	 * @param pgmId	model에 삽입할 submitUrl 속성
+	 * @param model	Model
+	 * @return		submitUrl속성이 삽입된 Model
+	 */
+	public static Model getCommonModelSubmitUrl( String submitUrl, Model model ) {
+		return model.addAttribute( "submitUrl"	, submitUrl );
+	}
+	
 }

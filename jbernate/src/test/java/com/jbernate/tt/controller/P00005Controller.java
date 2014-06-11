@@ -36,7 +36,7 @@ public class P00005Controller {
 	@Autowired CmService cmService;
 	@Autowired SbValidator sbValidator;
 	
-	/*
+	/* ▣ CmController에 합병하기 위해 선행 테스트 한 소스 입니다.
 	@RequestMapping( value = "/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_LOAD, method = RequestMethod.GET )
 	public String load(	HttpSession session
 						, Model model
@@ -55,12 +55,13 @@ public class P00005Controller {
 		sb.setTtOneTable( ttOneTable );
 		
 		// 모델 공통부분 설정
-		model = BeanUtil.getCommonModel( this, session, model, request );
+		model = BeanUtil.getCommonModel( session, model, request );
 		
 		return ControllerUtil.getViewName( getClass() );
 	}
 	*/
 	
+	/* ▣ CmController에 합병하기 위해 선행 테스트 한 소스 입니다.
 	@RequestMapping( value = "/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_SUBMIT, method = RequestMethod.POST )
 	public String submit(
 			@ModelAttribute  Sb sb
@@ -74,11 +75,12 @@ public class P00005Controller {
 		// 오류 발생 시 load 부분으로 redirect
 		if( result.hasErrors() ){
 			return //"redirect:/" + ControllerUtil.getViewName( getClass() ) + "/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_LOAD;
-					"/" + ControllerUtil.getViewName( getClass() );
+					"/" + ControllerUtil.getViewName( request );
 		}
 		
 		status.setComplete();
 		
-		return ControllerUtil.getViewName( getClass() );
+		return ControllerUtil.getViewName( request );
 	}
+	*/
 }

@@ -43,8 +43,9 @@ public class SbValidator implements Validator{
 		/*
 		TtOneTable ttOneTable = sb.getTtOneTable();
 		if( ttOneTable != null ) {
-			// if( ttOneTable.gettVarchar() == null || ttOneTable.gettVarchar().length() < 10 ) errors.rejectValue( "ttOneTable.tVarchar", "test.test1" );			
+			 if( ttOneTable.gettVarchar() == null || ttOneTable.gettVarchar().length() < 10 ) errors.rejectValue( "ttOneTable.tVarchar", "test.test1" );			
 		}
 		*/
+		
 	}
 }

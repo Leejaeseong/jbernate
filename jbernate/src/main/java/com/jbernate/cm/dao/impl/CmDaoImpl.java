@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Property;
@@ -265,13 +268,45 @@ public class CmDaoImpl implements CmDao{
 	 * 조회 : 사용자 정의 쿼리로 직접 조회
 	 * @param request		HttpServletRequest	
 	 * @param query			사용자 직접 쿼리 조회
-	 * @return				List<Object>
+	 * @return				List<Object> : Bean에 매핑되지 않은 순수 Object형태임
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List queryList( HttpServletRequest request, String query ) {
 		return DbUtil.getHibernateSession( sessionFactory ).createQuery( query ).list();		
 	}
+	/**
+	 * 조회 : Native 쿼리로 직접 조회( DB 직접 쿼리 )
+	 * Query에 .addEntity( 클래스.class )를 하면 객체를 매핑시킬 수 있으나 순수 DB Query 함수용도이므로 생략 함
+	 * @param request	HttpServletRequest
+	 * @param query		Navie DB 직접 쿼리 : 파라미터 부분은 ":파라미터명" 형태로 붙여야 함
+	 * @param param		파라미터
+	 * @return			List<Object> : Bean에 매핑되지 않은 순수 Object형태임
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List queryList( HttpServletRequest request, String query, HashMap param ) {
+		Query q = DbUtil.getHibernateSession( sessionFactory ).createSQLQuery( query );
+		
+		// 파라미터가 있다면 매핑 시작 /////////////////////////////////////////
+		if( param != null ){	
+			Iterator iter = param.keySet().iterator();
+			while( iter.hasNext() ) {
+				Object obj = iter.next();
+				if( param.get( obj ) != null ) {
+					q.setParameter( obj.toString(), param.get( obj ) );
+				}
+			}
+		}
+		// 파라미터가 있다면 매핑 끝 ///////////////////////////////////////////
+		
+		return q.list();
+	}
+	
+	/**▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	 * ▣ 유틸 부분  ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	 * ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	 */
 	
 	/**
 	 * 조회 시 공통으로 처리할 조건절 추가

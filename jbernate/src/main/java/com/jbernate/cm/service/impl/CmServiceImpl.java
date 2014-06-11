@@ -1,5 +1,6 @@
 package com.jbernate.cm.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -139,14 +140,26 @@ public class CmServiceImpl implements CmService{
 		return cmCrudDao.list( request, entity, wbList, obList, cPage, cntPerPage );
 	}
 	/**
-	 * 조회 : 사용자 정의 쿼리로 직접 조회
+	 * 조회 : 사용자 정의 쿼리로 직접 조회( 하이버네이트 문법 쿼리 )
 	 * @param request		HttpServletRequest	
 	 * @param query			사용자 직접 쿼리 조회
-	 * @return				List<Object>
+	 * @return				List<Object> : Bean에 매핑되지 않은 순수 Object형태임
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List queryList( HttpServletRequest request, String query ) {
 		return cmCrudDao.queryList( request, query );
+	}
+	/**
+	 * 조회 : Native 쿼리로 직접 조회( DB 직접 쿼리 )
+	 * @param request	HttpServletRequest
+	 * @param query		Navie DB 직접 쿼리 : 파라미터 부분은 ":파라미터명" 형태로 붙여야 함
+	 * @param param		파라미터
+	 * @return			List<Object> : Bean에 매핑되지 않은 순수 Object형태임
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")	
+	public List queryList( HttpServletRequest request, String query, HashMap param ) {
+		return cmCrudDao.queryList( request, query, param );
 	}
 }

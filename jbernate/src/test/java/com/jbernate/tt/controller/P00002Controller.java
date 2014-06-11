@@ -25,6 +25,6 @@ public class P00002Controller {
 	) {
 		LogUtil.trace( "logger.trace!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
 		
-		return ControllerUtil.getViewName( getClass() );
+		return ControllerUtil.getViewName( request );
 	}
 }

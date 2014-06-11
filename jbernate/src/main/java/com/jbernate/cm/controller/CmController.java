@@ -11,11 +11,15 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 
+import com.jbernate.cm.bean.Sb;
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.ConstUtil;
@@ -23,7 +27,7 @@ import com.jbernate.cm.util.ControllerUtil;
 import com.jbernate.cm.util.DbUtil;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.cm.util.StrUtil;
-import com.jbernate.tt.service.P00005Service;
+import com.jbernate.cm.validator.SbValidator;
 
 /**
  * 공통으로 사용되는 컨트롤러 기능
@@ -35,6 +39,7 @@ public class CmController {
 	@Autowired CmService cmService;
 	@Autowired AutowireCapableBeanFactory factory;
 	@Autowired ApplicationContext appContext;
+	@Autowired SbValidator sbValidator;
 	
 	/**
 	 * 페이지 로딩
@@ -50,18 +55,47 @@ public class CmController {
 			, Model model, HttpServletRequest request 
 		) throws Exception {
 		
-		LogUtil.trace( pgmId + " program : loaded( By BasicController > load method" );
+		LogUtil.trace( pgmId + " program : loaded( By BasicController > load method" );	// Log
 		
-		P00005Service service = (P00005Service)appContext.getBean( P00005Service.class );
-		model = service.load( session, request, model );	
-		
-		//Object sBean = appContext.getBean( Class.forName( "com.jbernate.tt.service.P00005Service" ) );
-		Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) ) );
-		Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, Model.class );
-		model = (Model)m.invoke( sBean, session, request, model );
+		// 해당 프로그램 Service의 load 함수 호출
+		try{
+			Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" ) );
+			Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, Model.class );
+			model = (Model)m.invoke( sBean, session, request, model );
+		}catch( Exception e ) {
+			LogUtil.trace( "Service has not load method" );
+		}
 		
 		// 모델 공통부분 설정
-		model = BeanUtil.getCommonModel( this, session, model, request );
+		model = BeanUtil.getCommonModel( session, model, request );
+		
+		return ControllerUtil.getViewName( request );
+	}
+	
+	/**
+	 * Form Submit
+	 * @param sb		Sb( SessionBean ) : 테이블 및 뷰 정보를 담고 있는 상위 공통 빈
+	 * @param result	Validation 결과 객체
+	 * @param session	HttpSession
+	 * @param status	SessionStatus : Form session
+	 * @param request	HttpServlerRequest
+	 * @return			/domain/pageId 페이지로 submit
+	 */
+	// TODO submit 서비스 호출 및 메시지 리턴 처리
+	@RequestMapping( value = "/{pgmId}/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_SUBMIT, method = RequestMethod.POST )
+	public String submit(
+			@ModelAttribute  Sb sb
+			, BindingResult result
+			, HttpSession session
+			, SessionStatus status
+			, HttpServletRequest request
+	) {
+		sbValidator.validate( sb, result );
+		
+		// 오류 발생 시 load 부분으로 redirect
+		if( result.hasErrors() ){	return "/" + ControllerUtil.getViewName( request );	}
+		
+		status.setComplete();	// Form session clear
 		
 		return ControllerUtil.getViewName( request );
 	}

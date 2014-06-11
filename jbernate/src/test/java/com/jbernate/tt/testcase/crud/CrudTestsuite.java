@@ -10,8 +10,9 @@ import org.junit.runners.Suite.SuiteClasses;
 		CrudOneTableTest.class
 		, ViewSelectTest.class
 		, ManualQuerySelectTest.class
+		, NativeQuerySelectTest.class
 		, Crud11Test.class
-		, Crud1nTest.class
+		, Crud1nTest.class		
 	}
 )
 public class CrudTestsuite {
