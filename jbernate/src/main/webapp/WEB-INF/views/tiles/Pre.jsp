@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html ng-app>
+<html ng-app="jbernateApp">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Content-Script-Type" content="text/javascript" />
@@ -22,14 +22,20 @@
 		<script src="/js/jqgrid-i18n/grid.locale-kr.js" type="text/javascript"></script>
 		<script src="/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 		
-		<!-- angular -->
-		<script src="/js/angular.min.js" type="text/javascript"></script>
-		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
-    	<script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
+		<!-- angularjs > core -->
+		<script src="/js/angular-1.2.17.js" type="text/javascript"></script>
+
+		<!-- angularjs > i18n -->
+		<script src="/js/angular-i18n/angular-locale_ko-kr.js" type="text/javascript"></script>
+
+		<!-- angularjs > bootstrap -->
+		<script src="/js/ui-bootstrap-tpls-0.11.0.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/bootstrap.css" /> 
 		
 		<!-- common -->
 		<link rel="stylesheet" type="text/css" media="screen" href="/css/common.css" />
+		<script src="/js/common.js" type="text/javascript"></script>		
 		
 	</head>
 	
-	<body>
+	<body ng-controller="bodyCtrl">
