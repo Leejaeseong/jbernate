@@ -11,11 +11,13 @@
 %>
 
 <div>
-	<button type="checkbox" class="btn btn-primary" ng-click="toggleContentView()">Toggle</button>
+	<button type="checkbox" class="btn btn-primary" ng-click="toggleContentView()">{{toggleText}}</button>
 	
-	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewExpression">Expression</button>
-	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewAlert">Alert</button>
-	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewDatepicker">Datepicker</button>
+	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewCont.viewExpression" 	ng-init="viewCont.viewExpression=false">Expression</button>
+	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewCont.viewAlert" 		ng-init="viewCont.viewAlert=false">Alert</button>
+	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewCont.viewDatepicker"	ng-init="viewCont.viewDatepicker=false">Datepicker</button>
+	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewCont.viewModal"		ng-init="viewCont.viewModal=false">Modal</button>
+	<button type="button" class="btn btn-primary" btn-checkbox ng-model="viewCont.viewPoup"			ng-init="viewCont.viewPopup=false">Popup</button>
 </div>
 
 <table ng-controller="tableCtrl" border="1">
@@ -26,14 +28,14 @@
 	<td class="header" width="40%">비고</td>
 </tr>
 
-<tr ng-show="viewExpression">
+<tr ng-show="viewCont.viewExpression">
 	<td><%=no++%></td>
 	<td>Expression</td>
 	<td>1 + 1 = {{ 1 + 1 }}</td>
 	<td ng-non-bindable>1 + 1 = {{ 1 + 1 }}</td>
 </tr>
 
-<tr ng-show="viewAlert">
+<tr ng-show="viewCont.viewAlert">
 	<td><%=no++%></td>
 	<td>Alert</td>
 	<td>
@@ -45,7 +47,7 @@
 	<td ng-non-bindable>&nbsp;</td>
 </tr>
 
-<tr ng-show="viewDatepicker">
+<tr ng-show="viewCont.viewDatepicker">
 	<td><%=no++%></td>
 	<td>Datepicker</td>
 	<td>
@@ -84,24 +86,84 @@
 	<td ng-non-bindable>&nbsp;</td>
 </tr>
 
+<tr ng-show="viewCont.viewModal">
+	<td><%=no++%></td>
+	<td>Modal</td>
+	<td>
+		<div ng-controller="modalCtrl">
+		<%-- 
+		    <script type="text/ng-template" id="P00007.html">
+        		<div class="modal-header">
+            		<h3 class="modal-title"><b>I'm a modal!</b></h3>
+        		</div>
+        		<div class="modal-body">
+            		<ul>
+                		<li ng-repeat="item in items">
+                    		<a ng-click="selected.item = item">{{ item }}</a>
+                		</li>
+            		</ul>
+            		Selected: <b>{{ selected.item }}</b>
+				</div>
+        		<div class="modal-footer">
+            		<button class="btn btn-success" ng-click="ok()">OK</button>
+            		<button class="btn btn-primary" ng-click="more()">More</button>
+            		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        		</div>
+    		</script>
+		--%>		
+
+		    <button class="btn btn-default" ng-click="open()">Open me!</button>
+		    <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
+		    <button class="btn btn-default" ng-click="open('sm')">Small modal</button>
+		    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+		</div>
+	</td>
+	<td ng-non-bindable>
+		중첩 Modal 생성 시 Confirm 값 받아오는 부분이 이상해 질 수 있으므로<br/>
+		단일 Alert또는 Confirm 용도로만 사용( Outside window 클릭하여 취소 가능 )
+	</td>
+</tr>
+
+<tr ng-show="viewCont.viewPopup">
+	<td><%=no++%></td>
+	<td>Popup</td>
+	<td>
+		
+	</td>
+	<td ng-non-bindable>&nbsp;</td>
+</tr>
+
 </table>
 
 <script type="text/javascript">
-	// body에서 공통으로 사용할 사항 정의
+	/* ▣ [ Body ] ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣ */
 	app.controller( "bodyCtrl", function( $scope, $log ) {
-		$scope.toggleContentView = function() {
-			$log.debug( $scope.viewAlert );
-		};
-	} );
+		$scope.toggleText = "Open all";
+		$scope.isExpand = false;	// 전체 보기 상태값 저장
+
+		$scope.testList = [];
+		
+		// 전체 보기 토글
+		$scope.toggleContentView = function() {	
+			angular.forEach( $scope.viewCont, function( value, key ) {
+				$scope.viewCont[key] = !$scope.isExpand;
+				$scope.testList.push( value );
+			} );
+			
+			$scope.isExpand = !$scope.isExpand;
+			
+			if( $scope.isExpand ) 	$scope.toggleText = "Close all";
+			else					$scope.toggleText = "Open all";
+
+			$log.debug( $scope.title );
+			
+		}; // end 전체 보기 토글
+		
+	} ); // end app.controller( "bodyCtrl", function( $scope, $log ) {
 	
-	// table에서 공통으로 사용할 사항 정의
+	/* ▣ [ Table ] ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣ */
 	app.controller( "tableCtrl", function( $scope ) {
 	} );
-	
-	/* ▣ [ Button expand toggle ] ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣ */
-	function btnExpToggle( $scope ) {
-		alert( $scope.viewCont );
-	}
 	
 	/* ▣ [ Alert ] ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣ */
 	app.controller( "alertCtrl", function( $scope ) {
@@ -156,4 +218,52 @@
 		$scope.formats = ['yyyy-MM-dd', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 		$scope.format = $scope.formats[0];
 	};	
+
+	/* ▣ [ Modal ] ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣ */
+	var modalCtrl = function ($scope, $modal, $log) {
+
+	  	$scope.items = ['item1', 'item2', 'item3'];
+	
+	  	$scope.open = function (size) {
+	
+		    var modalInstance = $modal.open({
+					templateUrl: '/tt/P00007/load'
+				,	controller: ModalInstanceCtrl
+				,	size: size
+				,	resolve: {
+						items: function () {
+							return $scope.items;
+						}
+					}
+				//,	backdrop : 'static'	// prevent click event out of modal
+			});
+		
+		    modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+		    }, function () {
+				$log.info('Modal dismissed at: ' + new Date());	// include cancel
+		    });
+		};
+	};
+	
+	// Please note that $modalInstance represents a modal window (instance) dependency.
+	// It is not the same as the $modal service used above.
+	var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+		$scope.items = items;
+	  	$scope.selected = {
+	    	item: $scope.items[0]
+  		};
+
+		$scope.ok = function () {
+			$modalInstance.close($scope.selected.item);
+		};
+	
+		$scope.more = function () {
+			$modalInstance.close($scope.selected.item);
+		};
+		
+		$scope.cancel = function () {
+		    $modalInstance.dismiss('cancel');
+		};
+	};
 </script>

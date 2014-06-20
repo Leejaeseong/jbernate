@@ -63,7 +63,7 @@ public class CmController {
 			Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, Model.class );
 			model = (Model)m.invoke( sBean, session, request, model );
 		}catch( Exception e ) {
-			LogUtil.trace( "Service has not load method" );
+			LogUtil.trace( "Service has not method of load" );
 		}
 		
 		// 모델 공통부분 설정

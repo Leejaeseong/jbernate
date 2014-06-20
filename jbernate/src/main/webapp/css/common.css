@@ -12,9 +12,7 @@ input,select,button{vertical-align:middle}
 img{vertical-align:top}
 em,address{font-style:normal}
 label,button{cursor:pointer}
-hr{display:none}
-h1,h2,h3,h4,.displaynone{display:	none}
-a{text-decoration: none;}
+a{text-decoration: none;cursor: pointer;}
 
 /* input > type=text */
 input[type="text"]{width:500px;}
