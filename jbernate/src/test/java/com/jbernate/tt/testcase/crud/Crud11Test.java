@@ -72,6 +72,6 @@ public class Crud11Test {
 		// ※ 1:1 관계에서 master insert => slave insert => slave.get( 현재 세션 Master insert 객체 )은 실패한다, 굳이 필요하다면 list로 값 얻기가 가능
 		// 그러나 다른 세션의 값은 조회 가능( slave.get( new Tt11master( 기존에 삽입되어있는 DB seq ) )
 		slave1 = (Tt11Slave1)cmService.get( null, new Tt11Slave1( new Tt11Master( 4L ) ) );
-		LogUtil.trace( "slave1 get 기존데이터 = " + slave1.getSeq().getSeq() );
+		if( slave1 != null ) LogUtil.trace( "slave1 get 기존데이터 = " + slave1.getSeq().getSeq() );
 	}
 }

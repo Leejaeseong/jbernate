@@ -12,5 +12,5 @@
         		<div class="modal-footer">
             		<button class="btn btn-success" ng-click="ok()">OK</button>
             		<button class="btn btn-primary" ng-click="more()">More</button>
-            		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            		<button class="btn btn-warning" ng-click="cancel()" >Cancel</button>            		
         		</div>

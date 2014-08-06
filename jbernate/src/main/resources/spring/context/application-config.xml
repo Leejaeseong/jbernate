@@ -33,7 +33,7 @@
 	<!-- Datasource : DB 접속 설정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@192.168.56.101:1521:XE" />
+		<property name="url" value="jdbc:oracle:thin:@192.168.56.102:1521:XE" />
 		<property name="username" value="phan98" />
 		<property name="password" value="phan98" />
 	</bean>
@@ -57,10 +57,10 @@
 				-->
 
 				<!--  
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.hbm2ddl.auto">validate</prop>
-				-->
 				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				-->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				
 				<!-- Hibernate 구성 프로퍼티들
 				+===================================+=======================================================================================================================================================================================================+
