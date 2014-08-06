@@ -1,0 +1,17 @@
+<html ng-app="myApp">  
+    <head lang="ko">
+        <meta charset="utf-8">
+        <title>Getting Started With ngGrid Example</title>  
+        <link rel="stylesheet" type="text/css" href="../../css/ng-grid.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/test/Grid1.css" />        
+        <script type="text/javascript" src="../../js/resource/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="../../js/resource/angular-1.2.17.js"></script>
+        <script type="text/javascript" src="../../js/resource/ng-grid.debug.js"></script>
+        <script type="text/javascript" src="../../js/controller/test/Grid2.js"></script>
+    </head>
+    <body ng-controller="MyCtrl">
+        <div class="gridStyle" ng-grid="gridOptions">
+        </div>
+        <input type="button" value="저장" ng-click="saveClick();"/>
+    </body>
+</html>
