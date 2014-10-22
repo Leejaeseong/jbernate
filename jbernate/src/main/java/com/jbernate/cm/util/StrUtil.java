@@ -47,6 +47,16 @@ public class StrUtil {
 
 	/**
 	 * 자바 변수명 규칙으로 변환
+	 * @param str	대상 문자열
+	 * @return		ex1 : delim = "_" ) "aa_bb_cc" 	=> "aaBbCc"
+	 * 				ex2 : delim = "_" ) "aa_bb_"	=> "aaBb"
+	 * 				ex3 : delim = "_" ) "_"			=> ""
+	 */
+	public static String makeJavaNameRule( String str ) {
+		return makeJavaNameRule( str, "_" );
+	}
+	/**
+	 * 자바 변수명 규칙으로 변환
 	 * @param str	변환할 대상 문자열
 	 * @param delim	구분자
 	 * @return		ex1 : delim = "_" ) "aa_bb_cc" 	=> "aaBbCc"
@@ -75,16 +85,6 @@ public class StrUtil {
 			}
 		}
 		return rVal;		
-	}
-	/**
-	 * 자바 변수명 규칙으로 변환
-	 * @param str	대상 문자열
-	 * @return		ex1 : delim = "_" ) "aa_bb_cc" 	=> "aaBbCc"
-	 * 				ex2 : delim = "_" ) "aa_bb_"	=> "aaBb"
-	 * 				ex3 : delim = "_" ) "_"			=> ""
-	 */
-	public static String makeJavaNameRule( String str ) {
-		return makeJavaNameRule( str, "_" );
 	}
 	
 	/**

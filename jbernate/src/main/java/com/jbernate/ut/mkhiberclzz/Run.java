@@ -1,0 +1,134 @@
+package com.jbernate.ut.mkhiberclzz;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.jbernate.cm.service.CmService;
+import com.jbernate.cm.util.ChkUtil;
+import com.jbernate.cm.util.StrUtil;
+
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration(locations = { "classpath:spring/context/application-config.xml" } )
+@TransactionConfiguration( transactionManager = "transactionManager", defaultRollback = false )
+@Transactional
+public class Run {
+
+	@Autowired 	ApplicationContext context;	
+	@Autowired	CmService cmService;
+	
+	@Value( "${mkjava.db_name}" )		String tDbName;		// 데이터베이스명
+	@Value( "${mkjava.target_path}" )	String tPath;		// 소스 만들 위치
+	@Value( "${mkjava.prefix}" )		String tPrefix;		// 소스 Prefix	
+	@Value( "${mkjava.postfix}" )		String tPostfix;	// 소스 Postfix	
+	@Value( "${mkjava.mkdb_arr}" )		String tMkdbArr;	// 대상 데이터베이스	
+	
+	private List<Object> 	list = null;
+	private File			file;
+	private BufferedWriter	bw;
+	private String			dbNm = "";
+	private boolean			isFirstTable = false;
+	
+	@Test
+	public void run() {
+		if( tDbName.equals( "Oracle" ) ) {
+			Oracle oracle = new Oracle( cmService, tPath, tPrefix, tMkdbArr );
+			list = oracle.getList();
+		}
+
+		if( ChkUtil.chkBlank( list ) ) {
+			for( int i = 0; i < list.size(); i++ ) {
+				Object[] ent = (Object[])list.get( i );
+				
+				isFirstTable = !dbNm.equals( ent[ 0 ] );
+				dbNm = ent[ 0 ].toString();
+				
+				try{
+					// 디렉토리가 없다면 생성
+					if( i == 0 ) {
+						file = new File( tPath + File.separator + tPrefix.replace( ".", File.separator ) + File.separator + dbNm.toLowerCase() + File.separator + tPostfix.replace( ".", File.separator ) );
+						if ( !file.exists() ) file.mkdirs();
+					}
+					
+					// DB명이 다르면 파일 생성
+					if( isFirstTable ) {
+						// 처음이 아니라면 파일 마지막 부분 생성
+						if( i > 0 ){
+							bw = MkTail.mkCont( bw, ent, dbNm, tPrefix, tPostfix );
+							bw.flush();
+							bw.close();
+						}
+						
+						// ex) com.jbernate.tt.domain.table.테이블명
+						file = new File( tPath + File.separator + tPrefix.replace( ".", File.separator ) + File.separator + dbNm.toLowerCase() + File.separator + tPostfix.replace( ".", File.separator ) + File.separator + StrUtil.makeJavaNameRule( ent[ 1 ].toString().toLowerCase() ) + ".java" );
+						try {	bw = new BufferedWriter( new FileWriter( file ) );	} catch (IOException e) {	e.printStackTrace();	}
+						
+						// 파일 첫 부분 생성
+						bw = MkHead.mkCont( bw, ent, dbNm, tPrefix, tPostfix );
+					}
+					
+					// ▣ 본문 생성 시작 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣---------
+					
+					// Single PK
+					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "0" ) ){
+						MkSinglePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix );					
+					}
+					// OneToOne PK
+					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "2" ) ){
+						MkOneToOnePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix );					
+					}
+					// ManyToOne
+					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "1" ) ){
+						MkManyToOne.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );					
+					}
+					// 숫자
+					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "NUMBER") ){
+						MkNumber.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );					
+					}
+					// 문자
+					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().indexOf( "VARCHAR" ) != -1 ){
+						MkString.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
+					}
+					// CLOB
+					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "CLOB" ) ){
+						MkCLob.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
+					}
+					// BLOB
+					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "CLOB" ) ){
+						MkBLob.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
+					}
+					// DATE
+					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "DATE" ) ){
+						MkDate.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
+					}
+					
+					// ▣ 본문 생성 끝 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣---------
+					
+					// 배열의 끝이라면 파일 마지막 부분 생성
+					if( i + 1 == list.size() ){
+						bw = MkTail.mkCont( bw, ent, dbNm, tPrefix, tPostfix );
+						bw.flush();
+						bw.close();
+					}
+					
+				}catch( IOException e ) {
+					e.printStackTrace();
+					if( bw != null ) try{ bw.close(); }catch( IOException ee ){ ee.printStackTrace(); }
+				}
+			}// end of for( int i = 0; i < list.size(); i++ )
+		}// end of if( ChkUtil.chkBlank( list ) )
+	}// end of public void run()
+		
+}

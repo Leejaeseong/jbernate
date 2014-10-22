@@ -13,24 +13,22 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jbernate.cm.util.ConstUtil;
 
+/**
+ * 
+ */
 @Entity( name = "com.jbernate.tt.domain.table.Tt1nMaster" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 @Table( name = "TT_1N_MASTER" )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 @SequenceGenerator( name = "TT_1N_MASTER_S", sequenceName = "TT_1N_MASTER_S", initialValue = 1, allocationSize = 1 )
 public class Tt1nMaster implements Serializable{
-
 	private static final long serialVersionUID = 1L;
-	
+
 	public Tt1nMaster(){};
-	
-	public Tt1nMaster( Long seq ){
-		this.seq = seq;
-	}
+	public Tt1nMaster( Long seq ){	this.seq = seq;	}
 	
 	// Sequence
 	@Id
@@ -98,13 +96,9 @@ public class Tt1nMaster implements Serializable{
 	@Column( name = "MOD_IP", columnDefinition = "VARCHAR2(64) NULL", length = 64 )
 	private String modIp;
 
-	public Long getSeq() {
-		return seq;
-	}
+	public Long getSeq() {	return seq;	}
 
-	public void setSeq(Long seq) {
-		this.seq = seq;
-	}
+	public void setSeq(Long seq) {	this.seq = seq;	}
 
 	public String gettVarchar() {
 		return tVarchar;

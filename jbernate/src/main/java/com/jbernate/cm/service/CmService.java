@@ -95,7 +95,7 @@ public interface CmService {
 	List list( HttpServletRequest request, Object entity, List<WhereBean> wbList, List<OrderBean> obList );
 	/**
 	 * 조회
-	 * @param request		HttpServletRequest	
+	 * @param request		HttpServletRequest
 	 * @param entity		객체
 	 * @param wbList		조건문 목록 List<WhereBean>
 	 * @param obList		정렬 목록 List<OrderBean>
