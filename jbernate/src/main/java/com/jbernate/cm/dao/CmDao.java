@@ -55,7 +55,7 @@ public interface CmDao {
 	List list( HttpServletRequest request, Object entity );
 	/**
 	 * 조회
-	 * @param request		HttpServletRequest	
+	 * @param request		HttpServletRequest
 	 * @param entity		객체
 	 * @param cPage			현재 페이지 번호
 	 * @param cntPerPage	한 페이지 당 데이터 출력 개수

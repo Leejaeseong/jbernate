@@ -3,7 +3,7 @@ package com.jbernate.tt.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.jbernate.cm.controller.CmController;
+import com.jbernate.cm.controller.BasicController;
 import com.jbernate.cm.util.ConstUtil;
 
 /**
@@ -12,5 +12,5 @@ import com.jbernate.cm.util.ConstUtil;
  */
 @Controller
 @RequestMapping( value = ConstUtil.PATH_CONTROLLER_TEST )
-public class TtCmController extends CmController{	
+public class TtController extends BasicController{	
 }

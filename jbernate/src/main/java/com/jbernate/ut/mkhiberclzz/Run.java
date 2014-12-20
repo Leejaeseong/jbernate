@@ -31,14 +31,15 @@ public class Run {
 	
 	@Value( "${mkjava.db_name}" )		String tDbName;		// 데이터베이스명
 	@Value( "${mkjava.target_path}" )	String tPath;		// 소스 만들 위치
-	@Value( "${mkjava.prefix}" )		String tPrefix;		// 소스 Prefix	
+	@Value( "${source.prefix}" )		String tPrefix;		// 소스 Prefix	
 	@Value( "${mkjava.postfix}" )		String tPostfix;	// 소스 Postfix	
-	@Value( "${mkjava.mkdb_arr}" )		String tMkdbArr;	// 대상 데이터베이스	
+	@Value( "${mkjava.mkdb_arr}" )		String tMkdbArr;	// 대상 데이터베이스
 	
 	private List<Object> 	list = null;
 	private File			file;
 	private BufferedWriter	bw;
 	private String			dbNm = "";
+	private String			tabNm = "";
 	private boolean			isFirstTable = false;
 	
 	@Test
@@ -52,17 +53,17 @@ public class Run {
 			for( int i = 0; i < list.size(); i++ ) {
 				Object[] ent = (Object[])list.get( i );
 				
-				isFirstTable = !dbNm.equals( ent[ 0 ] );
-				dbNm = ent[ 0 ].toString();
+				isFirstTable = !tabNm.equals( ent[ 1 ] );
+				
+				dbNm 	= ent[ 0 ].toString();
+				tabNm 	= ent[ 1 ].toString();
 				
 				try{
 					// 디렉토리가 없다면 생성
-					if( i == 0 ) {
-						file = new File( tPath + File.separator + tPrefix.replace( ".", File.separator ) + File.separator + dbNm.toLowerCase() + File.separator + tPostfix.replace( ".", File.separator ) );
-						if ( !file.exists() ) file.mkdirs();
-					}
+					file = new File( tPath + File.separator + tPrefix.replace( ".", File.separator ) + File.separator + dbNm.toLowerCase() + File.separator + tPostfix.replace( ".", File.separator ) );
+					if ( !file.exists() ) file.mkdirs();
 					
-					// DB명이 다르면 파일 생성
+					// 테이블명이 다르면 파일 생성
 					if( isFirstTable ) {
 						// 처음이 아니라면 파일 마지막 부분 생성
 						if( i > 0 ){
@@ -72,7 +73,7 @@ public class Run {
 						}
 						
 						// ex) com.jbernate.tt.domain.table.테이블명
-						file = new File( tPath + File.separator + tPrefix.replace( ".", File.separator ) + File.separator + dbNm.toLowerCase() + File.separator + tPostfix.replace( ".", File.separator ) + File.separator + StrUtil.makeJavaNameRule( ent[ 1 ].toString().toLowerCase() ) + ".java" );
+						file = new File( tPath + File.separator + tPrefix.replace( ".", File.separator ) + File.separator + dbNm.toLowerCase() + File.separator + tPostfix.replace( ".", File.separator ) + File.separator + StrUtil.makeJavaFileNameRule( ent[ 1 ].toString().toLowerCase() ) + ".java" );
 						try {	bw = new BufferedWriter( new FileWriter( file ) );	} catch (IOException e) {	e.printStackTrace();	}
 						
 						// 파일 첫 부분 생성
@@ -82,12 +83,12 @@ public class Run {
 					// ▣ 본문 생성 시작 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣---------
 					
 					// Single PK
-					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "0" ) ){
+					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "1" ) ){
 						MkSinglePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix );					
 					}
 					// OneToOne PK
 					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "2" ) ){
-						MkOneToOnePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix );					
+						MkOneToOnePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );					
 					}
 					// ManyToOne
 					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "1" ) ){

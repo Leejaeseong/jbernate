@@ -10,8 +10,10 @@ public class WhereBean {
 	/**
 	 * 조건 타입
 	 * EQ 			: equal
-	 * GE 			: greater then
-	 * LE 			: lesser then
+	 * GT 			: greater then
+	 * LT 			: lesser then
+	 * GE 			: greater equal
+	 * LE 			: lesser equal
 	 * LIKEANY 		: like ( MatchMode.ANYWHERE )
 	 * LIKEPRE 		: like ( MatchMode.START )
 	 * LIKEPOST 	: like ( MatchMode.END )
@@ -21,7 +23,7 @@ public class WhereBean {
 	 * BETWEEN		: between colVal.split( "," )[ 0 ] and colVal.split( "," )[ 1 ]
 	 */
 	private String clause;	
-	public static enum Clause{ EQ, GE, LE, LIKEANY, LIKEPRE, LIKEPOST, IN, ISNULL, ISNOTNULL };
+	public static enum Clause{ EQ, GT, LT, GE, LE, LIKEANY, LIKEPRE, LIKEPOST, IN, ISNULL, ISNOTNULL, BETWEEN };
 
 	public WhereBean( String colNm, Object colVal, Clause c ) {
 		this.colNm 	= colNm;

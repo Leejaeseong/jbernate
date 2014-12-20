@@ -338,6 +338,9 @@ public class CmDaoImpl implements CmDao{
 			}else if( wb.getClause().equals( "LIKEANY" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.ANYWHERE ) 												);
 			}else if( wb.getClause().equals( "LIKEPRE" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.START ) 												);
 			}else if( wb.getClause().equals( "LIKEPOST" ) ){	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.END ) 													);
+			}else if( wb.getClause().equals( "LT" ) ){ 			criteria.add( Restrictions.lt( 			wb.getColNm(), wb.getColVal() ) 																			);
+			}else if( wb.getClause().equals( "GT" ) ){ 			criteria.add( Restrictions.gt( 			wb.getColNm(), wb.getColVal() ) 																			);
+			}else if( wb.getClause().equals( "LE" ) ){ 			criteria.add( Restrictions.le( 			wb.getColNm(), wb.getColVal() ) 																			);
 			}else if( wb.getClause().equals( "GE" ) ){ 			criteria.add( Restrictions.ge( 			wb.getColNm(), wb.getColVal() ) 																			);
 			}else if( wb.getClause().equals( "IN" ) ) {			criteria.add( Restrictions.in( 			wb.getColNm(), (Object[])wb.getColVal() ) 																	);
 			}else if( wb.getClause().equals( "ISNULL" ) ){ 		criteria.add( Restrictions.isNull( 		wb.getColNm() ) 																							);

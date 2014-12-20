@@ -46,6 +46,21 @@ public class StrUtil {
 	}
 
 	/**
+	 * 자바 파일명 규칙으로 변환
+	 * @param str	대상 문자열
+	 * @return		ex1 : delim = "_" ) "aa_bb_cc" 	=> "AaBbCc"
+	 * 				ex2 : delim = "_" ) "aa_bb_"	=> "AaBb"
+	 * 				ex3 : delim = "_" ) "_"			=> ""
+	 */
+	public static String makeJavaFileNameRule( String str ) {
+		str = makeJavaNameRule( str.toLowerCase(), "_" );
+		if( str != null && str.length() > 0 ) {
+			str = str.substring( 0, 1 ).toUpperCase() + str.substring( 1 );
+		}
+		return str;
+	}
+	
+	/**
 	 * 자바 변수명 규칙으로 변환
 	 * @param str	대상 문자열
 	 * @return		ex1 : delim = "_" ) "aa_bb_cc" 	=> "aaBbCc"
@@ -53,7 +68,7 @@ public class StrUtil {
 	 * 				ex3 : delim = "_" ) "_"			=> ""
 	 */
 	public static String makeJavaNameRule( String str ) {
-		return makeJavaNameRule( str, "_" );
+		return makeJavaNameRule( str.toLowerCase(), "_" );
 	}
 	/**
 	 * 자바 변수명 규칙으로 변환

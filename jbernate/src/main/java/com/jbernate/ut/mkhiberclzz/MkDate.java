@@ -12,7 +12,7 @@ public class MkDate {
 		bw.write( "\t//" + ent[ 4 ] );	bw.newLine();
 		bw.write( "\t@Column( name = \"" + ent[ 3 ] + "\" )" );	bw.newLine();
 		bw.write( "\t@Temporal(TemporalType.DATE)" );	bw.newLine();
-		bw.write( "\t@DateTimeFormat(pattern=ConstantUtil.dateFormat)" );	bw.newLine();
+		bw.write( "\t@DateTimeFormat(pattern=ConstUtil.FORMAT_DATE)" );	bw.newLine();
 		bw = MkVarGetSet.mkCont(bw, ent, dbNm, tPrefix, tPostfix, tDbName);
 		bw.newLine();
 		

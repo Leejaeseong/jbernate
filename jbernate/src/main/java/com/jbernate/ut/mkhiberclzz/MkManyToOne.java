@@ -20,8 +20,8 @@ public class MkManyToOne {
 		
 		bw.write( "\t//" + ent[ 4 ] );	bw.newLine();
 		bw.write( "\t@ManyToOne" );	bw.newLine();
-		bw.write( "\t@JoinColumn( name = \"" + ent[ 3 ] + "\", referencedColumnName = \"" + rCol + "\" columnDefinition = \"NUMBER(16) NOT NULL UNIQUE\", precision = 16, scale = 0 )" );	bw.newLine();
-		bw = MkVarGetSet.mkCont(bw, ent, dbNm, tPrefix, tPostfix, tDbName);
+		bw.write( "\t@JoinColumn( name = \"" + ent[ 3 ] + "\", referencedColumnName = \"" + rCol + "\", columnDefinition = \"NUMBER(16) NOT NULL UNIQUE\" )" );	bw.newLine();
+		bw = MkVarGetSet.mkFkCont(bw, ent, dbNm, tPrefix, tPostfix, tDbName, rTab, rCol);
 		bw.newLine();
 		
 		return bw;

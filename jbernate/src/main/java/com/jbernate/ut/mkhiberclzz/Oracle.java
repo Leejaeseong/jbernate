@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.jbernate.cm.service.CmService;
-import com.jbernate.cm.util.LogUtil;
 
 public class Oracle {
 
@@ -32,10 +31,10 @@ public class Oracle {
 				+ "	,	IS_PK"			// 배열 11	( Y/N )
 				+ "	,	R_CNT"			// 배열 12	( 2 = 1:1, 1 = 1:N, 0 = 관계없음 )
 				+ "	,	REF_TAB_N_COL "	// 배열 13	( TT_TEST_B,SEQ 즉 테이블,컬럼 형태 )
-				+ "	FROM CM_MKJAVA_META_VI "
+				+ "	FROM MN_MKJAVA_META_VI "
 				+ "	WHERE :p1 LIKE '%' || DB_NM || '%'", hash );
 		
-		LogUtil.trace( "list.size() = " + list.size() );
+		//LogUtil.trace( "list.size() = " + list.size() );
 		
 		/*for( int i = 0; i < list.size(); i++ ) {
 			Object[] entity = (Object[])list.get( i );

@@ -2,6 +2,8 @@ package com.jbernate.cm.util;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 public class ChkUtil {
 	
 	/**
@@ -22,6 +24,17 @@ public class ChkUtil {
 			System.out.println( "정의되지 않은 타입" );
 			return false;
 		}		
+	}
+	
+	/**
+	 * 세션으로 로그인 상태인지 체크
+	 * @param session
+	 * @return	true 	: 로그인 된 상태
+	 * 			fasle 	: 로그인 되지 않은 상태
+	 */
+	public static boolean chkLogin( HttpSession session ) {
+		if( session != null && session.getAttribute( "loginId" ) != null && !session.getAttribute( "loginId" ).equals( "" ) ) return true;
+		else return false;
 	}
 	
 }

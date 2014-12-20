@@ -1,0 +1,24 @@
+/*
+  만들어 져 있지 않은 동의어를 추가로 생성함
+  실행 USER : MN
+*/
+DECLARE CURSOR C_LIST 
+    IS
+    SELECT OWNER, TABLE_NAME
+    FROM ALL_TABLES 
+    WHERE TABLE_NAME IN (
+      SELECT TABLE_NAME FROM ALL_TABLES
+      MINUS
+      SELECT TABLE_NAME FROM ALL_SYNONYMS
+    )
+    AND LENGTH( OWNER ) = 2 AND TABLE_NAME LIKE OWNER || '_%'
+    ;   
+  BEGIN
+
+    FOR C_L IN C_LIST LOOP
+    
+      EXECUTE IMMEDIATE 'CREATE SYNONYM ' || C_L.TABLE_NAME || ' FOR ' || C_L.OWNER || '.' || C_L.TABLE_NAME;
+      
+    END LOOP;    
+
+  END;

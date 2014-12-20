@@ -20,9 +20,6 @@
 		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
     
-	<!-- 설정파일 경로 지정 -->
-	<context:property-placeholder location="classpath:/property/*.properties" />
-	
 	<!-- 트랜잭션을 annotation 기반으로 제어가능, 즉 클래스와 메소드에 @Transactional 사용 가능  -->
 	<tx:annotation-driven />
 	
@@ -34,7 +31,7 @@
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@192.168.56.101:1521:XE" />
-		<property name="username" value="MAIN" />
+		<property name="username" value="MN" />
 		<property name="password" value="1234" />
 	</bean>
 	

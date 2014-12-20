@@ -2,6 +2,8 @@ package com.jbernate.cm.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * Controller에서 필요한 Util
  */
@@ -38,4 +40,5 @@ public class ControllerUtil {
 		String[] arr = request.getRequestURI().split( "/" );
 		return ConstUtil.ID_PACKAGE_PREFIX + "." + arr[ arr.length - 3 ] + "." + domain + "." + arr[ arr.length - 2 ];
 	}
+	
 }
