@@ -17,16 +17,6 @@
         </param-value>
     </context-param>
     
-    <!-- 설정파일 경로 지정
-		 application-config.xml에만 지정할 경우 Controller에서 사용이 안되고, mvc-config.xml에만 지정할 경우 Controller에서만 사용이 가능하니
-		 web.xml에서 지정 함 -->
-    <context-param>
-    <param-name>propertiesLocation</param-name>
-        <param-value>
-        	classpath:/property/*.properties
-        </param-value>
-    </context-param>
-    
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

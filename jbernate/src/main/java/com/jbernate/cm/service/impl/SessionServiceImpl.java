@@ -2,7 +2,6 @@ package com.jbernate.cm.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,10 +14,7 @@ import org.springframework.ui.Model;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.bean.WhereBean.Clause;
 import com.jbernate.cm.dao.CmDao;
-import com.jbernate.cm.domain.table.CmUserMgr;
 import com.jbernate.cm.service.SessionService;
-import com.jbernate.cm.util.ArrUtil;
-import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.SecuUtil;
 
 /**
@@ -48,6 +44,7 @@ public class SessionServiceImpl implements SessionService{
 		wbList.add( new WhereBean( "accEdDt", new Date(), Clause.GE ) );
 		wbList.add( new WhereBean( "useYn", "1", Clause.EQ ) );
 				
+		/*
 		List rList = dao.list( req, new CmUserMgr(), wbList );
 		if( ArrUtil.chkBlank( rList ) ) {	// 로그인 성공
 			CmUserMgr user = (CmUserMgr)rList.get( 0 );
@@ -66,6 +63,7 @@ public class SessionServiceImpl implements SessionService{
 		}else {
 			model.addAttribute( ConstUtil.FORMAT_MODEL_SUCCESS, false );
 		}
+		*/
 		
 		return model;
 	}

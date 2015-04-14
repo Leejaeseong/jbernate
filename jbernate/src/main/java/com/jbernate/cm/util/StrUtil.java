@@ -21,9 +21,12 @@ public class StrUtil {
 	 * @param str	대상 문자
 	 * @return		null 일 경우 "" 으로 치환
 	 */
-	public static String nvl( String str ) {
-		if( str == null ) 	return "";
-		else				return str;
+	public static String nvl( Object str ) {
+		if( str == null ){
+			return "";
+		} else{
+			return str.toString();
+		}
 	}
 	
 	/**

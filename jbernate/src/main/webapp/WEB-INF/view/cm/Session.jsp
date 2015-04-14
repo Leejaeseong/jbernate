@@ -1,3 +1,4 @@
+<%@page import="com.jbernate.cm.util.StrUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
 <%@page import="com.jbernate.cm.util.ChkUtil"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -17,8 +18,7 @@
 	<input type="submit" value="로그인" />
 	</form>
 	
-	<br/>사용자명 = 
-	<%=session.getAttribute( "userNm" )%>
+	<br/>사용자명 = <%=StrUtil.nvl( session.getAttribute( "userNm" ) )%>
 
 </body>
 </html>
