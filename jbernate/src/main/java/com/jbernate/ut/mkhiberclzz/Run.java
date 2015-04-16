@@ -18,11 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.ChkUtil;
+import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.StrUtil;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations = { "classpath:spring/context/application-config.xml" } )
-@TransactionConfiguration( transactionManager = "transactionManager", defaultRollback = false )
+@TransactionConfiguration( transactionManager = "transactionManager" )
 @Transactional
 public class Run {
 
@@ -44,11 +45,12 @@ public class Run {
 	
 	@Test
 	public void run() {
-		if( tDbName.equals( "Oracle" ) ) {
-			Oracle oracle = new Oracle( cmService, tPath, tPrefix, tMkdbArr );
-			list = oracle.getList();
+		if( tDbName.equals( ConstUtil.ID_DBTYPE_ORACLE ) ) {			// 오라클
+			list = new Oracle( cmService, tPath, tPrefix, tMkdbArr ).getList();
+		}else if( tDbName.equals( ConstUtil.ID_DBTYPE_SQLServer ) ) {	// SQL Server
+			list = new SQLServer( cmService, tPath, tPrefix, tMkdbArr ).getList();
 		}
-
+		
 		if( ChkUtil.chkBlank( list ) ) {
 			for( int i = 0; i < list.size(); i++ ) {
 				Object[] ent = (Object[])list.get( i );
@@ -83,35 +85,37 @@ public class Run {
 					// ▣ 본문 생성 시작 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣---------
 					
 					// Single PK
-					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "1" ) ){
+					// PK이고, 관계 테이블/컬럼이 미존재
+					// PK는 아니지만 SEQ인 경우(VIEW)도 여기에서 생성
+					if( ( ent[ 11 ].toString().equals( "Y" ) || ent[ 3 ].toString().toUpperCase().equals( "SEQ" ) ) && !StrUtil.chkBlank( ent[ 13 ] ) ){	
 						MkSinglePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix );					
 					}
 					// OneToOne PK
-					if( ent[ 11 ].toString().equals( "Y" ) && ent[ 12 ].toString().equals( "2" ) ){
+					if( ent[ 11 ].toString().equals( "Y" ) && StrUtil.chkBlank( ent[ 13 ] ) ){	// PK이고, 관계 테이블/컬럼이 존재
 						MkOneToOnePk.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );					
 					}
 					// ManyToOne
-					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "1" ) ){
+					if( ent[ 11 ].toString().equals( "N" ) && StrUtil.chkBlank( ent[ 13 ] ) ){	// PK아니고, 관계 테이블/컬럼이 존재
 						MkManyToOne.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );					
 					}
 					// 숫자
-					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "NUMBER") ){
+					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ( ent[ 5 ].toString().equals( "NUMBER") || ent[ 5 ].toString().equals( "NUMERIC") ) ){
 						MkNumber.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );					
 					}
 					// 문자
-					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().indexOf( "VARCHAR" ) != -1 ){
+					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ent[ 5 ].toString().indexOf( "VARCHAR" ) != -1 ){	// NVARCHAR, VARCHAR2포함
 						MkString.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
 					}
 					// CLOB
-					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "CLOB" ) ){
+					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ent[ 5 ].toString().equals( "CLOB" ) ){
 						MkCLob.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
 					}
 					// BLOB
-					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "CLOB" ) ){
+					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ent[ 5 ].toString().equals( "BLOB" ) ){
 						MkBLob.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
 					}
 					// DATE
-					if( ent[ 11 ].toString().equals( "N" ) && ent[ 12 ].toString().equals( "0" ) && ent[ 5 ].toString().equals( "DATE" ) ){
+					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ent[ 5 ].toString().equals( "DATE" ) ){
 						MkDate.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
 					}
 					

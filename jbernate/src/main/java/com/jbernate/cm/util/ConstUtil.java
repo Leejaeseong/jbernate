@@ -21,6 +21,11 @@ public class ConstUtil {
 	
 	/** 식별자 > 패키지 > prefix */
 	public static final String ID_PACKAGE_PREFIX		= "com.jbernate";
+	
+	/** 식별자 > DB종류 > 오라클 */
+	public static final String ID_DBTYPE_ORACLE			= "Oracle";
+	/** 식별자 > DB종류 > SQL Server */
+	public static final String ID_DBTYPE_SQLServer		= "SQLServer";
 
 	// ▣ 형식 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	/** 형식 > 날짜 */
