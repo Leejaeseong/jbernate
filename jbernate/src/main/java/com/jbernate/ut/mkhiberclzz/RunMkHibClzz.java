@@ -25,7 +25,7 @@ import com.jbernate.cm.util.StrUtil;
 @ContextConfiguration(locations = { "classpath:spring/context/application-config.xml" } )
 @TransactionConfiguration( transactionManager = "transactionManager" )
 @Transactional
-public class Run {
+public class RunMkHibClzz {
 
 	@Autowired 	ApplicationContext context;	
 	@Autowired	CmService cmService;

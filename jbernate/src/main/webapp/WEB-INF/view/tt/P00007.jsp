@@ -1,3 +1,6 @@
+<%--
+	기능 : Angular js 기본 테스트	
+--%>
 				<div class="modal-header">
             		<h3 class="modal-title"><b>I'm a modal!</b></h3>
         		</div>

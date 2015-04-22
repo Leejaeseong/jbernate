@@ -8,7 +8,7 @@
 
 <html>
 	<head>
-		<%@include file="./WEB-INF/view/cm/IncludeHeader.jsp" %>
+		<%@include file="./WEB-INF/view/cm/P00010.jsp" %>
 		
 		<%-- 세션없으면 로그인 페이지로 분기 --%>
 		<%-- 

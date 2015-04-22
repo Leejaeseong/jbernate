@@ -18,12 +18,11 @@ public class MkUtil {
 	 * @param Type
 	 */
 	public static String ConvertDataType( String tDbName, String type ) {
-		if( tDbName.equals( "Oracle" ) ) {
-			if( type.equals( "NUMBER" ) ) return "BigDecimal";
-			else if( type.equals( "BLOB" ) ) return "byte[]";
-			else if( type.equals( "DATE" ) ) return "Date";
-			else return "String";
-		}else return "String";		
+		if( type.equals( "NUMBER" ) || type.equals( "NUMERIC" ) ) return "BigDecimal";
+		else if( type.equals( "BLOB" ) ) return "byte[]";
+		else if( type.equals( "DATE" ) ) return "Date";
+		else return "String";
+		
 	}
 	
 }
