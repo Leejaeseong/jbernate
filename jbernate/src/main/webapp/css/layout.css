@@ -1,10 +1,105 @@
 @charset "utf-8";
 
-/* header */
-header{ width:100%;height:5%; }
-nav{ width: 100%; height: 5%; }
+/* page header */
+body header{ 
+	/*
+	background-image		: none;
+    background-repeat		: repeat;
+    background-attachment	: scroll;
+    */
+    
+    position				: fixed;
+    top						: 0px;
+    
+	width					: 100%;
+	height					: 106px;
+ 	text-align				: left;
+ 	padding-top				: 10px;
+ 	padding-left			: 10px;
+ 	padding-right			: 10px;
+ 	vertical-align			: middle;
+ 	position				: fixed; 
+ 	
+ 	border-left-style 		: none;
+ 	border-right-style 		: none;
+ 	border-top-style 		: none;
+ 	border-bottom-color		: #eeeeee;
+	border-bottom-width		: 1px;
+	border-bottom-style		: solid;
+}
+nav{ 
+	width			: 100%; 
+	height			: 0%;
+}
 
-#section-menu{ width: 15%; height:85%; float: left;}
-#section-content{ width: 85%; height:85%; float: right;}
+#section-menu{ 
+	/*
+	background-image		: none;
+    background-repeat		: repeat;
+    background-attachment	: scroll;
+    */
+    position				: fixed;
+    top						: 106px;
+    padding-top 			: 10px;
+    padding-left			: 10px;
+ 	padding-right			: 10px;
+    
+	width					: 312px; 
+	height					: 100%; 
+	float					: left;
+	
+	border-left-style 		: none;
+ 	border-bottom-style		: none;
+ 	border-top-style 		: none;
+ 	border-right-color		: #eeeeee;
+	border-right-width		: 1px;
+	border-right-style		: solid;
+}
+#section-content{
+	/*
+	background-image		: none;
+    background-repeat		: repeat;
+    background-attachment	: scroll;
+    */
+    position				: fixed;
+    top						: 106px;
+    left					: 312px;
+    padding-left			: 17px;
+ 	padding-right			: 10px;
+ 	padding-top				: 10px;
+ 	padding-bottom			: 10px;
+ 	overflow				: none;
+ 	
+	width					: 85%; 
+	height					: 100%; 
+	float					: right; 
+	
 
-footer{ width: 100%; height: 5%; }
+}
+
+footer{
+    /*
+    background-image		: none;
+    background-repeat		: repeat;
+    background-attachment	: scroll;
+    */
+    
+    width					: 100%;
+    
+    position				: fixed;
+    bottom					: 0px;
+    padding-left			: 10px;
+    padding-right			: 10px;
+    padding-top				: 17px;
+    
+    height					: 50px;
+    text-align				: center;    
+    background-color		: #ffffff;
+    
+    border-left-style 		: none;
+ 	border-bottom-style		: none;
+ 	border-right-style 		: none;
+ 	border-top-color		: #eeeeee;
+	border-top-width		: 1px;
+	border-top-style		: solid;
+}

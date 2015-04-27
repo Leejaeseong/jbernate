@@ -17,11 +17,12 @@
 		<div class="gridStyle" ng-grid="gridOptions" ng-controller="P00008.ctl.grd.test1">
         </div>	
         
+        
+	<!-- 
 		<div ng-controller="P00008.ctl.alert.test1">
 		  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 		  <button class='btn btn-default' ng-click="addAlert()">Add Alert</button>
 		</div>
-	
-	
+	 -->
 	
 <%@ include file="../cm/P00009.jsp"%>	<!-- Footer -->

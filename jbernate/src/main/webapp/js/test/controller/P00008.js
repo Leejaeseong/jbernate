@@ -1,5 +1,3 @@
-var app = angular.module('rootApp',['ui.bootstrap','ngGrid']);
-
 app.controller('P00008.ctl.grd.test1', function($scope) {
     $scope.myData = [{name: "Moroni", age: 50},
                      {name: "Tiancum", age: 43},
@@ -9,6 +7,7 @@ app.controller('P00008.ctl.grd.test1', function($scope) {
     $scope.gridOptions = { data: 'myData' };
 });
 
+/*
 angular.module('rootApp').controller('P00008.ctl.alert.test1', function ($scope) {
   $scope.alerts = [
     { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
@@ -23,3 +22,4 @@ angular.module('rootApp').controller('P00008.ctl.alert.test1', function ($scope)
     $scope.alerts.splice(index, 1);
   };
 });
+*/

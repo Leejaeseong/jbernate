@@ -5,10 +5,12 @@
 <%@ page import="com.jbernate.cm.util.*"%>
 
 	<nav>
+		<!--		  
 		<div style="float: left; width: 100px;">공통업무</div>
 		<div style="float: left; width: 100px;">본부운영</div>
 		<div style="float: left; width: 100px;">물류운영</div>
 		<div style="float: left; width: 100px;">점포운영</div>
 		<div style="float: left; width: 100px;">POS관리</div>
 		<div style="float: left; width: 100px;">시스템관리</div>
+		-->
 	</nav>
