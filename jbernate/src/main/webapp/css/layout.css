@@ -8,7 +8,9 @@ body header{
     background-attachment	: scroll;
     */
     
+    /*
     position				: fixed;
+    */
     top						: 0px;
     
 	width					: 100%;
@@ -18,7 +20,6 @@ body header{
  	padding-left			: 10px;
  	padding-right			: 10px;
  	vertical-align			: middle;
- 	position				: fixed; 
  	
  	border-left-style 		: none;
  	border-right-style 		: none;
@@ -38,22 +39,27 @@ nav{
     background-repeat		: repeat;
     background-attachment	: scroll;
     */
+    
+    /*
     position				: fixed;
     top						: 106px;
-    padding-top 			: 10px;
-    padding-left			: 10px;
+    */
+    padding-top 			: 17px;
+    padding-left			: 0px;
  	padding-right			: 10px;
     
-	width					: 312px; 
+	width					: 295px; 
 	height					: 100%; 
 	float					: left;
 	
+	/*
 	border-left-style 		: none;
  	border-bottom-style		: none;
  	border-top-style 		: none;
  	border-right-color		: #eeeeee;
 	border-right-width		: 1px;
 	border-right-style		: solid;
+	*/
 }
 #section-content{
 	/*
@@ -61,18 +67,42 @@ nav{
     background-repeat		: repeat;
     background-attachment	: scroll;
     */
+    
+    /*
     position				: fixed;
     top						: 106px;
     left					: 312px;
+    */
+    
+    float					: left;
+    
     padding-left			: 17px;
  	padding-right			: 10px;
- 	padding-top				: 10px;
+ 	padding-top				: 17px;
  	padding-bottom			: 10px;
- 	overflow				: none;
  	
+ 	border-left-style 		: none;
+ 	border-bottom-style		: none;
+ 	border-top-style 		: none;
+ 	border-right-style 		: none;
+ 	border-left-color		: #eeeeee;
+	border-left-width		: 1px;
+	border-left-style		: solid;
+ 	min-height				: 577px; 
+ 	/*
+ 	padding-left			: 350px;
+ 	padding-right			: 10px;
+ 	padding-top				: 120px;
+ 	padding-bottom			: 10px;
+ 	*/
+ 	
+ 	/*overflow				: none;*/
+ 	
+ 	/*
 	width					: 85%; 
 	height					: 100%; 
-	float					: right; 
+	float					: right;
+	*/ 
 	
 
 }
@@ -86,7 +116,11 @@ footer{
     
     width					: 100%;
     
+    /*
     position				: fixed;
+    */
+    
+    clear					: left;
     bottom					: 0px;
     padding-left			: 10px;
     padding-right			: 10px;

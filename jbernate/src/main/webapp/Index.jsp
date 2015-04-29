@@ -8,16 +8,20 @@
 
 <html>
 	<head>
-		<%@include file="./WEB-INF/view/cm/P00010.jsp" %>
+	
+		<%@include file="./WEB-INF/view/cm/Header.jsp" %>
 		
 		<%-- 세션없으면 로그인 페이지로 분기 --%>
 		<%-- 
 		<%=!ChkUtil.chkLogin( session ) ? "<meta http-equiv=\"refresh\" content=\"0; url=./Login\"></meta>" : ""%>
 		--%>
 		<%=
+		/*
 			!ChkUtil.chkLogin( session ) 
 				?	"<meta http-equiv=\"refresh\" content=\"0; url=cm/Session/load\"></meta>" 
 				: 	"<meta http-equiv=\"refresh\" content=\"0; url=cm/Main/load\"></meta>"
+		*/
+		"<meta http-equiv=\"refresh\" content=\"0; url=cm/Main/load\"></meta>"
 		%>
 		
 		

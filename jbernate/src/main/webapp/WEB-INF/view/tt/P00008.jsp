@@ -5,9 +5,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.jbernate.cm.util.*"%>
-<%@ include file="../cm/P00010.jsp"%>	<!-- Header -->
-<%@ include file="../cm/P00011.jsp"%>	<!-- Top navigator -->
-<%@ include file="../cm/P00012.jsp"%>	<!-- Left navigator -->
+<%@ include file="../cm/Header.jsp"%>		<!-- Header -->
+<%@ include file="../cm/Nav.jsp"%>			<!-- Top navigator -->
+<%@ include file="../cm/SectionMenu.jsp"%>	<!-- Left navigator -->
 
 	<!-- 개별 Resource -->
 	<script type="text/javascript" src="../../js/test/controller/P00008.js"></script>
@@ -17,6 +17,11 @@
 		<div class="gridStyle" ng-grid="gridOptions" ng-controller="P00008.ctl.grd.test1">
         </div>	
         
+        <div class="gridStyle" ng-grid="gridOptions" ng-controller="P00008.ctl.grd.test1">
+        </div>
+        
+        <div class="gridStyle" ng-grid="gridOptions" ng-controller="P00008.ctl.grd.test1">
+        </div>
         
 	<!-- 
 		<div ng-controller="P00008.ctl.alert.test1">
@@ -25,4 +30,4 @@
 		</div>
 	 -->
 	
-<%@ include file="../cm/P00009.jsp"%>	<!-- Footer -->
+<%@ include file="../cm/Footer.jsp"%>	<!-- Footer -->

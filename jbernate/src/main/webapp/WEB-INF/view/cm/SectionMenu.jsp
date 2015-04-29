@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.jbernate.cm.util.*"%>
 
-	<section id="section-menu">
+	<section id="section-menu" class="east-back">
 		
 		<!-- 작업 중 -->
 		<!-- http://www.bootply.com/zwcoG0xEfZ -->
@@ -191,10 +191,10 @@
 								<label label-default="" class="tree-toggle nav-header"><span class="fa fa-medkit"></span> Master</label>
 									<ul class="nav tree">
 										<li>
-											<a href="#"><span class="fa fa-university"></span> 팀관리</a>
+											<a href="#Test1"><span class="fa fa-university"></span> 팀관리</a>
 										</li>
 										<li>
-											<a href="#"><span class="fa fa-user"></span> 직원관리</a>
+											<a href="#Test2"><span class="fa fa-user"></span> 직원관리</a>
 										</li>
 										<li>
 											<a href="#"><span class="fa fa-users"></span> 제품그룹관리</a>
