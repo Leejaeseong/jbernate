@@ -1,4 +1,4 @@
-package com.jbernate.mundi.domain.table;
+package com.jbernate.cm.domain.table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,28 +22,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jbernate.cm.util.ConstUtil;
 
-@Entity( name = "com.jbernate.mundi.domain.table.Test1" )
-@Table( name = "TEST_1" )
-@SequenceGenerator( name = "TEST_1_S", initialValue = 1, allocationSize = 1 )
-public class Test1 implements Serializable{
+@Entity( name = "com.jbernate.cm.domain.table.CmPgmMgr" )
+@Table( name = "CM_PGM_MGR" )
+@SequenceGenerator( name = "CM_PGM_MGR_S", sequenceName = "CM_PGM_MGR_S",  initialValue = 1, allocationSize = 1 )
+public class CmPgmMgr implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	public Test1(){};
-	public Test1( BigDecimal seq ){	this.seq = seq;	}
-
-	//Sequence
-	@Id
-	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "TEST_1_S" )
-	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
-	private BigDecimal seq;
-	public BigDecimal getSeq() {	return seq;	}
-	public void setSeq(BigDecimal seq) {	this.seq = seq;	}
-
-	//
-	@Column( name = "ENG_USER_NM", length = 128, nullable = true ) 
-	private String engUserNm;
-	public String getEngUserNm() {	return engUserNm;	}
-	public void setEngUserNm(String engUserNm) {	this.engUserNm = engUserNm;	}
+	public CmPgmMgr(){};
+	public CmPgmMgr( BigDecimal seq ){	this.seq = seq;	}
 
 	//
 	@Column( name = "INS_DT" )
@@ -52,6 +38,14 @@ public class Test1 implements Serializable{
 	private Date insDt;
 	public Date getInsDt() {	return insDt;	}
 	public void setInsDt(Date insDt) {	this.insDt = insDt;	}
+
+	//Sequence
+	@Id
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "CM_PGM_MGR_S" )
+	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
+	private BigDecimal seq;
+	public BigDecimal getSeq() {	return seq;	}
+	public void setSeq(BigDecimal seq) {	this.seq = seq;	}
 
 	//
 	@Column( name = "INS_ID", length = 30, nullable = true ) 
@@ -96,5 +90,17 @@ public class Test1 implements Serializable{
 	private String updIp;
 	public String getUpdIp() {	return updIp;	}
 	public void setUpdIp(String updIp) {	this.updIp = updIp;	}
+
+	//
+	@Column( name = "PGM_NM", length = 128, nullable = true ) 
+	private String pgmNm;
+	public String getPgmNm() {	return pgmNm;	}
+	public void setPgmNm(String pgmNm) {	this.pgmNm = pgmNm;	}
+
+	//
+	@Column( name = "REMK", length = 256, nullable = true ) 
+	private String remk;
+	public String getRemk() {	return remk;	}
+	public void setRemk(String remk) {	this.remk = remk;	}
 
 }

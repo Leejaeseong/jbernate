@@ -36,7 +36,7 @@ public class MkHead {
 		bw.write( "import com.jbernate.cm.util.ConstUtil;" );	bw.newLine();	bw.newLine();
 		bw.write( "@Entity( name = \"" + tPrefix + "." + dbNm.toLowerCase() + "." + tPostfix + "." + DbUtil.getEntityName( ent[ 1 ].toString() ) + "\" )" );	bw.newLine();
 		bw.write( "@Table( name = \"" + ent[ 1 ] + "\" )" );	bw.newLine();
-		bw.write( "@SequenceGenerator( name = \"" + ent[ 1 ] + "_S\", initialValue = 1, allocationSize = 1 )" );	bw.newLine();
+		bw.write( "@SequenceGenerator( name = \"" + ent[ 1 ] + "_S\", sequenceName = \"" + ent[ 1 ] + "_S\",  initialValue = 1, allocationSize = 1 )" );	bw.newLine();
 		bw.write( "public class " + DbUtil.getEntityName( ent[ 1 ].toString() ) + " implements Serializable{" );	bw.newLine();
 		bw.write( "\tprivate static final long serialVersionUID = 1L;" );	bw.newLine();	bw.newLine();
 		bw.write( "\tpublic " + DbUtil.getEntityName( ent[ 1 ].toString() ) + "(){};" );	bw.newLine();

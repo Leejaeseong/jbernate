@@ -20,7 +20,7 @@ public class MkUtil {
 	public static String ConvertDataType( String tDbName, String type ) {
 		if( type.equals( "NUMBER" ) || type.equals( "NUMERIC" ) ) return "BigDecimal";
 		else if( type.equals( "BLOB" ) ) return "byte[]";
-		else if( type.equals( "DATE" ) ) return "Date";
+		else if( type.equals( "DATE" ) || type.equals( "DATETIME" ) ) return "Date";
 		else return "String";
 		
 	}

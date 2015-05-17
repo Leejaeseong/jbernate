@@ -1,4 +1,4 @@
-package com.jbernate.mundi.domain.table;
+package com.jbernate.cm.domain.table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,34 +22,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jbernate.cm.util.ConstUtil;
 
-@Entity( name = "com.jbernate.mundi.domain.table.Test2" )
-@Table( name = "TEST_2" )
-@SequenceGenerator( name = "TEST_2_S", initialValue = 1, allocationSize = 1 )
-public class Test2 implements Serializable{
+@Entity( name = "com.jbernate.cm.domain.table.CmUsermenuMap" )
+@Table( name = "CM_USERMENU_MAP" )
+@SequenceGenerator( name = "CM_USERMENU_MAP_S", sequenceName = "CM_USERMENU_MAP_S",  initialValue = 1, allocationSize = 1 )
+public class CmUsermenuMap implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	public Test2(){};
-	public Test2( BigDecimal seq ){	this.seq = seq;	}
-
-	//Sequence
-	@Id
-	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "TEST_2_S" )
-	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
-	private BigDecimal seq;
-	public BigDecimal getSeq() {	return seq;	}
-	public void setSeq(BigDecimal seq) {	this.seq = seq;	}
-
-	//
-	@Column( name = "ENG_USER_NM", length = 128, nullable = true ) 
-	private String engUserNm;
-	public String getEngUserNm() {	return engUserNm;	}
-	public void setEngUserNm(String engUserNm) {	this.engUserNm = engUserNm;	}
-
-	//
-	@Column( name = "TEST_TEXT", length = -1, nullable = true ) 
-	private String testText;
-	public String getTestText() {	return testText;	}
-	public void setTestText(String testText) {	this.testText = testText;	}
+	public CmUsermenuMap(){};
+	public CmUsermenuMap( BigDecimal seq ){	this.seq = seq;	}
 
 	//
 	@Column( name = "INS_DT" )
@@ -58,6 +38,13 @@ public class Test2 implements Serializable{
 	private Date insDt;
 	public Date getInsDt() {	return insDt;	}
 	public void setInsDt(Date insDt) {	this.insDt = insDt;	}
+
+	//
+	@ManyToOne
+	@JoinColumn( name = "MENU_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
+	private CmMenuMgr menuSeq;
+	public CmMenuMgr getMenuSeq() {	return menuSeq;	}
+	public void setMenuSeq(CmMenuMgr menuSeq) {	this.menuSeq = menuSeq;	}
 
 	//
 	@Column( name = "INS_ID", length = 30, nullable = true ) 
@@ -102,5 +89,20 @@ public class Test2 implements Serializable{
 	private String updIp;
 	public String getUpdIp() {	return updIp;	}
 	public void setUpdIp(String updIp) {	this.updIp = updIp;	}
+
+	//
+	@ManyToOne
+	@JoinColumn( name = "USER_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
+	private CmUserMgr userSeq;
+	public CmUserMgr getUserSeq() {	return userSeq;	}
+	public void setUserSeq(CmUserMgr userSeq) {	this.userSeq = userSeq;	}
+
+	//Sequence
+	@Id
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "CM_USERMENU_MAP_S" )
+	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
+	private BigDecimal seq;
+	public BigDecimal getSeq() {	return seq;	}
+	public void setSeq(BigDecimal seq) {	this.seq = seq;	}
 
 }

@@ -13,6 +13,10 @@ public class ConstUtil {
 	public static final String PATH_CONTROLLER_CM	= "/cm";
 	
 	// ▣ 식별자 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
+	
+	/** 식별자 > 사이트 > 먼디파마 */
+	public static final String ID_SITE_MUNDI			= "1001";
+	
 	/** 식별자 > DB > Jbernate 본인 객체 */
 	public static final String ID_DB_OBJECTOWN			= "jbernate";
 	

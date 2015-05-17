@@ -1,4 +1,4 @@
-package com.jbernate.mundi.domain.table;
+package com.jbernate.cm.domain.table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,9 +22,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.jbernate.cm.util.ConstUtil;
 
-@Entity( name = "com.jbernate.mundi.domain.table.MnMkjavaMetaVi" )
+@Entity( name = "com.jbernate.cm.domain.table.MnMkjavaMetaVi" )
 @Table( name = "MN_MKJAVA_META_VI" )
-@SequenceGenerator( name = "MN_MKJAVA_META_VI_S", initialValue = 1, allocationSize = 1 )
+@SequenceGenerator( name = "MN_MKJAVA_META_VI_S", sequenceName = "MN_MKJAVA_META_VI_S",  initialValue = 1, allocationSize = 1 )
 public class MnMkjavaMetaVi implements Serializable{
 	private static final long serialVersionUID = 1L;
 

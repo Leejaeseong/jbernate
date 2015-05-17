@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.ChkUtil;
 import com.jbernate.cm.util.ConstUtil;
+import com.jbernate.cm.util.LogUtil;
 import com.jbernate.cm.util.StrUtil;
 
 @RunWith( SpringJUnit4ClassRunner.class )
@@ -115,7 +116,7 @@ public class RunMkHibClzz {
 						MkBLob.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
 					}
 					// DATE
-					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ent[ 5 ].toString().equals( "DATE" ) ){
+					if( ent[ 11 ].toString().equals( "N" ) && !StrUtil.chkBlank( ent[ 13 ] ) && ent[ 5 ].toString().indexOf( "DATE" ) != -1 ){	// DATE, DATETIME 포함
 						MkDate.mkCont( bw, ent, dbNm, tPrefix, tPostfix, tDbName );
 					}
 					

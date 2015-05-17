@@ -101,10 +101,10 @@ public class CmDaoImpl implements CmDao{
 		if( request == null ) return entity;
 		Method m = null;
 		try {			
-			m = entity.getClass().getDeclaredMethod( "setCreDate", new Date().getClass() );		m.invoke( entity, new Date() );											// 생성일 설정
-			m = entity.getClass().getDeclaredMethod( "setCreId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 생성자 설정 
-			m = entity.getClass().getDeclaredMethod( "setCreObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );						// 생성객체 설정
-			m = entity.getClass().getDeclaredMethod( "setCreIp", new String().getClass() );		m.invoke( entity, request.getRemoteAddr() );							// 생성자 IP 설정
+			m = entity.getClass().getDeclaredMethod( "setInsDt", new Date().getClass() );		m.invoke( entity, new Date() );											// 생성일 설정
+			m = entity.getClass().getDeclaredMethod( "setInsId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 생성일 설정
+			m = entity.getClass().getDeclaredMethod( "setInsObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );							// 생성객체 설정
+			m = entity.getClass().getDeclaredMethod( "setInsObj", new String().getClass() );	m.invoke( entity, request.getRemoteAddr() );							// 생성자 IP 설정
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.warn( "Common create column is not exist");
 		}
@@ -120,10 +120,10 @@ public class CmDaoImpl implements CmDao{
 		if( request == null ) return entity;
 		Method m = null;
 		try {			
-			m = entity.getClass().getDeclaredMethod( "setModDate", new Date().getClass() );		m.invoke( entity, new Date() );											// 수정일 설정
-			m = entity.getClass().getDeclaredMethod( "setModId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 수정자 설정
-			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );						// 수정객체 설정
-			m = entity.getClass().getDeclaredMethod( "setModIp", new String().getClass() );		m.invoke( entity, request.getRemoteAddr() );							// 수정자 IP 설정
+			m = entity.getClass().getDeclaredMethod( "setModDt", new Date().getClass() );		m.invoke( entity, new Date() );											// 수정일 설정
+			m = entity.getClass().getDeclaredMethod( "setModId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 수정일 설정
+			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );							// 수정객체 설정
+			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, request.getRemoteAddr() );							// 수정자 IP 설정
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.warn( "Common update column is not exist");
 		}

@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,9 @@ public class BasicController {
 	public String list( 
 			@PathVariable( "pgmId" ) String pgmId
 			, HttpSession session
-			, Model model, HttpServletRequest request 
+			, Model model
+			, HttpServletRequest request 
+			, HttpServletResponse response 
 		) throws Exception {
 		
 		LogUtil.trace( pgmId + " program : loaded( By BasicController > load method )" );	// Log
@@ -60,8 +63,8 @@ public class BasicController {
 		// 해당 프로그램 Service의 load 함수 호출
 		try{
 			Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" ) );
-			Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, Model.class );
-			model = (Model)m.invoke( sBean, session, request, model );
+			Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class );
+			model = (Model)m.invoke( sBean, session, request, response, model );
 		}catch( Exception e ) {
 			LogUtil.trace( "Service( " + ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" + ") has not method of load" );
 		}
@@ -92,6 +95,7 @@ public class BasicController {
 			, SessionStatus status
 			, Model model
 			, HttpServletRequest request
+			, HttpServletResponse response
 	) {
 		sbValidator.validate( sb, result );
 		
@@ -101,8 +105,8 @@ public class BasicController {
 		// 해당 프로그램 Service의 Submit 함수 호출
 		try{
 			Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" ) );
-			Method m = sBean.getClass().getDeclaredMethod( "submit", HttpSession.class, HttpServletRequest.class, Model.class, String.class );
-			model = (Model)m.invoke( sBean, session, request, model, submitType );
+			Method m = sBean.getClass().getDeclaredMethod( "submit", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class, String.class );
+			model = (Model)m.invoke( sBean, session, request, response, model, submitType );
 		}catch( Exception e ) {
 			e.printStackTrace();
 			LogUtil.trace( "Service( " + ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" + " ) has not method of submit" );
@@ -130,6 +134,7 @@ public class BasicController {
 			, @RequestParam( value = "viewNm", required = false ) 	String viewNm
 			, Model model
 			, HttpServletRequest request 
+			, HttpServletResponse response
 		) throws Exception{
 		
 		LogUtil.trace( pgmId + " program : loaded( By BasicController > list method" );

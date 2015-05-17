@@ -18,7 +18,7 @@
 		<%=
 		/*
 			!ChkUtil.chkLogin( session ) 
-				?	"<meta http-equiv=\"refresh\" content=\"0; url=cm/Session/load\"></meta>" 
+				?	"<meta http-equiv=\"refresh\" content=\"0; url=cm/Login/load\"></meta>" 
 				: 	"<meta http-equiv=\"refresh\" content=\"0; url=cm/Main/load\"></meta>"
 		*/
 		"<meta http-equiv=\"refresh\" content=\"0; url=cm/Main/load\"></meta>"
