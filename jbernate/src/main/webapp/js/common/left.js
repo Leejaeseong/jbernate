@@ -7,5 +7,9 @@ function leftMenuController( $scope, $location ) {
 	    } else {
 	      return "";
 	    }
-	};	
+	};
+	
+	/** 권한에 따른 메뉴 숨김 */
+	$scope.conIsAdmin = con_is_admin;
+
 }

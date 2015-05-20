@@ -7,7 +7,7 @@ var app			= angular.module('rootApp', [ 'ui.bootstrap','ngGrid', 'ngRoute', 'ngR
 app.config(function ($routeProvider, $httpProvider) {	
 	$routeProvider	//$routeProvider의 when 메소드를 이용하면 특정 URL에 해당하는 라우트를 설정한다. 이때 라우트 설정객체를 전달하는데 <ng-view>태그에 삽입할 탬플릿에 해당하는 url을 설정객체의 templateUrl 속성으로 정의한다.
 		.when('/Main', {templateUrl: '/template/Main.html'})
-		.when('/Test1', {templateUrl: '/template/test/Test1.html'})
+		.when('/Team', {templateUrl: '/template/mp/Team.html'})
 	    .when('/Test2', {templateUrl: '/template/test/Test2.html', controller: 'userListCtrl'})	//라우트 설정객체에 controller 속성을 통하여 해당 화면에 연결되는 컨트롤러 이름을 설정할 수 있다.
 	    .otherwise({redirectTo: '/Main'});	//otherwise 메소드를 통하여 브라우저의 URL이 $routeProivder에서 정의되지 않은 URL일 경우에 해당하는 설정을 할 수 있다.
 
@@ -29,7 +29,39 @@ app.config(function ($routeProvider, $httpProvider) {
 		email : 'jess@gmail.com',
 		regDate : '2012-03-12'
 	}];
-});
+}).controller('ctrlTeamMgr',function($scope, $http) {	// 팀관리 컨트롤러
+	$scope.gridTeamMgr = {
+				data: 'dataTeamMgr'
+			, 	enablePinning: true
+			,	columnDefs: [{ field: "pgmNm", width: 120, pinned: true },
+			                 { field: "remk", width: 120 }
+							]
+			
+	};
+	
+	$http.post('../../mp/P00009/test.json').success(function(data, status, headers, config){
+		
+		$scope.dataTeamMgr = data.viewData;
+		
+	}).error(function(data, status, headers, config) {
+	    alert( msg_err_load_data );
+	});
+	
+	/*
+	$http.get('https://api.github.com/users/mralexgray/repos').success(function(data) {
+        $scope.persons = data;
+    });
+
+    $scope.gridOptions = { data: 'persons',
+      columnDefs: [
+      {field: 'name', displayName: 'Name'},
+      {field: 'url', displayName: 'Url'}
+      ]
+    };
+	*/
+	
+})
+;
 
 /** 로딩 인터셉터 선언 */
 app.factory('globalLodingInterceptor', function ($q, $window) {

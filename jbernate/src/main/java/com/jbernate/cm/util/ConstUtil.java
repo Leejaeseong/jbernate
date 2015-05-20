@@ -12,6 +12,9 @@ public class ConstUtil {
 	/** 컨트롤러 PATH > 공통 */
 	public static final String PATH_CONTROLLER_CM	= "/cm";
 	
+	/** 컨트롤러 PATH > 먼디파마 */
+	public static final String PATH_CONTROLLER_MP	= "/mp";
+	
 	// ▣ 식별자 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	
 	/** 식별자 > 사이트 > 먼디파마 */
@@ -30,7 +33,7 @@ public class ConstUtil {
 	public static final String ID_DBTYPE_ORACLE			= "Oracle";
 	/** 식별자 > DB종류 > SQL Server */
 	public static final String ID_DBTYPE_SQLServer		= "SQLServer";
-
+	
 	// ▣ 형식 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	/** 형식 > 날짜 */
 	public static final String FORMAT_DATE						= "yyyy-MM-dd";
@@ -56,4 +59,5 @@ public class ConstUtil {
 	
 	/** 제약 > Loop 횟수 Max값 limit */
 	public static final int LIMIT_LOOP_CNT	= 100;
+
 }

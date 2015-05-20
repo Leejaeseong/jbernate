@@ -56,7 +56,7 @@ public class LoginServiceImpl implements LoginService{
 			CmUserMgr user = (CmUserMgr)rList.get( 0 );
 			
 			// 세션에 정보 저장
-			sess.setAttribute( "roleSeq", user.getRoleSeq() );
+			sess.setAttribute( "roleSeq", user.getRoleSeq().getSeq() );
 			sess.setAttribute( "coCd"	, user.getCoCd() 	);
 			sess.setAttribute( "loginId", user.getLoginId() );
 			sess.setAttribute( "pwdExDt", user.getPwdExDt() );

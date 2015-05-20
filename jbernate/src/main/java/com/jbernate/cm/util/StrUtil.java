@@ -17,6 +17,37 @@ public class StrUtil {
 	}
 	
 	/**
+	 * 문자열 같은지 확인
+	 * @param 	src	대상 문자 객체
+	 *   		tgt 비교 문자열
+	 * @return		true 	: 동일한 문자열
+	 * 				false 	: null이거나 동일하지 않은 문자열
+	 */
+	public static boolean chkStrEqual( Object src, String tgt ) {
+		if( src == null ) return false;
+		
+		if( src.toString().equals( tgt ) ) 	return true;
+		else								return false;
+	}
+	
+	/**
+	 * 문자열 같은지 확인
+	 * @param 	src	대상 문자 객체
+	 *   		tgt 비교 문자열
+	 * @return		true 	: 동일한 문자열
+	 * 				false 	: null이거나 동일하지 않은 문자열
+	 */
+	public static boolean chkStrIn( Object src, String ... tgt ) {
+		if( src == null ) return false;
+		
+		for( int i = 0; i < tgt.length; i++ ) {
+			if( src.toString().equals( tgt[i] ) ) 	return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * 널이면 "" 으로 치환
 	 * @param str	대상 문자
 	 * @return		null 일 경우 "" 으로 치환

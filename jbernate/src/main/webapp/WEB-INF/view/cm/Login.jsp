@@ -121,7 +121,7 @@
 		</div>
 		<div class="inputIdInputCss">
 			<h2>
-				<input type="text" id="loginId" name="loginId" size="10" maxlength="30" ng-keypress="loginEnter($event)"/>
+				<input type="text" name="loginId" size="10" maxlength="30" ng-keypress="loginEnter($event)"	ng-model="modelLoginId" autofocus/>
 			</h2>
 		</div>
 		
@@ -132,7 +132,7 @@
 		</div>
 		<div class="inputPwInputCss">
 			<h2>
-				<input type="password" id="pwd" name="pwd" size="10" maxlength="30" ng-keypress="loginEnter($event)"/>
+				<input type="password" id="pwd" name="pwd" size="10" maxlength="30" ng-keypress="loginEnter($event)" ng-model="modelPwd"/>
 			</h2>
 		</div>
 		<div class="buttonLoginCss">
@@ -143,7 +143,7 @@
 			</h2>
 		</div>
 		<div class="checkRemIdCss">
-			<input type="checkbox" name="cbRemId" style="vertical-align: top;"/> save id
+			<input type="checkbox" name="cbRemId" style="vertical-align: top;" ng-model="modelCbRemId"/> save id
 		</div>
 	</form>
 

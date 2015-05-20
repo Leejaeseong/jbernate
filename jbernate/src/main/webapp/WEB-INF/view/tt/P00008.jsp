@@ -7,7 +7,7 @@
 <%@ page import="com.jbernate.cm.util.*"%>
 <%@ include file="../cm/Header.jsp"%>		<!-- Header -->
 <%@ include file="../cm/Nav.jsp"%>			<!-- Top navigator -->
-<%@ include file="../cm/SectionMenu.jsp"%>	<!-- Left navigator -->
+<%@ include file="../cm/Left.jsp"%>			<!-- Left navigator -->
 
 	<!-- 개별 Resource -->
 	<script type="text/javascript" src="../../js/test/controller/P00008.js"></script>

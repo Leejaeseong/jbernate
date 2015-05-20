@@ -24,8 +24,9 @@
 	<script type="text/javascript" src="../../js/resource/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
 	<script type="text/javascript" src="../../js/resource/ng-grid.debug.js"></script>
     <script type="text/javascript" src="../../js/common/app.js"></script>
+    <script type="text/javascript" src="../../js/common/constant.js"></script>
     <script type="text/javascript" src="../../js/common/header.js"></script>
-    <script type="text/javascript" src="../../js/common/leftMenu.js"></script>
+    <script type="text/javascript" src="../../js/common/left.js"></script>
     
 	<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/ng-grid.css" />
@@ -50,4 +51,4 @@
 	        	로그아웃
 	    	</button>		
 		</div>
-	</header>	
+	</header>

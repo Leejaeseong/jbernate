@@ -4,6 +4,7 @@
  *  		false 	: 공백이 아님
  * */
 function chkBlank( val ) {
-	if( val == null || val == undefined || val == "" ) 	return true;
-	else 												return false;
+	
+	if( val == null || val == undefined || val == '' || val == "\"\"" || val == "''" ) 	return true;
+	else 																				return false;
 }
