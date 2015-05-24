@@ -16,17 +16,26 @@
 	
 	<title><%=PropertyUtil.get( "common", "site.title" )%></title>
 	
-    <script type="text/javascript" src="../../js/resource/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="../../js/resource/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-1.2.17.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-route.min.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-resource.min.js"></script>
     <script type="text/javascript" src="../../js/resource/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../js/resource/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
 	<script type="text/javascript" src="../../js/resource/ng-grid.debug.js"></script>
+    <script type="text/javascript" src="../../js/resource/ekathuwa.min.js"></script>
+    
     <script type="text/javascript" src="../../js/common/app.js"></script>
+    <script type="text/javascript" src="../../js/common/appConfig.js"></script>
+    <script type="text/javascript" src="../../js/common/appFactory.js"></script>
+    <script type="text/javascript" src="../../js/common/bodyCtrl.js"></script>
     <script type="text/javascript" src="../../js/common/constant.js"></script>
-    <script type="text/javascript" src="../../js/common/header.js"></script>
-    <script type="text/javascript" src="../../js/common/left.js"></script>
+    <script type="text/javascript" src="../../js/controller/header.js"></script>
+    <script type="text/javascript" src="../../js/controller/left.js"></script>
+    
+    <script type="text/javascript" src="../../js/util/validUtil.js"></script>
+    <script type="text/javascript" src="../../js/util/arrayUtil.js"></script>
+    <script type="text/javascript" src="../../js/mp/teamMgr.js"></script>
     
 	<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/ng-grid.css" />
@@ -38,7 +47,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="../../css/font-awesome-4.3.0/css/font-awesome.min.css" />
 	
 </head>
-<body>
+<body ng-controller="bodyCtrl">
 	<img id="globalLoadingImgId" ng-src="../../img/ajax-loader.gif" style="display:none;" />
 	
 	<header class="north-back" ng-controller="headerController">

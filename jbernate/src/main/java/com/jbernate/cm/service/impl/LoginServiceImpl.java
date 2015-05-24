@@ -73,6 +73,7 @@ public class LoginServiceImpl implements LoginService{
 			}else {						// 아이디 저장 해제
 				cookie = new Cookie("loginSaveId", "" );
 			}
+			cookie.setMaxAge( 60 * 60 * 24 * 365 );
 			res.addCookie( cookie );
 			model.addAttribute( ConstUtil.FORMAT_MODEL_SUCCESS, true );
 		}else {

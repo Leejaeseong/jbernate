@@ -4,19 +4,19 @@
 					<i class="fa fa-youtube-play"></i> 팀 관리
 				</div>
 				<div class="buttons">
-					<button type="button" class="btn btn-primary">
+					<button type="button" class="btn btn-default" ng-click="chkTeamMgrSearch()">
 		        		조회
-		    		</button>	
+		    		</button>
 		    		
-		    		<button type="button" class="btn btn-primary">
+		    		<button type="button" class="btn btn-default" ng-click="addTeamMgrRow()">
 		        		행추가
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-primary">
+		    		<button type="button" class="btn btn-default" ng-click="delTeamMgrRow()">
 		        		행삭제
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-primary">
+		    		<button type="button" class="btn btn-default"">
 		        		저장
 		    		</button>
 				</div>
@@ -28,4 +28,5 @@
 			
 			<div class="areaGrid gridStyle1" ng-grid="gridTeamMgr">
 			</div>
+			
 		</div>

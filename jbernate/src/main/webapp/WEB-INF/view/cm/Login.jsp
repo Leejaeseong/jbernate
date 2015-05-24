@@ -9,6 +9,14 @@
     	pageContext.setAttribute( "successMsg", request.getAttribute( ConstUtil.FORMAT_MODEL_SUCCESS ) );
     %>
     
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="cache-control" content="no-cache"/>
+	<meta http-equiv="pragma" content="no-cache"/>
+	
+	<title><%=PropertyUtil.get( "common", "site.title" )%></title>
+    
     <script type="text/javascript" src="../../js/resource/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-1.2.17.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-route.min.js"></script>
@@ -16,10 +24,12 @@
     <script type="text/javascript" src="../../js/resource/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../js/resource/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
 	<script type="text/javascript" src="../../js/resource/ng-grid.debug.js"></script>
+	<script type="text/javascript" src="../../js/resource/ekathuwa.min.js"></script>
+	
     <script type="text/javascript" src="../../js/common/app.js"></script>
 	<script type="text/javascript" src="../../js/util/cookie.js"></script>
 	<script type="text/javascript" src="../../js/util/validUtil.js"></script>
-	<script type="text/javascript" src="../../js/common/login.js"></script>
+	<script type="text/javascript" src="../../js/controller/login.js"></script>
     
 	<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/ng-grid.css" />

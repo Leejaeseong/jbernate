@@ -8,3 +8,4 @@ function chkBlank( val ) {
 	if( val == null || val == undefined || val == '' || val == "\"\"" || val == "''" ) 	return true;
 	else 																				return false;
 }
+
