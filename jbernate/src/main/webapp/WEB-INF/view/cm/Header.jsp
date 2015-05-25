@@ -55,7 +55,7 @@
 			<a href="/cm/Main/load"><img src="../../img/logo.gif"></a>
 		</div>
 		<div style="float:right; text-align: right; width: 50%">
-			<i class="fa fa-user" style="padding-top: 37px; clear: right " ></i><%=session.getAttribute( "userNm" )%> 
+			<i class="fa fa-user" style="padding-top: 37px; clear: right " ></i><%=session.getAttribute( "userNm" ) + " [" + session.getAttribute( "teamNm" ) + "] "%> 
 			<button type="button" class="btn btn-primary" ng-model="singleModel" ng-click="headerClickLogout()">
 	        	로그아웃
 	    	</button>		

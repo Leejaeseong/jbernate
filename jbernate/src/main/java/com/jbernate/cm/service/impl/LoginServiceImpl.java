@@ -1,7 +1,6 @@
 package com.jbernate.cm.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -17,11 +16,11 @@ import org.springframework.ui.Model;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.bean.WhereBean.Clause;
 import com.jbernate.cm.dao.CmDao;
-import com.jbernate.cm.domain.table.CmUserMgr;
 import com.jbernate.cm.service.LoginService;
 import com.jbernate.cm.util.ArrUtil;
 import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.SecuUtil;
+import com.jbernate.mundi.domain.table.UserMgr;
 
 /**
  * 로그인/아웃 및 세션 관리
@@ -40,6 +39,7 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	@SuppressWarnings("rawtypes")	
 	public Model submit( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String submitType ) {
+		/*
 		String loginId 	= req.getParameter( "loginId" );
 		String pwd 		= req.getParameter( "pwd" );
 		String chkRemId	= req.getParameter( "cbRemId" );
@@ -51,12 +51,26 @@ public class LoginServiceImpl implements LoginService{
 		wbList.add( new WhereBean( "accEdDt", new Date(), Clause.GE ) );
 		wbList.add( new WhereBean( "useYn", "Y", Clause.EQ ) );
 		List rList = dao.list( req, new CmUserMgr(), wbList );
+		*/
+		
+		String loginId 	= req.getParameter( "loginId" 	);
+		String pwd 		= req.getParameter( "pwd" 		);
+		String chkRemId	= req.getParameter( "cbRemId" 	);
+		
+		ArrayList wbList = new ArrayList<WhereBean>();
+		wbList.add( new WhereBean( "loginId", loginId, Clause.EQ ) );
+		wbList.add( new WhereBean( "loginPwd", SecuUtil.getSha256( pwd ), Clause.EQ ) );
+		wbList.add( new WhereBean( "useYn", "Y", Clause.EQ ) );
+		List rList = dao.list( req, new UserMgr(), wbList );
 		
 		if( ArrUtil.chkBlank( rList ) ) {	// 로그인 성공
-			CmUserMgr user = (CmUserMgr)rList.get( 0 );
+			UserMgr user = (UserMgr)rList.get( 0 );
 			
+			/*
+			CmUserMgr user = (CmUserMgr)rList.get( 0 );
 			// 세션에 정보 저장
 			sess.setAttribute( "roleSeq", user.getRoleSeq().getSeq() );
+			sess.setAttribute( "roleNm"	, user.getRoleSeq().getRoleNm() );
 			sess.setAttribute( "coCd"	, user.getCoCd() 	);
 			sess.setAttribute( "loginId", user.getLoginId() );
 			sess.setAttribute( "pwdExDt", user.getPwdExDt() );
@@ -64,6 +78,13 @@ public class LoginServiceImpl implements LoginService{
 			sess.setAttribute( "accStDt", user.getAccStDt() );
 			sess.setAttribute( "accEdDt", user.getAccEdDt() );
 			sess.setAttribute( "useYn"	, user.getUseYn() 	);
+			*/
+			
+			// 세션에 정보 저장
+			sess.setAttribute( "roleCd"	, user.getRoleCd() );
+			sess.setAttribute( "teamNm"	, user.getTeamSeq().getTeamNm() );
+			sess.setAttribute( "loginId", user.getLoginId() );
+			sess.setAttribute( "userNm"	, user.getUserNm() 	);
 			
 			// cookie 정보
 			Cookie cookie;

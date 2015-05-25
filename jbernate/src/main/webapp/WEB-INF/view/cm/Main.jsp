@@ -11,11 +11,11 @@
 <script lang="javascript" charset="utf-8">
 	// 상수 설정
 	<%
-		if( StrUtil.chkStrIn( session.getAttribute( "roleSeq" ) 
+		if( StrUtil.chkStrIn( session.getAttribute( "roleCd" ) 
 				, MpConstUtil.MP_ROLE_ADMIN		// 관리자 계정	 
 				, MpConstUtil.MP_ROLE_DEVELOP	// 개발 계정	 
 			) ) {	
-			out.print( "con_is_admin = true;" );
+			out.print( "con_is_admin = true;" );	
 		}
 	%>
 </script>
