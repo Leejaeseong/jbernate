@@ -1,5 +1,6 @@
 /** Left menu controller */
 function leftMenuController( $scope, $location ) {
+
 	/** Left menu class( activate ) */
 	$scope.getLeftMenuClass = function(path) {
 		if ($location.path().substr(0, path.length) == path) {
