@@ -8,10 +8,17 @@
 <%@ page import="com.jbernate.mp.util.*"%>
 <%@ include file="../cm/Header.jsp"%>		<!-- Header -->
 
+<%-- 세션없으면 로그인 페이지로 분기 --%>
+<%=
+	!ChkUtil.chkLogin( session ) ? "<meta http-equiv=\"refresh\" content=\"0; url=cm/Login/load\"></meta>" : "" 
+%>
+
 <script lang="javascript" charset="utf-8">
 	// 상수 설정
 	<%
-		if( StrUtil.chkStrIn( session.getAttribute( "roleCd" ) 
+		if( session.getAttribute( "roleCd" ) != null
+			&&
+			StrUtil.chkStrIn( session.getAttribute( "roleCd" ).toString()
 				, MpConstUtil.MP_ROLE_ADMIN		// 관리자 계정	 
 				, MpConstUtil.MP_ROLE_DEVELOP	// 개발 계정	 
 			) ) {	

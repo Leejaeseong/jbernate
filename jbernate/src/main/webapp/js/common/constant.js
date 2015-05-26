@@ -10,6 +10,9 @@ var con_msg_cof_exist_data_change	= "변경된데이터가 존재합니다.\r\n�
 /** 메시지 > 알림 > 필수값 입력 필요 */
 var con_msg_val_essential	= "필수값을 입력해 주세요";
 
+/** 메시지 > 알림 > 저장할 데이터가 없습니다. */
+var con_msg_val_no_data_to_save	= "저장할 데이터가 없습니다.";
+
 /** 메시지 > 알림 > 저장 */
 var con_msg_cof_save	= "저장하시겠습니까?";
 
@@ -21,7 +24,8 @@ var con_option_grid = {
 	, enableColumnResize 	: true	// 컬럼 폭 조정 가능 여부
 	, showSelectionCheckbox	: true	// 체크박스
 	, selectWithCheckboxOnly: true	// 체크를 하면 Row가 선택됨
+	, primaryKey : "seq"
 };
 
 /** 신규데이터 seq 최소값 */
-var con_i_min_seq = 10000000000;
+var con_i_max_seq = -1;
