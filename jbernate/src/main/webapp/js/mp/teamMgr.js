@@ -12,8 +12,8 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 			, columnDefs: [		{ field: "seq"		, displayName: "No"				, width: 120, pinned: true, enableCellEdit :false }
 			 	             , 	{ field: "pgmNm"	, displayName: "*프로그램명"	, width: 120 }
 			                 , 	{ field: "remk"		, displayName: "비고"			, width: 120 }
-							]
-			
+						  ]
+	
 	});
 	
 	// 감지 : data loaded
