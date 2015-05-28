@@ -3,6 +3,7 @@ package com.jbernate.cm.dao.impl;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -79,9 +80,9 @@ public class CmDaoImpl implements CmDao{
 		}
 		
 		try {
-			if( entity.getClass().getDeclaredMethod( "setDelFlag", new String().getClass() ) != null ){
-				Method m = entity.getClass().getDeclaredMethod( "setDelFlag", new String().getClass() );
-				m.invoke( entity, new String( "1" ) );
+			if( entity.getClass().getDeclaredMethod( "setUseYn", new String().getClass() ) != null ){
+				Method m = entity.getClass().getDeclaredMethod( "setUseYn", new String().getClass() );
+				m.invoke( entity, new String( "N" ) );
 				this.update( request, entity );
 			}
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -102,9 +103,8 @@ public class CmDaoImpl implements CmDao{
 		Method m = null;
 		try {			
 			m = entity.getClass().getDeclaredMethod( "setInsDt", new Date().getClass() );		m.invoke( entity, new Date() );											// 생성일 설정
-			m = entity.getClass().getDeclaredMethod( "setInsId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 생성일 설정
-			m = entity.getClass().getDeclaredMethod( "setInsObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );							// 생성객체 설정
-			m = entity.getClass().getDeclaredMethod( "setInsObj", new String().getClass() );	m.invoke( entity, request.getRemoteAddr() );							// 생성자 IP 설정
+			m = entity.getClass().getDeclaredMethod( "setInsId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginId" ) );		// 생성자 설정
+			m = entity.getClass().getDeclaredMethod( "setInsIp", new String().getClass() );		m.invoke( entity, request.getRemoteAddr() );							// 생성자 IP 설정
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.warn( "Common create column is not exist");
 		}
@@ -120,10 +120,9 @@ public class CmDaoImpl implements CmDao{
 		if( request == null ) return entity;
 		Method m = null;
 		try {			
-			m = entity.getClass().getDeclaredMethod( "setModDt", new Date().getClass() );		m.invoke( entity, new Date() );											// 수정일 설정
-			m = entity.getClass().getDeclaredMethod( "setModId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginSeq" ) );	// 수정일 설정
-			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, ConstUtil.ID_DB_OBJECTOWN );							// 수정객체 설정
-			m = entity.getClass().getDeclaredMethod( "setModObj", new String().getClass() );	m.invoke( entity, request.getRemoteAddr() );							// 수정자 IP 설정
+			m = entity.getClass().getDeclaredMethod( "setUpdDt", new Date().getClass() );		m.invoke( entity, new Date() );											// 수정일 설정
+			m = entity.getClass().getDeclaredMethod( "setUpdId", new String().getClass() );		m.invoke( entity, request.getSession().getAttribute( "loginId" ) );		// 수정자 설정
+			m = entity.getClass().getDeclaredMethod( "setUpdIp", new String().getClass() );	m.invoke( entity, request.getRemoteAddr() );								// 수정자 IP 설정
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			LogUtil.warn( "Common update column is not exist");
 		}
@@ -153,7 +152,7 @@ public class CmDaoImpl implements CmDao{
 			m = entity.getClass().getDeclaredMethod( "getSeq" );
 			Object obj = m.invoke( entity );
 			
-			if( m.getReturnType() != java.lang.Long.class ) {
+			if( m.getReturnType() != BigDecimal.class ) {
 				for( int i = 0; i < ConstUtil.LIMIT_LOOP_CNT; i++ ) {	// 1:1:1... Join인 경우 루프를 돌며 seq값을 찾음 
 					Method tempM = obj.getClass().getDeclaredMethod( "getSeq" );
 					if( tempM.getReturnType() == java.lang.Long.class ){
@@ -316,11 +315,12 @@ public class CmDaoImpl implements CmDao{
 	 */
 	private Criteria addCommonWhereCriteria( Criteria criteria ) {
 		try {
-			Class<? extends Criteria> clazz = criteria.getClass();
-			if( clazz.getDeclaredMethod( "getDelFlag" ) != null ){
-				criteria.add( Restrictions.isNull( "delFlag" ) );
-			}
-		} catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
+			//Class<? extends Criteria> clazz = criteria.getClass();
+			//if( clazz.getDeclaredMethod( "getUseYn" ) != null ){
+				criteria.add( Restrictions.eq( "useYn", "Y" ) );
+			//}
+		//} catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
+		} catch ( SecurityException | IllegalArgumentException e) {
 			LogUtil.warn( "DEL_FLAG column is not exist at addCommonWhereCriteria function");
 		}
 		return criteria;
@@ -335,9 +335,12 @@ public class CmDaoImpl implements CmDao{
 	private Criteria addWhereCriteria( Criteria criteria, List<WhereBean> wbList ) {
 		for( WhereBean wb : wbList ) {
 			if( wb.getClause().equals( "EQ" ) ){ 				criteria.add( Restrictions.eq( 			wb.getColNm(), wb.getColVal() ) 																			);
-			}else if( wb.getClause().equals( "LIKEANY" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.ANYWHERE ) 												);
-			}else if( wb.getClause().equals( "LIKEPRE" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.START ) 												);
-			}else if( wb.getClause().equals( "LIKEPOST" ) ){	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.END ) 													);
+			}else if( wb.getColVal() != null 
+					&& wb.getClause().equals( "LIKEANY" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.ANYWHERE ) 												);
+			}else if( wb.getColVal() != null 
+					&& wb.getClause().equals( "LIKEPRE" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.START ) 												);
+			}else if( wb.getColVal() != null 
+					&& wb.getClause().equals( "LIKEPOST" ) ){	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.END ) 													);
 			}else if( wb.getClause().equals( "LT" ) ){ 			criteria.add( Restrictions.lt( 			wb.getColNm(), wb.getColVal() ) 																			);
 			}else if( wb.getClause().equals( "GT" ) ){ 			criteria.add( Restrictions.gt( 			wb.getColNm(), wb.getColVal() ) 																			);
 			}else if( wb.getClause().equals( "LE" ) ){ 			criteria.add( Restrictions.le( 			wb.getColNm(), wb.getColVal() ) 																			);
@@ -345,7 +348,8 @@ public class CmDaoImpl implements CmDao{
 			}else if( wb.getClause().equals( "IN" ) ) {			criteria.add( Restrictions.in( 			wb.getColNm(), (Object[])wb.getColVal() ) 																	);
 			}else if( wb.getClause().equals( "ISNULL" ) ){ 		criteria.add( Restrictions.isNull( 		wb.getColNm() ) 																							);
 			}else if( wb.getClause().equals( "ISNOTNULL" ) ){ 	criteria.add( Restrictions.isNotNull( 	wb.getColNm() ) 																							);
-			}else if( wb.getClause().equals( "BETWEEN" ) ){ 	criteria.add( Restrictions.between(		wb.getColNm(), wb.getColVal().toString().split( "," )[ 0 ], wb.getColVal().toString().split( "," )[ 1 ] ) 	);
+			}else if( wb.getColVal() != null 
+					&& wb.getClause().equals( "BETWEEN" ) ){ 	criteria.add( Restrictions.between(		wb.getColNm(), wb.getColVal().toString().split( "," )[ 0 ], wb.getColVal().toString().split( "," )[ 1 ] ) 	);
 			}
 		}
 		return criteria;

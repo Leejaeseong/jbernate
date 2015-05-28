@@ -61,6 +61,19 @@ public class StrUtil {
 	}
 	
 	/**
+	 * null 또는 스트링 반환
+	 * @param str	대상 문자
+	 * @return		null 일 경우 "" 으로 치환
+	 */
+	public static String nvlNull( Object str ) {
+		if( str == null ){
+			return "";
+		} else{
+			return str.toString();
+		}
+	}
+	
+	/**
 	 * 단어의 첫문자만 소문자로 치환
 	 * @param str	대상 문자
 	 * @return		단어의 첫문자만 소문자로 치환

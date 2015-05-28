@@ -38,7 +38,7 @@ public class LoginServiceImpl implements LoginService{
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")	
-	public Model submit( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String submitType ) {
+	public Model submit( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload, String submitType ) {
 		/*
 		String loginId 	= req.getParameter( "loginId" );
 		String pwd 		= req.getParameter( "pwd" );

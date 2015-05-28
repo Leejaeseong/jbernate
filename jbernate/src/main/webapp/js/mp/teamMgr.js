@@ -9,9 +9,10 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	$scope.gridTeamMgr = collectProp( con_option_grid ,{
 			  data: 'dataTeamMgr'
 			, selectedItems: []
-			, columnDefs: [		{ field: "seq"		, displayName: "No"				, width: 120, pinned: true, enableCellEdit :false }
-			 	             , 	{ field: "pgmNm"	, displayName: "*프로그램명"	, width: 120 }
-			                 , 	{ field: "remk"		, displayName: "비고"			, width: 120 }
+			, columnDefs: [		{ field: "seq"		, displayName: "No"		, width: 120, pinned: true, enableCellEdit :false }
+			 	             //, 	{ field: "teamCd"	, displayName: "팀코드"	, width: 120 }
+			                 , 	{ field: "teamNm"	, displayName: "*팀명"	, width: 120 }
+			                 , 	{ field: "remk"		, displayName: "비고"	, width: 120 }
 						  ]
 	
 	});
@@ -39,7 +40,7 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	});
 	
 	// 조회 버튼 클릭
-	$scope.chkTeamMgrSearch = function( dta, type, res ) {
+	$scope.chkTeamMgrSearch = function( data, type, res ) {
 		// 데이터 변경 여부 확인
 		if( $scope.chkSaveData() ) {
 			$scope.modalConfirmYn( con_msg_cof_exist_data_change, 'tpSearchConfirm' );
@@ -50,23 +51,33 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	// Data 조회 통신 함수
 	$scope.teamMgrSearch = function( data, type, res ) {
 		
+		console.log( $scope.teamMgrSearchTeamNm );
 		// 통신 시작
-		$http.post('../../mp/P00009/test.json').success(function(data, status, headers, config){
+		$http.post('../../mp/P00009/load.json'
+					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm }
+			).success(function(data, status, headers, config){
 			// 통신
 			$scope.dataTeamMgr = data.viewData;	// 데이터 바인딩
 			
-			// 데이터 초기화
-			$scope.dataTeamTempEntity			= null;	// 임시 저장변수( 그리드 수정 시작/후 비교용 )
-			$scope.gridTeamMgr.selectAll(false);
+			$scope.initData();
 		}).error(function(data, status, headers, config) {
-		    alert( con_msg_err_load_data );
+		    $scope.modalAlert( con_msg_err_load_data );
 		});
+	};
+	
+	// 데이터 초기화
+	$scope.initData = function() {
+		$scope.dataTeamTempEntity	= null;	// 임시 저장변수( 그리드 수정 시작/후 비교용 )
+		$scope.gridTeamMgr.selectAll(false);
 	};
 	
 	// 확인 모달 OK 이벤트 listen
 	$scope.$on( 'modalConfirmYnOk', function( event, data ) {
-		//console.log( "OK", data.modalConfirmYnType );
-		$scope.teamMgrSearch();
+		if( data.modalConfirmYnType == "tpSearchConfirm" ) { 		// 검색
+			$scope.teamMgrSearch();
+		} else if( data.modalConfirmYnType == "tpSaveConfirm" ) { 	// 저장
+			$scope.saveTeamMgr();
+		}
 	});
 	// 확인 모달 NO 이벤트 listen	
 	$scope.$on( 'modalConfirmYnNo', function( event, data ) {
@@ -82,7 +93,7 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	
 	// 행삭제
 	$scope.delTeamMgrRow = function( event, data ) {
-		console.log( "1", $scope.gridTeamMgr.selectedItems );
+		//console.log( "1", $scope.gridTeamMgr.selectedItems );
 		
 		angular.forEach($scope.gridTeamMgr.selectedItems, function( value, key ) {
 			value.CRUD = "D";
@@ -93,29 +104,33 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	};
 	
 	// 저장
-	$scope.saveTeamMgr = function( event, data ) {
+	$scope.chkSaveTeamMgr = function( event, data ) {
 
-		// 저장 데이터 존재여부 판단
+		// 저장 데이터 없음
 		if( !$scope.chkSaveData() ) {
-			alert( con_msg_val_no_data_to_save );
+			$scope.modalAlert( con_msg_val_no_data_to_save );
 			return;
 		}
 		
 		// Validation
 		if( !$scope.saveValTeamMgr() ) {
-			alert( con_msg_val_essential );
+			$scope.modalAlert( con_msg_val_essential );
 			return;
 		}
 		
-
-		// 저장 데이터 전송
-		
-		$http.post( '../../mp/P00009/testSave.json', $scope.getSaveData() ).success(function() {
-			console.log("SAVE success !!!!");
+		// 저장하시겠습니까?
+		$scope.modalConfirmYn( con_msg_cof_save, 'tpSaveConfirm' );
+				
+	};
+	
+	// 저장 데이터 전송		
+	$scope.saveTeamMgr = function( event, data ) {
+		$http.post( '../../mp/P00009/submit.json', $scope.getSaveData() ).success(function() {
+			$scope.modalAlert( con_msg_save_ok );
+			$scope.teamMgrSearch();
 		}).error(function() {
-			console.log("SAVE Error !!!!");
+			$scope.modalAlert( con_msg_save_fail );
 		});
-		
 	};
 	
 	// Validation
@@ -123,8 +138,9 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		var valOk = true;
 		
 		angular.forEach($scope.dataTeamMgr, function( value, key ) {
-			if( value.hasOwnProperty( "CRUD" )		// CRUD 플래그가 있는것만 검사 
-					&&  chkBlank( value.pgmNm ) 
+			if( 		value.hasOwnProperty( "CRUD" )			// CRUD 플래그가 있는것만 검사
+					&&	value.hasOwnProperty( "CRUD" )!= "D"	// 삭제는 필수값 검사 불필요
+					&&  chkBlank( value.teamNm ) 
 			) {	
 				valOk = false;
 			}
@@ -132,7 +148,6 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		
 		return valOk;		
 	};
-	
 	
 	// Check savedata
 	// true : exist save data

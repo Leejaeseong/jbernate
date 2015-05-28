@@ -1,5 +1,15 @@
 app.controller('bodyCtrl',function($scope, $ekathuwa, $q) {
 	
+	/* 알림 Modal */
+	$scope.modalAlert = function ( msg ) {
+		$scope.modalAlertMsg = msg;
+		$ekathuwa.modal({
+            id: "modalAlert",
+            scope: $scope,
+            templateURL: "../../template/common/ModalAlert.html"
+        });
+    };
+    
 	/* 확인 Modal */
 	$scope.modalConfirmYn = function ( msg, type ) {
 		$scope.modalConfirmYnMsg = msg;

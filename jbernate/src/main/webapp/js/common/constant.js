@@ -16,6 +16,12 @@ var con_msg_val_no_data_to_save	= "저장할 데이터가 없습니다.";
 /** 메시지 > 알림 > 저장 */
 var con_msg_cof_save	= "저장하시겠습니까?";
 
+/** 메시지 > 알림 > 저장되었습니다. */
+var con_msg_save_ok	= "저장되었습니다.";
+
+/** 메시지 > 알림 > 저장에 실패하였습니다 */
+var con_msg_save_fail	= "저장에 실패하였습니다.";
+
 /** 그리드 기본 옵션 */
 var con_option_grid = {
 	  enablePinning			: true	// 고정핀

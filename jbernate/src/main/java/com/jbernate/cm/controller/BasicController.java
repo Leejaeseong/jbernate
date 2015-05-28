@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,13 +50,14 @@ public class BasicController {
 	 * @param request	HttpServletRequest
 	 * @return			/domain/pageId 페이지
 	 */
-	@RequestMapping( value = "/{pgmId}/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_LOAD, method = RequestMethod.GET )
+	@RequestMapping( value = "/{pgmId}/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_LOAD )
 	public String list( 
 			@PathVariable( "pgmId" ) String pgmId
 			, HttpSession session
 			, Model model
 			, HttpServletRequest request 
 			, HttpServletResponse response 
+			, @RequestBody String postPayload	// Json 데이터를 받기 위함
 		) throws Exception {
 		
 		LogUtil.trace( pgmId + " program : loaded( By BasicController > load method )" );	// Log
@@ -63,8 +65,8 @@ public class BasicController {
 		// 해당 프로그램 Service의 load 함수 호출
 		try{
 			Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" ) );
-			Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class );
-			model = (Model)m.invoke( sBean, session, request, response, model );
+			Method m = sBean.getClass().getDeclaredMethod( "load", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class, String.class );
+			model = (Model)m.invoke( sBean, session, request, response, model, postPayload );
 		}catch( Exception e ) {
 			LogUtil.trace( "Service( " + ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" + ") has not method of load" );
 		}
@@ -96,6 +98,7 @@ public class BasicController {
 			, Model model
 			, HttpServletRequest request
 			, HttpServletResponse response
+			, @RequestBody String postPayload	// Json 데이터를 받기 위함
 	) {
 		sbValidator.validate( sb, result );
 		
@@ -105,8 +108,8 @@ public class BasicController {
 		// 해당 프로그램 Service의 Submit 함수 호출
 		try{
 			Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" ) );
-			Method m = sBean.getClass().getDeclaredMethod( "submit", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class, String.class );
-			model = (Model)m.invoke( sBean, session, request, response, model, submitType );
+			Method m = sBean.getClass().getDeclaredMethod( "submit", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class, String.class, String.class );
+			model = (Model)m.invoke( sBean, session, request, response, model, postPayload, submitType );
 		}catch( Exception e ) {
 			e.printStackTrace();
 			LogUtil.trace( "Service( " + ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" + " ) has not method of submit" );
