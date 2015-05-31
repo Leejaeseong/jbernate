@@ -35,8 +35,9 @@
     
     <script type="text/javascript" src="../../js/util/validUtil.js"></script>
     <script type="text/javascript" src="../../js/util/arrayUtil.js"></script>
-    <script type="text/javascript" src="../../js/mp/teamMgr.js"></script>
-    <script type="text/javascript" src="../../js/mp/userMgr.js"></script>
+    <script type="text/javascript" src="../../js/mp/teamMgr.js"></script>	<!-- 팀관리 		-->
+    <script type="text/javascript" src="../../js/mp/userMgr.js"></script>	<!-- 사용자관리 	-->
+    <script type="text/javascript" src="../../js/mp/grpPrdMgr.js"></script>	<!-- 제품그룹관리 	-->
     
 	<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/ng-grid.css" />
