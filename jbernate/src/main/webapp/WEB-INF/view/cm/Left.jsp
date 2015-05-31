@@ -21,19 +21,19 @@
 											<a href="#Team" ng-class="getLeftMenuClass('/Team')"><span class="fa fa-users"></span> 팀관리</a>
 										</li>
 										<li>
-											<a href="#Test2" ng-class="getLeftMenuClass('/Test2')"><span class="fa fa-user"></span> 직원관리</a>
+											<a href="#User" ng-class="getLeftMenuClass('/User')"><span class="fa fa-user"></span> 사용자관리</a>
 										</li>
 										<li>
 <!-- 											<a href="#"><span class="fa fa-users"></span> 제품그룹관리</a> -->
-											<a href="#"><span class="fa fa-cubes"></span> 제품그룹관리</a>
+											<a href="#GrpPrd" ng-class="getLeftMenuClass('/User')"><span class="fa fa-cubes"></span> 제품그룹관리</a>
 										</li>
 										<li>
 <!-- 											<a href="#"><span class="fa fa-heartbeat"></span> 제품관리</a> -->
-											<a href="#"><span class="fa fa-eyedropper"></span> 제품관리</a>
+											<a href="#Prd" ng-class="getLeftMenuClass('/User')"><span class="fa fa-eyedropper"></span> 제품관리</a>
 										</li>
 										<li>
 <!-- 											<a href="#"><span class="fa fa-bed"></span> 병원관리</a> -->
-											<a href="#"><span class="fa fa-hospital-o"></span> 병원관리</a>
+											<a href="#Hopt" ng-class="getLeftMenuClass('/User')"><span class="fa fa-hospital-o"></span> 병원관리</a>
 										</li>
 									</ul>
 								</li>
