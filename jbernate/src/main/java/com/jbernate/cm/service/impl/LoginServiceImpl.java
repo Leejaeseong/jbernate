@@ -39,20 +39,6 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	@SuppressWarnings("rawtypes")	
 	public Model submit( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload, String submitType ) {
-		/*
-		String loginId 	= req.getParameter( "loginId" );
-		String pwd 		= req.getParameter( "pwd" );
-		String chkRemId	= req.getParameter( "cbRemId" );
-		
-		ArrayList wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "loginId", loginId, Clause.EQ ) );
-		wbList.add( new WhereBean( "pwd", SecuUtil.getSha256( pwd ), Clause.EQ ) );
-		wbList.add( new WhereBean( "accStDt", new Date(), Clause.LE ) );
-		wbList.add( new WhereBean( "accEdDt", new Date(), Clause.GE ) );
-		wbList.add( new WhereBean( "useYn", "Y", Clause.EQ ) );
-		List rList = dao.list( req, new CmUserMgr(), wbList );
-		*/
-		
 		String loginId 	= req.getParameter( "loginId" 	);
 		String pwd 		= req.getParameter( "pwd" 		);
 		String chkRemId	= req.getParameter( "cbRemId" 	);
@@ -60,25 +46,10 @@ public class LoginServiceImpl implements LoginService{
 		ArrayList wbList = new ArrayList<WhereBean>();
 		wbList.add( new WhereBean( "loginId", loginId, Clause.EQ ) );
 		wbList.add( new WhereBean( "loginPwd", SecuUtil.getSha256( pwd ), Clause.EQ ) );
-		wbList.add( new WhereBean( "useYn", "Y", Clause.EQ ) );
 		List rList = dao.list( req, new UserMgr(), wbList );
 		
 		if( ArrUtil.chkBlank( rList ) ) {	// 로그인 성공
 			UserMgr user = (UserMgr)rList.get( 0 );
-			
-			/*
-			CmUserMgr user = (CmUserMgr)rList.get( 0 );
-			// 세션에 정보 저장
-			sess.setAttribute( "roleSeq", user.getRoleSeq().getSeq() );
-			sess.setAttribute( "roleNm"	, user.getRoleSeq().getRoleNm() );
-			sess.setAttribute( "coCd"	, user.getCoCd() 	);
-			sess.setAttribute( "loginId", user.getLoginId() );
-			sess.setAttribute( "pwdExDt", user.getPwdExDt() );
-			sess.setAttribute( "userNm"	, user.getUserNm() 	);
-			sess.setAttribute( "accStDt", user.getAccStDt() );
-			sess.setAttribute( "accEdDt", user.getAccEdDt() );
-			sess.setAttribute( "useYn"	, user.getUseYn() 	);
-			*/
 			
 			// 세션에 정보 저장
 			sess.setAttribute( "roleCd"	, user.getRoleCd() );

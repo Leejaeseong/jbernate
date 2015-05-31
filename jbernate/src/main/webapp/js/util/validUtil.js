@@ -5,7 +5,7 @@
  * */
 function chkBlank( val ) {
 	
-	if( val == null || val == undefined || val == '' || val == "\"\"" || val == "''" ) 	return true;
-	else 																				return false;
+	if( !val || val == null || val == undefined || val == '' || val == "\"\"" || val == "''" ) 	return true;
+	else 																						return false;
 }
 

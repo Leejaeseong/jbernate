@@ -24,7 +24,7 @@ import com.jbernate.mp.service.P00009Service;
 import com.jbernate.mundi.domain.table.TeamMgr;
 
 /**
- * 로그인/아웃 및 세션 관리
+ * 먼디파마 > 팀관리
  */
 @Service
 @Transactional
@@ -44,7 +44,15 @@ public class P00009ServiceImpl implements P00009Service{
 		map = (LinkedTreeMap) gson.fromJson(postPayload, map.getClass());
 		
 		ArrayList wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "teamNm", map.get( "searchTeamNm" ), Clause.LIKEANY ) );
+		
+		// 리스트박스 목록조회
+		if( StrUtil.chkStrEqual( map.get( "searchType" ), "teamSelectBox" ) ) {
+			
+		}
+		// 팀관리 화면 조회
+		else {
+			wbList.add( new WhereBean( "teamNm", map.get( "searchTeamNm" ), Clause.LIKEANY ) );
+		}
 		List rList = dao.list( req, new TeamMgr(), wbList );
 		
 		model.addAttribute( "viewData", rList );
@@ -67,7 +75,7 @@ public class P00009ServiceImpl implements P00009Service{
 			LinkedTreeMap map = (LinkedTreeMap)list.get( i );
 			if( map.get( "CRUD" ).equals( "I" ) ) {
 				tm = new TeamMgr();
-				tm.setTeamCd( map.get( "teamCd").toString() );
+				tm.setTeamCd( StrUtil.nvlNull( map.get( "teamCd") ) );
 				tm.setTeamNm( StrUtil.nvlNull( map.get( "teamNm") ) );
 				tm.setRemk( StrUtil.nvlNull( map.get( "remk") ) );
 				tm.setUseYn( "Y" );
@@ -81,9 +89,6 @@ public class P00009ServiceImpl implements P00009Service{
 				cmService.update( req, tm );
 			} else if( map.get( "CRUD" ).equals( "D" ) && map.get( "seq" ).toString().indexOf( "-" ) == -1 ) {	// 신규추가( seq가 음수 )는 삭제할 필요도 없음
 				tm = new TeamMgr( new BigDecimal( map.get( "seq" ).toString() ) );
-				tm.setTeamCd( map.get( "teamCd").toString() );
-				tm.setTeamNm( StrUtil.nvlNull( map.get( "teamNm") ) );
-				tm.setRemk( StrUtil.nvlNull( map.get( "remk") ) );
 				cmService.delete( req, tm );
 			}
 			System.out.println( "seq = " + map.get( "seq" ) + ", teamCd = " + map.get( "teamCd" ) + ", teamNm = " + map.get( "teamNm" ) + ", CRUD = " + map.get( "CRUD" ) );

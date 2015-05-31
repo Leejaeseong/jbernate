@@ -3,7 +3,6 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	// 변수 선언
 	$scope.dataTeamTempEntity	= null;	// 임시 저장변수( 그리드 수정 시작/후 비교용 )
 	$scope.max_i_seq			= con_i_max_seq;	// 신규 데이터인 경우 최대 값
-	$scope.dataTeamMySelection	= [];
 	
 	// 그리드 정의
 	$scope.gridTeamMgr = collectProp( con_option_grid ,{
@@ -14,7 +13,6 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 			                 , 	{ field: "teamNm"	, displayName: "*팀명"	, width: 120 }
 			                 , 	{ field: "remk"		, displayName: "비고"	, width: 120 }
 						  ]
-	
 	});
 	
 	// 감지 : data loaded
@@ -51,7 +49,6 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	// Data 조회 통신 함수
 	$scope.teamMgrSearch = function( data, type, res ) {
 		
-		console.log( $scope.teamMgrSearchTeamNm );
 		// 통신 시작
 		$http.post('../../mp/P00009/load.json'
 					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm }

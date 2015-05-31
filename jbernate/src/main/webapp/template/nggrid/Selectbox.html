@@ -1,0 +1,27 @@
+<!--  
+<select ng-cell-input ng-options='l.code as l.title for l in teamDataSelectBox'
+	ng-model="COL_FIELD" 
+>
+
+</select>
+-->
+
+<select
+	ng-options='l.seq as l.teamNm for l in teamDataSelectBox'
+	data-placeholder="-- Select One --"
+	ng-model="COL_FIELD"
+	ng-class="'colt' + $index"
+	ng-cell-input
+	style="margin-top: 4px; margin-left: 4px;"
+>
+
+</select>
+	<!--  
+	ng-input="COL_FIELD"
+	-->
+
+	<!--  
+	ng-model="row.entity.teamSeq"
+	ng-model="row.entity.teamSeq.seq"
+	ng-input="row.entity.teamSeq.seq"
+	-->

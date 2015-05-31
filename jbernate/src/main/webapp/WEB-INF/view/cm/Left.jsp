@@ -19,7 +19,7 @@
 											<a href="#Team" ng-class="getLeftMenuClass('/Team')"><span class="fa fa-university"></span> 팀관리</a>
 										</li>
 										<li>
-											<a href="#Test2" ng-class="getLeftMenuClass('/Test2')"><span class="fa fa-user"></span> 직원관리</a>
+											<a href="#User" ng-class="getLeftMenuClass('/User')"><span class="fa fa-user"></span> 직원관리</a>
 										</li>
 										<li>
 											<a href="#"><span class="fa fa-users"></span> 제품그룹관리</a>
