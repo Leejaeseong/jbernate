@@ -13,22 +13,27 @@
 						<div>
 							<ul class="nav">
 								<li ng-show="conIsAdmin">
-								<label label-default="" class="tree-toggle nav-header"><span class="fa fa-medkit"></span> Master</label>
+<!-- 								<label label-default="" class="tree-toggle nav-header"><span class="fa fa-medkit"></span> Master</label> -->
+								<label label-default="" class="tree-toggle nav-header"><span class="fa fa-sitemap"></span> Master</label>
 									<ul class="nav tree">
 										<li>
-											<a href="#Team" ng-class="getLeftMenuClass('/Team')"><span class="fa fa-university"></span> 팀관리</a>
+<!-- 											<a href="#Team" ng-class="getLeftMenuClass('/Team')"><span class="fa fa-university"></span> 팀관리</a> -->
+											<a href="#Team" ng-class="getLeftMenuClass('/Team')"><span class="fa fa-users"></span> 팀관리</a>
 										</li>
 										<li>
-											<a href="#User" ng-class="getLeftMenuClass('/User')"><span class="fa fa-user"></span> 직원관리</a>
+											<a href="#Test2" ng-class="getLeftMenuClass('/Test2')"><span class="fa fa-user"></span> 직원관리</a>
 										</li>
 										<li>
-											<a href="#"><span class="fa fa-users"></span> 제품그룹관리</a>
+<!-- 											<a href="#"><span class="fa fa-users"></span> 제품그룹관리</a> -->
+											<a href="#"><span class="fa fa-cubes"></span> 제품그룹관리</a>
 										</li>
 										<li>
-											<a href="#"><span class="fa fa-heartbeat"></span> 제품관리</a>
+<!-- 											<a href="#"><span class="fa fa-heartbeat"></span> 제품관리</a> -->
+											<a href="#"><span class="fa fa-eyedropper"></span> 제품관리</a>
 										</li>
 										<li>
-											<a href="#"><span class="fa fa-bed"></span> 병원관리</a>
+<!-- 											<a href="#"><span class="fa fa-bed"></span> 병원관리</a> -->
+											<a href="#"><span class="fa fa-hospital-o"></span> 병원관리</a>
 										</li>
 									</ul>
 								</li>
@@ -55,7 +60,8 @@
 											<a href="#"><span class="fa fa-sort-amount-desc"></span> 팀별조회</a>
 										</li>																				
 										<li ng-show="conIsAdmin">
-											<a href="#"><span class="fa fa-toggle-off"></span> 변경이력조회</a>
+<!-- 											<a href="#"><span class="fa fa-toggle-off"></span> 변경이력조회</a> -->
+											<a href="#"><span class="fa fa-toggle-on"></span> 변경이력조회</a>
 										</li>																				
 									</ul>
 							</ul>
