@@ -49,10 +49,17 @@ public class P00011ServiceImpl implements P00011Service{
 		map = (LinkedTreeMap) gson.fromJson(postPayload, map.getClass());
 		
 		ArrayList wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "prdgrpNm"	, map.get( "searchPrdgrpNm" )	, Clause.LIKEANY ) );
-		if( StrUtil.chkBlank( map.get( "searchRateCd" ) ) ) {
-			wbList.add( new WhereBean( "searchRateCd", new BigDecimal( map.get( "searchRateCd" ).toString() ), Clause.EQ ) );
+		// 리스트박스 목록조회
+		if( StrUtil.chkStrEqual( map.get( "searchType" ), "prdgrpSelectBox" ) ) {			
 		}
+		// 제품그룹관리 화면 조회
+		else {
+			wbList.add( new WhereBean( "prdgrpNm"	, map.get( "searchPrdgrpNm" )	, Clause.LIKEANY ) );
+			if( StrUtil.chkBlank( map.get( "searchRateCd" ) ) ) {
+				wbList.add( new WhereBean( "rateCd",  map.get( "searchRateCd" ).toString(), Clause.EQ ) );
+			}
+		}
+		
 		List rList = dao.list( req, new PrdgrpMgr(), wbList );
 		
 		model.addAttribute( "viewData", rList );
@@ -73,6 +80,7 @@ public class P00011ServiceImpl implements P00011Service{
 		PrdgrpMgr grp;
 		for( int i = 0; i < list.size(); i++ ) {
 			LinkedTreeMap map = (LinkedTreeMap)list.get( i );
+			if( map == null ) continue;	// null 값이 넘어오면 Pass
 			if( map.get( "CRUD" ).equals( "I" ) ) {
 				grp = new PrdgrpMgr();
 				

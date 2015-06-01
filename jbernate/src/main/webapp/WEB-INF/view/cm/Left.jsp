@@ -25,15 +25,15 @@
 										</li>
 										<li>
 <!-- 											<a href="#"><span class="fa fa-users"></span> 제품그룹관리</a> -->
-											<a href="#GrpPrd" ng-class="getLeftMenuClass('/User')"><span class="fa fa-cubes"></span> 제품그룹관리</a>
+											<a href="#GrpPrd" ng-class="getLeftMenuClass('/GrpPrd')"><span class="fa fa-cubes"></span> 제품그룹관리</a>
 										</li>
 										<li>
 <!-- 											<a href="#"><span class="fa fa-heartbeat"></span> 제품관리</a> -->
-											<a href="#Prd" ng-class="getLeftMenuClass('/User')"><span class="fa fa-eyedropper"></span> 제품관리</a>
+											<a href="#Prd" ng-class="getLeftMenuClass('/Prd')"><span class="fa fa-eyedropper"></span> 제품관리</a>
 										</li>
 										<li>
 <!-- 											<a href="#"><span class="fa fa-bed"></span> 병원관리</a> -->
-											<a href="#Hopt" ng-class="getLeftMenuClass('/User')"><span class="fa fa-hospital-o"></span> 병원관리</a>
+											<a href="#Hopt" ng-class="getLeftMenuClass('/Hopt')"><span class="fa fa-hospital-o"></span> 병원관리</a>
 										</li>
 									</ul>
 								</li>

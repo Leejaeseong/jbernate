@@ -3,6 +3,7 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	// 변수 선언
 	$scope.dataTempEntity	= null;				// 임시 저장변수( 그리드 수정 시작/후 비교용 )
 	$scope.max_i_seq		= con_i_max_seq;	// 신규 데이터인 경우 최대 값
+	$scope.gridData			= new Array();		// 그리드 데이터
 	
 	// 그리드 내의 셀렉트 박스 변경 이벤트 등록
 	$scope.emitEndCellEdit = function() { 
@@ -19,7 +20,7 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 
 	// RATE 컬럼 템플릿
 	$scope.cellRateTemplate = 	'<select '
-							+ 	'	ng-options="l.seq as l.teamNm for l in teamDataSelectBox" '
+							+ 	'	ng-options="l.code as l.title for l in rateDataSelectBox" '
 							+ 	'	data-placeholder="-- Select One --" '
 							+ 	'	ng-model="COL_FIELD" '
 							+ 	'	ng-class="\'colt\' + $index" '
@@ -30,8 +31,8 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	
 	// 컬럼 정의
 	$scope.columnDefs = [		{ field: "seq"			, displayName: "No"				, width:  40, pinned: true, enableCellEdit :false }
-						     , 	{ field: "prdgrpNm"		, displayName: "*제품그룹명"	, width: 120 }
-						     , 	{ field: "teamSeq"		, displayName: "*RATE"			, width: 120
+						     , 	{ field: "prdgrpNm"		, displayName: "*제품그룹명"	, width: 300 }
+						     , 	{ field: "rateCd"		, displayName: "*RATE"			, width: 120
 						    	 	, enableCellEdit :false
 						    	 	, cellTemplate : $scope.cellRateTemplate
 						     	}
@@ -84,12 +85,15 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 		$http.post('../../mp/P00011/load.json'
 					, { 
 						  "searchPrdgrpNm" 	: $scope.searchPrdgrpNm
-						, "searchRate" 		: $scope.searchRate
+						, "searchRateCd" 	: $scope.searchRateCd
 					}
 			).success(function(data, status, headers, config){
 				
-			$scope.dataUserMgr = data.viewData;	// 데이터 바인딩
+			$scope.gridData = data.viewData;	// 데이터 바인딩
 			$scope.initData();	// 초기화
+			
+			//if( !$scope.gridData ) $scope.gridData = new Array();	// 데이터가 없어도 객체는 생성되도록 함
+			//console.log( "search", $scope.gridData );
 		}).error(function(data, status, headers, config) {	// 오류
 		    $scope.modalAlert( con_msg_err_load_data );	
 		});
@@ -112,16 +116,14 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	
 	// 행추가
 	$scope.addRow = function( event, data ) {
-		if( $scope.grdiData ) {
-			$scope.gridData.push( { CRUD:"I", seq:$scope.max_i_seq-- } );
-		}
+		$scope.gridData.push( { CRUD:"I", seq:$scope.max_i_seq-- } );		
 	};
 	
 	// 행삭제
 	$scope.delRow = function( event, data ) {
 		angular.forEach($scope.grid.selectedItems, function( value, key ) {
 			value.CRUD = "D";
-			$scope.gridData = $filter('filter')($scope.dataUserMgr, function( element ) {
+			$scope.gridData = $filter('filter')($scope.gridData, function( element ) {
 				return element.seq != value.seq;
 			} );
 		});
@@ -162,13 +164,11 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 		var valOk = true;
 		
 		angular.forEach($scope.gridData, function( value, key ) {
-			console.log( "validation", value );
 			if( (		value.hasOwnProperty( "CRUD" )			// CRUD 플래그가 있는것만 검사
 					&&	value.hasOwnProperty( "CRUD" )!= "D" )	// 삭제는 필수값 검사 불필요
 					&&
 				(
 						chkBlank( value.prdgrpNm )				// 제품그룹명
-					||  chkBlank( value.loginId )				// 로그인아이디
 					|| 	chkBlank( value.rateCd )				// RATE코드
 				)
 			) {	
@@ -200,7 +200,7 @@ app.controller('ctrlGrpPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 		return JSON.stringify( 
 				angular.copy( $filter('filter')($scope.gridData, {CRUD:'U'} ) )
 				.concat( angular.copy( $filter('filter')($scope.gridData, {CRUD:'I'} ) )
-				.concat( angular.copy( $filter('filter')($scope.gridData.selectedItems, {CRUD:'D'} ) ) )
+				.concat( angular.copy( $filter('filter')($scope.grid.selectedItems, {CRUD:'D'} ) ) )
 			  )
 		);
 	};

@@ -160,19 +160,18 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 					}
 			).success(function(data, status, headers, config){
 				
-			// 조회 데이터 가공
-			angular.forEach(data.viewData, function( value, key ) {
-				value.loginPwd = "";	// 조회 데이터 비밀번호 제거
-				
-				// 팀정보 리스트박스화
-				value.teamNm = value.teamSeq.teamNm;
-				value.teamSeq = value.teamSeq.seq;
-				
-			});
+				// 조회 데이터 가공
+				angular.forEach(data.viewData, function( value, key ) {
+					value.loginPwd = "";	// 조회 데이터 비밀번호 제거
+					
+					// 팀정보 리스트박스화
+					value.teamNm = value.teamSeq.teamNm;
+					value.teamSeq = value.teamSeq.seq;
+					
+				});
 			
-			$scope.dataUserMgr = data.viewData;	// 데이터 바인딩
-			
-			$scope.initData();
+				$scope.dataUserMgr = data.viewData;	// 데이터 바인딩
+				$scope.initData();
 		}).error(function(data, status, headers, config) {	// 오류
 		    $scope.modalAlert( con_msg_err_load_data );	
 		});

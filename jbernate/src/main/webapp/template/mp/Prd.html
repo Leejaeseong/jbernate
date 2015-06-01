@@ -1,0 +1,44 @@
+		<div ng-controller="ctrlPrdMgr">
+			<div class="areaButton">
+				<div class="menuTitle">
+					<i class="fa fa-youtube-play"></i> 제품 관리
+				</div>
+				<div class="buttons">
+					<button type="button" class="btn btn-default" ng-click="chkSearch()">
+		        		조회
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="addRow()">
+		        		행추가
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="delRow()">
+		        		행삭제
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-click="chkSave()">
+		        		저장
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		엑셀
+		    		</button>
+				</div>
+			</div>
+			
+			<div class="areaSearch">
+				제품명 <input type="text" maxlength="30" size="10" ng-model="searchPrdNm"/>
+				&nbsp;&nbsp;&nbsp;
+				제품그룹 <select
+						ng-model="searchPrdgrpSeq"
+						ng-options="l.seq as l.prdgrpNm for l in prdgrpDataSelectBox"
+						ng-cell-input
+						style="height:27px;">
+						<option value="" selected="selected">==ALL==</option>
+						</select>
+			</div>
+			
+			<div class="areaGrid gridStyle1" ui-grid-edit ng-grid="grid">
+			</div>
+			
+		</div>

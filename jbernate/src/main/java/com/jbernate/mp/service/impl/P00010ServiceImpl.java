@@ -73,6 +73,7 @@ public class P00010ServiceImpl implements P00010Service{
 		UserMgr user;
 		for( int i = 0; i < list.size(); i++ ) {
 			LinkedTreeMap map = (LinkedTreeMap)list.get( i );
+			if( map == null ) continue;	// null 값이 넘어오면 Pass
 			if( map.get( "CRUD" ).equals( "I" ) ) {
 				user = new UserMgr();
 				
