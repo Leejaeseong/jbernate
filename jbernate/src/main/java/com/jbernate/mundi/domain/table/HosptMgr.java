@@ -40,16 +40,16 @@ public class HosptMgr implements Serializable{
 	public void setSeq(BigDecimal seq) {	this.seq = seq;	}
 
 	//
-	@Column( name = "PRDGRP_CD", length = 30, nullable = true ) 
-	private String prdgrpCd;
-	public String getPrdgrpCd() {	return prdgrpCd;	}
-	public void setPrdgrpCd(String prdgrpCd) {	this.prdgrpCd = prdgrpCd;	}
+	@Column( name = "HOSPT_CD", length = 30, nullable = true ) 
+	private String hosptCd;
+	public String getHosptCd() {	return hosptCd;	}
+	public void setHosptCd(String hosptCd) {	this.hosptCd = hosptCd;	}
 
 	//
-	@Column( name = "PRDGRP_NM", length = 128, nullable = true ) 
-	private String prdgrpNm;
-	public String getPrdgrpNm() {	return prdgrpNm;	}
-	public void setPrdgrpNm(String prdgrpNm) {	this.prdgrpNm = prdgrpNm;	}
+	@Column( name = "HOSPT_NM", length = 128, nullable = true ) 
+	private String hosptNm;
+	public String getHosptNm() {	return hosptNm;	}
+	public void setHosptNm(String hosptNm) {	this.hosptNm = hosptNm;	}
 
 	//
 	@Column( name = "REMK", length = 256, nullable = true ) 

@@ -1,0 +1,64 @@
+		<div ng-controller="ctrlRateMgr">
+			<div class="areaButton">
+				<div class="menuTitle">
+					<i class="fa fa-youtube-play"></i> RATE 관리
+				</div>
+				<div class="buttons">
+					<button type="button" class="btn btn-default" ng-click="chkSearch()">
+		        		조회
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="addRow()" ng-show="isLast">
+		        		행추가
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="delRow()" ng-show="isLast">
+		        		행삭제
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-click="chkSave()" ng-show="isLast">
+		        		저장
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		양식다운로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-show="isLast">
+		        		엑셀업로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		엑셀
+		    		</button>
+				</div>
+			</div>
+			
+			<div class="areaSearch">
+				<div class="col-md-6" style="width:220px;>
+					<p class="input-group">
+						<input 	type="month" 
+								class="form-control" 
+								datepicker-popup 
+								ng-model="yyyymm"
+								is-open="opened" 
+								datepicker-options="dateOptions" 
+								ng-required="true" 
+								close-text="Close" 
+								ng-change="search()"
+								style="height: 27px;"/>		              	
+		            </p>
+		        </div>
+				&nbsp;&nbsp;&nbsp;
+				RATE <select
+						ng-model="searchRateCd"
+						style="height:27px;">
+						<option value="1">LAUNCH</option>
+						<option value="2">GROWTH</option>
+						</select>
+			</div>
+			
+			<div class="areaGrid gridStyle1" ui-grid-edit ng-grid="grid">
+			</div>
+			
+		</div>

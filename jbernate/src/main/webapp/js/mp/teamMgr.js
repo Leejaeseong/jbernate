@@ -38,7 +38,7 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	});
 	
 	// 조회 버튼 클릭
-	$scope.chkTeamMgrSearch = function( data, type, res ) {
+	$scope.chkTeamMgrSearch = function( data, type, res ) {		
 		// 데이터 변경 여부 확인
 		if( $scope.chkSaveData() ) {
 			$scope.modalConfirmYn( con_msg_cof_exist_data_change, 'tpSearchConfirm' );
@@ -57,6 +57,8 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 			$scope.dataTeamMgr = data.viewData;	// 데이터 바인딩
 			
 			$scope.initData();
+			
+			console.log($scope.dataTeamMgr);
 		}).error(function(data, status, headers, config) {
 		    $scope.modalAlert( con_msg_err_load_data );
 		});

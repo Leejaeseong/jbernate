@@ -272,7 +272,7 @@ public class CmDaoImpl implements CmDao{
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List queryList( HttpServletRequest request, String query ) {
-		return DbUtil.getHibernateSession( sessionFactory ).createQuery( query ).list();		
+		return DbUtil.getHibernateSession( sessionFactory ).createSQLQuery( query ).list();		
 	}
 	/**
 	 * 조회 : Native 쿼리로 직접 조회( DB 직접 쿼리 )

@@ -1,0 +1,81 @@
+		<div ng-controller="ctrlTargetMgr">
+			<div class="areaButton">
+				<div class="menuTitle">
+					<i class="fa fa-youtube-play"></i> 목표 관리
+				</div>
+				<div class="buttons">
+					<button type="button" class="btn btn-default" ng-click="chkSearch()">
+		        		조회
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="addRow()">
+		        		행추가
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="delRow()">
+		        		행삭제
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-click="chkSave()">
+		        		저장
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		양식다운로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-show="isLast">
+		        		엑셀업로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		엑셀
+		    		</button>
+				</div>
+			</div>
+			
+			<div class="areaSearch">
+				<div class="col-md-6" style="width:220px;>
+					<p class="input-group">
+						<input 	type="year" 
+								class="form-control" 
+								datepicker-popup 
+								ng-model="yyyy"
+								is-open="opened" 
+								datepicker-options="dateOptions" 
+								ng-required="true" 
+								close-text="Close" 
+								ng-change="search()"
+								style="height: 27px;"/>
+		            </p>
+		        </div>
+				&nbsp;&nbsp;&nbsp;
+				팀 <select 
+						ng-options="l.seq as l.teamNm for l in teamDataSelectBox"
+						ng-model="userSearchTeam"
+						ng-cell-input
+						style="height:27px;">
+						<option value="" selected="selected">==ALL==</option>
+						</select>
+				&nbsp;&nbsp;&nbsp;
+				제품그룹 <select
+						ng-model="searchPrdgrpSeq"
+						ng-options="l.seq as l.prdgrpNm for l in prdgrpDataSelectBox"
+						ng-cell-input
+						style="height:27px;">
+						<option value="" selected="selected">==ALL==</option>
+						</select>
+				&nbsp;&nbsp;&nbsp;
+				제품그룹 <select
+						ng-model="searchHosptSeq"
+						ng-options="l.seq as l.prdgrpNm for l in prdgrpDataSelectBox"
+						ng-cell-input
+						style="height:27px;">
+						<option value="" selected="selected">==ALL==</option>
+						</select>
+			</div>
+			
+			<div class="areaGrid gridStyle1" ui-grid-edit ng-grid="grid">
+			</div>
+			
+		</div>
