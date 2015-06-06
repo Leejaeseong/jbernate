@@ -45,7 +45,15 @@ public class P00013ServiceImpl implements P00013Service{
 		map = (LinkedTreeMap) gson.fromJson(postPayload, map.getClass());
 		
 		ArrayList wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "hosptNm"	, map.get( "searchHosptNm" )	, Clause.LIKEANY ) );
+		
+		// 리스트박스 목록조회
+		if( StrUtil.chkStrEqual( map.get( "searchType" ), "hosptSelectBox" ) ) {
+			
+		}
+		// 병원관리 화면 조회
+		else {
+			wbList.add( new WhereBean( "hosptNm"	, map.get( "searchHosptNm" )	, Clause.LIKEANY ) );
+		}
 		
 		List rList = dao.list( req, new HosptMgr(), wbList );
 		

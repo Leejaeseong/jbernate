@@ -33,5 +33,22 @@ app.controller('bodyCtrl',function($scope, $ekathuwa, $q) {
 	    	modalConfirmYnType : $scope.modalConfirmYnType
 	    });
     };
-
+    
+    // 템플릿URL Modal
+    $scope.modalTempURL = function ( urlPath, width, height ) {
+        return $ekathuwa.modal({
+              id: "modalTemplId"
+            , scope: $scope
+            , header:false
+            , bodyTemplateURL: urlPath
+            , contentStyle: "width:"+width+"px;height:"+height+"px;"
+        });
+    };
+    
+    // 팝업에서 데이터 선택 이벤트
+    $scope.popupSelectRow = function( rowItem ){
+    	console.log( "popupSelectRow", rowItem );
+    	$scope.$broadcast('popupSelectRow', rowItem );
+    };
+    
 });

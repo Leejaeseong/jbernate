@@ -23,7 +23,6 @@ import com.jbernate.cm.util.ConstUtil;
 import com.jbernate.cm.util.ControllerUtil;
 import com.jbernate.cm.util.LogUtil;
 import com.jbernate.cm.validator.SbValidator;
-import com.jbernate.tt.domain.table.TtOneTable;
 
 /**
  * Form 테스트

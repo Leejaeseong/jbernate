@@ -94,7 +94,7 @@ public class P00010ServiceImpl implements P00010Service{
 				user = (UserMgr)cmService.get( req, user );
 				
 				user.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
-				if( map.get( "loginPwd" ) != null ) { user.setLoginPwd( SecuUtil.getSha256( map.get( "loginPwd" ).toString() ) ); }
+				if( StrUtil.chkBlank( map.get( "loginPwd" ) ) ) { user.setLoginPwd( SecuUtil.getSha256( map.get( "loginPwd" ).toString() ) ); }
 				user.setUserNm( map.get( "userNm" ).toString() );
 				user.setWrkStDt( DateUtil.strToDt( map.get( "wrkStDt" ).toString(), "yyyy-MM-dd" ) );
 				user.setWrkRegion( StrUtil.nvlNull( map.get( "wrkRegion" ) ) );

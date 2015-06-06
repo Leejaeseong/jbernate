@@ -16,7 +16,6 @@ import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.BeanUtil;
 import com.jbernate.cm.util.LogUtil;
-import com.jbernate.tt.domain.table.TtOneTable;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations = { "classpath:spring/context/application-config.xml" } )
@@ -28,6 +27,7 @@ public class CrudOneTableTest {
 	
 	@Test
 	public void crudOneTableTest() {
+		/*
 		// 추가 ////////////////////////////////////////////////////////////////////////////////
 		TtOneTable entity = new TtOneTable();
 		entity.settVarchar( "테스트 : " + new Date().toString() );
@@ -60,24 +60,29 @@ public class CrudOneTableTest {
 		
 		// 삭제 ////////////////////////////////////////////////////////////////////////////////
 		cmService.delete( null, entity );
+		*/
 	}
 	
 	//@Test
 	public void crudOneTableGetTest() {
-		Object obj = cmService.get( null, new TtOneTable( 102L ) );
+		//Object obj = cmService.get( null, new TtOneTable( 102L ) );
 	}
 	
 	//@Test
 	public void crudOneTableDeleteTmpTest() {
+		/*
 		TtOneTable entity = new TtOneTable( 102L );
 		cmService.delete( null, entity );
+		*/
 	}
 	
 	//@Test
 	public void crudOneTableSelectTmpTest() {
+		/*
 		TtOneTable entity = new TtOneTable();
 		@SuppressWarnings("unchecked")
 		List<TtOneTable> list = cmService.list( null, entity );
 		LogUtil.trace( "size = " + list.size() );
+		*/
 	}
 }

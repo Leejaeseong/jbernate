@@ -1,13 +1,8 @@
 package com.jbernate.cm.bean;
 
 import java.io.Serializable;
-import java.util.List;
 
-import com.jbernate.tt.domain.table.Tt11Master;
-import com.jbernate.tt.domain.table.Tt11Slave1;
-import com.jbernate.tt.domain.table.Tt1nMaster;
-import com.jbernate.tt.domain.table.Tt1nSlave1;
-import com.jbernate.tt.domain.table.TtOneTable;
+import com.jbernate.mundi.domain.table.UserMgr;
 
 /**
  * Session Bean
@@ -16,6 +11,21 @@ public class Sb implements Serializable{
 
 	private static final long serialVersionUID = -4226643179532090253L;
 	
+	private UserMgr userMgr;
+
+	public UserMgr getUserMgr() {
+		return userMgr;
+	}
+
+	public void setUserMgr(UserMgr userMgr) {
+		this.userMgr = userMgr;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	/*
 	private TtOneTable 			ttOneTable;
 	private List<TtOneTable> 	ttOneTableList;
 	
@@ -91,5 +101,6 @@ public class Sb implements Serializable{
 	public void setTt1nSlave1List(List<Tt1nSlave1> tt1nSlave1List) {
 		this.tt1nSlave1List = tt1nSlave1List;
 	}
+	*/
 		
 }

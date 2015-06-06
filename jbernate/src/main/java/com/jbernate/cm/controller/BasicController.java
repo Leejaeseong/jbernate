@@ -89,7 +89,7 @@ public class BasicController {
 	// TODO submit 서비스 호출 및 메시지 리턴 처리
 	@RequestMapping( value = "/{pgmId}/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_SUBMIT, method = RequestMethod.POST )
 	public String submit(
-			@ModelAttribute  Sb sb
+			  @ModelAttribute  Sb sb
 			, @PathVariable( "pgmId" ) String pgmId
 			, @RequestParam( value = "submitType", required = false ) String submitType	// 타입 구분자를 통해 한 페이지에서 여러 형태의 submit 지원
 			, BindingResult result

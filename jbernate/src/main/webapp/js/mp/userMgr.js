@@ -125,12 +125,10 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	$scope.$on('ngGridEventStartCellEdit', function(data) {
 		// 셀 내용을 저장하여 변경 여부 확인
 		$scope.dataUserTempEntity = angular.copy(data.targetScope.row.entity);
-		console.log( "start", "$scope.dataUserTempEntity", $scope.dataUserTempEntity );
 	});
 	
 	// 이벤트 : 그리드 수정 종료
 	$scope.$on('ngGridEventEndCellEdit', function(data) {
-		console.log( "$scope.dataUserTempEntity", $scope.dataUserTempEntity, "data.targetScope.row.entity", data.targetScope.row.entity );
 		if( !angular.equals($scope.dataUserTempEntity , data.targetScope.row.entity ) ) {	// 수정이 이루어지면 변경 변수에 담기
 			 // CASE1. CRUD 없음 + seq 값이 있음 	: 처음 수정하는 것 	=> CRUD U 추가
 			 if( !data.targetScope.row.entity.hasOwnProperty("CRUD") && data.targetScope.row.entity.hasOwnProperty("seq") ) {
@@ -248,7 +246,6 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		var valOk = true;
 		
 		angular.forEach($scope.dataUserMgr, function( value, key ) {
-			console.log( "validation", value );
 			if( (		value.hasOwnProperty( "CRUD" )						// CRUD 플래그가 있는것만 검사
 					&&	value.hasOwnProperty( "CRUD" )!= "D" )				// 삭제는 필수값 검사 불필요
 					&&

@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import com.jbernate.cm.bean.Sb;
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.ArrUtil;
-import com.jbernate.tt.domain.table.TtOneTable;
 import com.jbernate.tt.service.P00005Service;
 
 @Service
@@ -24,6 +23,7 @@ public class P00005ServiceImpl implements P00005Service{
 	 * 테이블 로딩 Form 테스트
 	 */
 	public Model load( HttpSession session, HttpServletRequest request, Model model ) {
+		/*
 		TtOneTable ttOneTable = new TtOneTable();
 		@SuppressWarnings("unchecked")
 		List<TtOneTable> list = cmService.list( request, ttOneTable );
@@ -35,7 +35,7 @@ public class P00005ServiceImpl implements P00005Service{
 		sb.setTtOneTable( ttOneTable );
 		
 		model.addAttribute( "sb", sb );
-		
+		*/
 		return model;
 	}
 }

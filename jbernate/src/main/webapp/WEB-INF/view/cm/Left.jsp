@@ -6,9 +6,9 @@
 
 	<section id="section-menu" ng-controller="leftMenuController">
 		
-		<div class="container">
+		<div class="container" style="width: 300px;">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-3" style="width: 293px;">
 					<div class="well" style="height: 665px;">
 						<div>
 							<ul class="nav">
@@ -39,7 +39,7 @@
 											<a href="#Rate" ng-class="getLeftMenuClass('/Rate')"><span class="fa fa-rss"></span> RATE관리</a>
 										</li>
 										<li>
-											<a href="#Target" ng-class="getLeftMenuClass('/Target')"><span class="fa fa-line-chart"></span> 목표관리</a>
+											<a href="#Goal" ng-class="getLeftMenuClass('/Goal')"><span class="fa fa-line-chart"></span> 목표관리</a>
 										</li>
 										<li>
 											<a href="#Actual" ng-class="getLeftMenuClass('/Actual')"><span class="fa fa-pie-chart"></span> 실적관리</a>

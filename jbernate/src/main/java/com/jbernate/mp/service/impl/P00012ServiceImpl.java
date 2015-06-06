@@ -87,6 +87,7 @@ public class P00012ServiceImpl implements P00012Service{
 				prd = (PrdMgr)cmService.get( req, prd );
 				
 				prd.setPrdNm( map.get( "prdNm" ).toString() );
+				prd.setPrdgrpSeq( new PrdgrpMgr( new BigDecimal( map.get( "prdgrpSeq" ).toString() ) ) );
 				prd.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );
 				
 				cmService.update( req, prd );
