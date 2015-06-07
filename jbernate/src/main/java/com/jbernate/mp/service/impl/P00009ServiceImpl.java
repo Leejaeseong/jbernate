@@ -43,7 +43,7 @@ public class P00009ServiceImpl implements P00009Service{
 		LinkedTreeMap map = new LinkedTreeMap();
 		map = (LinkedTreeMap) gson.fromJson(postPayload, map.getClass());
 		
-		ArrayList wbList = new ArrayList<WhereBean>();
+		List<WhereBean> wbList = new ArrayList<WhereBean>();
 		
 		// 리스트박스 목록조회
 		if( StrUtil.chkStrEqual( map.get( "searchType" ), "teamSelectBox" ) ) {
