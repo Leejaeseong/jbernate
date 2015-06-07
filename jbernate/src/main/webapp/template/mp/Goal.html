@@ -38,12 +38,12 @@
 				년도 <select 
 						ng-model="yyyy"
 						style="height:27px;">
-						<option ng-repeat="i in yyyyDataSelectBox" value="{{ i.yyyy }}">{{ i.yyyy}}</option>
+						<option ng-repeat="i in yyyyDataSelectBox" value="{{ i.yyyy }}">{{ i.yyyy }}</option>
 						</select>
 				&nbsp;&nbsp;&nbsp;
 				팀 <select 
 						ng-options="l.seq as l.teamNm for l in teamDataSelectBox"
-						ng-model="userSearchTeam"
+						ng-model="searchTeamSeq"
 						ng-cell-input
 						style="height:27px;">
 						<option value="" selected="selected">==ALL==</option>
