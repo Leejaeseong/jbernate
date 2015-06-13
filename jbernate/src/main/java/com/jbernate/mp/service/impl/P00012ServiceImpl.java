@@ -46,7 +46,14 @@ public class P00012ServiceImpl implements P00012Service{
 		map = (LinkedTreeMap) gson.fromJson(postPayload, map.getClass());
 		
 		ArrayList wbList = new ArrayList<WhereBean>();
-		wbList.add( new WhereBean( "prdNm"	, map.get( "searchPrdNm" )	, Clause.LIKEANY ) );
+		// 리스트박스 목록조회
+		if( StrUtil.chkStrEqual( map.get( "searchType" ), "prdSelectBox" ) ) {
+			wbList.add( new WhereBean( "prdgrpSeq.seq", new BigDecimal( map.get( "searchPrdgrpSeq" ).toString() ), Clause.EQ ) );
+		}
+		// 제품관리 화면 조회
+		else {
+			wbList.add( new WhereBean( "prdNm"	, map.get( "searchPrdNm" )	, Clause.LIKEANY ) );
+		}
 		if( StrUtil.chkBlank( map.get( "searchPrdgrpSeq" ) ) ) {
 			wbList.add( new WhereBean( "prdgrpSeq.seq", new BigDecimal( map.get( "searchPrdgrpSeq" ).toString() ), Clause.EQ ) );
 		}

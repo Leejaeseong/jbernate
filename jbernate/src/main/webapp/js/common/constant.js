@@ -1,5 +1,8 @@
 /** 관리자 여부 */
 var con_is_admin = false;	// 상수 : 관리자 여부
+var con_user_seq = 0;		// 상수 : 사용자pk
+var con_user_login_id = "";	// 상수 : 로그인아이디
+var con_user_nm = "";		// 상수 : 사용자명
 
 /** 메시지 > 오류 > 데이터 로딩 실패 */
 var con_msg_err_load_data	= "데이터 로딩에 실패하였습니다";
@@ -21,3 +24,6 @@ var con_msg_save_ok	= "저장되었습니다.";
 
 /** 메시지 > 알림 > 저장에 실패하였습니다 */
 var con_msg_save_fail	= "저장에 실패하였습니다.";
+
+/** 메시지 > 알림 > 담당자를 본인으로 변경하시겠습니까? */
+var con_msg_conf_appoint_user	= "담당자를 본인으로 변경하시겠습니까?";

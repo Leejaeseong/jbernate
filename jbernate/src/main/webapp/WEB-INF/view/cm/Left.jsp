@@ -49,13 +49,13 @@
 								<label label-default="" class="tree-toggle nav-header"><span class="glyphicon glyphicon-usd"></span> Result</label>
 									<ul class="nav tree">
 										<li>
-											<a href="#"><span class="fa fa-street-view"></span> 개인별조회</a>
+											<a href="#Result"  ng-class="getLeftMenuClass('/Result')"><span class="fa fa-street-view"></span> 실적조회</a>
 										</li>
 										<li ng-show="conIsAdmin">
-											<a href="#"><span class="fa fa-sort-amount-desc"></span> 팀별조회</a>
+											<a href="#ResultTeam"  ng-class="getLeftMenuClass('/ResultTeam')"><span class="fa fa-sort-amount-desc"></span> 팀별조회</a>
 										</li>																				
 										<li ng-show="conIsAdmin">
-											<a href="#"><span class="fa fa-toggle-on"></span> 변경이력조회</a>
+											<a href="#History"  ng-class="getLeftMenuClass('/History')"><span class="fa fa-toggle-on"></span> 변경이력조회</a>
 										</li>																				
 									</ul>
 							</ul>

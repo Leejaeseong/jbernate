@@ -16,13 +16,17 @@
 <script lang="javascript" charset="utf-8">
 	// 상수 설정
 	<%
-		if( session.getAttribute( "roleCd" ) != null
-			&&
-			StrUtil.chkStrIn( session.getAttribute( "roleCd" ).toString()
-				, MpConstUtil.MP_ROLE_ADMIN		// 관리자 계정	 
-				, MpConstUtil.MP_ROLE_DEVELOP	// 개발 계정	 
-			) ) {	
-			out.print( "con_is_admin = true;" );	
+		if( session.getAttribute( "roleCd" ) != null ) {	
+			if( StrUtil.chkStrIn( session.getAttribute( "roleCd" ).toString()
+					, MpConstUtil.MP_ROLE_ADMIN		// 관리자 계정	 
+					, MpConstUtil.MP_ROLE_DEVELOP	// 개발 계정	 
+				) ) {
+				out.print( "con_is_admin = true;" );
+			}
+			
+			out.print( "con_user_seq 		= " 	+ session.getAttribute( "userSeq" ).toString() + ";" );
+			out.print( "con_user_login_id 	= '"	+ session.getAttribute( "loginId" ).toString() + "';" );
+			out.print( "con_user_nm 		= '" 	+ session.getAttribute( "userNm" ).toString() + "';" );
 		}
 	%>
 </script>

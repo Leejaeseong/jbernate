@@ -15,7 +15,7 @@ public class NumUtil {
 		if( str == null || str.toString().equals( "" ) ) 	return 0;
 		else {
 			if( str.toString().indexOf( "." ) != -1 ) {
-					return Integer.parseInt( str.toString().substring( 0, str.toString().indexOf( "." ) - 1 ) );
+					return Integer.parseInt( str.toString().substring( 0, str.toString().indexOf( "." ) ) );
 			}else	return Integer.parseInt( str.toString() );
 		}
 	}

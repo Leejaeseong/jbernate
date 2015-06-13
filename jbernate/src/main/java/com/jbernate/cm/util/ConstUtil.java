@@ -36,7 +36,7 @@ public class ConstUtil {
 	
 	// ▣ 형식 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	/** 형식 > 날짜 */
-	public static final String FORMAT_DATE						= "yyyy-MM-dd";
+	public static final String FORMAT_DATE						= "yyyy-MM-dd HH:mm:ss";
 	
 	/** 형식 > 페이지 길이 */
 	public static final int FORMAT_PAGE_LEN						= 6; // ex) P12345

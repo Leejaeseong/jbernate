@@ -98,13 +98,13 @@ public class UserMgr implements Serializable{
 	public void setUserNm(String userNm) {	this.userNm = userNm;	}
 
 	//
-	@Column( name = "LOGIN_ID", length = 30, nullable = true ) 
+	@Column( name = "LOGIN_ID", length = 30, nullable = true )
 	private String loginId;
 	public String getLoginId() {	return loginId;	}
 	public void setLoginId(String loginId) {	this.loginId = loginId;	}
 
 	//
-	@Column( name = "LOGIN_PWD", length = 30, nullable = true ) 
+	@Column( name = "LOGIN_PWD", length = 30, nullable = true )
 	private String loginPwd;
 	public String getLoginPwd() {	return loginPwd;	}
 	public void setLoginPwd(String loginPwd) {	this.loginPwd = loginPwd;	}

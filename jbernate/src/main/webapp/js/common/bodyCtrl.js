@@ -35,7 +35,8 @@ app.controller('bodyCtrl',function($scope, $ekathuwa, $q) {
     };
     
     // 템플릿URL Modal
-    $scope.modalTempURL = function ( urlPath, width, height ) {
+    $scope.modalTempURL = function ( urlPath, width, height, paramData ) {
+    	$scope.modalParamData = paramData;
         return $ekathuwa.modal({
               id: "modalTemplId"
             , scope: $scope

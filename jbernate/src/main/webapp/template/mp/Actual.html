@@ -1,0 +1,101 @@
+		<div ng-controller="ctrlActualMgr">
+			<div class="areaButton">
+				<div class="menuTitle">
+					<i class="fa fa-youtube-play"></i> 실적 관리
+				</div>
+				<div class="buttons">
+					<button type="button" class="btn btn-default" ng-click="chkSearch()">
+		        		조회
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="addRow()" ng-show="conIsAdmin && isLast">
+		        		행추가
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="delRow()" ng-show="conIsAdmin && isLast">
+		        		행삭제
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-click="chkSave()" ng-show="conIsAdmin && isLast">
+		        		저장
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-show="conIsAdmin && isLast">
+		        		양식다운로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-show="isLast" ng-show="conIsAdmin && isLast">
+		        		엑셀업로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default">
+		        		엑셀
+		    		</button>
+				</div>
+			</div>
+			
+			<div class="areaSearch" style="height: 85px;">
+				<div class="col-md-6" style="width:220px; float: left;">
+					<p class="input-group">
+						<input 	type="month" 
+								class="form-control" 
+								datepicker-popup 
+								ng-model="yyyymm"
+								is-open="opened" 
+								datepicker-options="dateOptions" 
+								ng-required="true" 
+								close-text="Close" 
+								ng-change="search()"
+								style="height: 27px;"/>		              	
+		            </p>
+		        </div>
+				<div style="width:240px; float: left;">
+					* 제품그룹 <select
+							ng-model="searchPrdgrpSeq"
+							ng-cell-input
+							style="height:27px;"
+							ng-change="getPrdList(this)"
+							>
+							<option ng-repeat="l in prdgrpDataSelectBox" value="{{l.seq}}">{{l.prdgrpNm}}</option>
+							</select>
+				</div>
+				<div style="width:180px; float: left;">
+					제품 <select
+							ng-model="searchPrdSeq"
+							ng-options="l.seq as l.prdNm for l in prdDataSelectBox"
+							ng-cell-input
+							style="height:27px; width:118px;">
+							<option value="" selected="selected">==ALL==</option>
+							</select>
+				</div>
+				<div style="width:200px; float: left;">
+					병원 <select
+							ng-model="searchHosptSeq"
+							ng-options="l.seq as l.hosptNm for l in hosptDataSelectBox"
+							ng-cell-input
+							style="height:27px;">
+							<option value="" selected="selected">==ALL==</option>
+							</select>
+				</div>
+				
+				<br/>
+				<br/>
+
+				<div style="width:220px; float: left;">
+					담당자명 <input type="text" maxlength="30" size="10" ng-model="searchUserNm" style="width:129px;"/>
+				</div>
+				<div style="width:240px; float: left;">
+					도매명 <input type="text" maxlength="30" size="10" ng-model="searchWholesalNm" style="width:168px;"/>
+				</div>
+				<div style="width:180px; float: left;">
+					매출처 <input type="text" maxlength="30" size="10" ng-model="searchSalLocNm"/>
+				</div>
+				<div style="width:200px; float: left;">
+					지점 <input type="text" maxlength="30" size="10" ng-model="searchBranchNm" style="width:125px;"/>
+				</div>
+			</div>
+			
+			<div class="areaGrid gridStyle1" ng-grid="grid">
+			</div>
+			
+		</div>

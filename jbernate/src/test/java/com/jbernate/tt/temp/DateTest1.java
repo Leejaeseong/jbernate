@@ -18,7 +18,8 @@ public class DateTest1 {
 			System.out.println( to );
 			*/
 			
-			System.out.println( DateUtil.dtToStr( new Date(), "yyyy-MM" ) );
+			System.out.println( DateUtil.strToDt( "2015-06-01 00:00:00", "yyyy-MM-dd HH:mm:ss" ) );
+			System.out.println( DateUtil.strToDt( "2015-06-01 23:59:59", "yyyy-MM-dd HH:mm:ss" ) );
 			
 		} catch (Exception e) {
 			e.printStackTrace();

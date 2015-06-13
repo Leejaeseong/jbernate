@@ -51,15 +51,15 @@ public class P00015ServiceImpl implements P00015Service{
 		ArrayList wbList = new ArrayList<WhereBean>();
 		wbList.add( new WhereBean( "yyyy"	, map.get( "searchYyyy" ).toString().replaceAll( "-", "" ) , Clause.EQ ) );
 		if( StrUtil.chkBlank( map.get( "searchTeamSeq" ) ) ) {
-			wbList.add( new WhereBean( "teamSeq.seq", map.get( "searchTeamSeq" ).toString(), Clause.EQ ) );
+			wbList.add( new WhereBean( "teamSeq.seq", new BigDecimal( map.get( "searchTeamSeq" ).toString() ), Clause.EQ ) );
 		}		
 		if( StrUtil.chkBlank( map.get( "searchPrdgrpSeq" ) ) ) {
-			wbList.add( new WhereBean( "prdgrpSeq.seq", map.get( "searchPrdgrpSeq" ).toString(), Clause.EQ ) );
+			wbList.add( new WhereBean( "prdgrpSeq.seq", new BigDecimal( map.get( "searchPrdgrpSeq" ).toString() ), Clause.EQ ) );
 		}		
 		if( StrUtil.chkBlank( map.get( "searchHosptSeq" ) ) ) {
-			wbList.add( new WhereBean( "hosptSeq.seq", map.get( "searchHosptSeq" ).toString(), Clause.EQ ) );
+			wbList.add( new WhereBean( "hosptSeq.seq", new BigDecimal( map.get( "searchHosptSeq" ).toString() ), Clause.EQ ) );
 		}
-		wbList.add( new WhereBean( "userNm"	, map.get( "searchUserNm" )	, Clause.LIKEANY ) );
+		wbList.add( new WhereBean( "userSeq.userNm"	, map.get( "searchUserNm" ), Clause.LIKEANY ) );
 		
 		List rList = dao.list( req, new GoalMgr(), wbList );
 		
@@ -112,7 +112,6 @@ public class P00015ServiceImpl implements P00015Service{
 			} else if( map.get( "CRUD" ).equals( "U" ) ) {
 				goal = new GoalMgr( new BigDecimal( map.get( "seq" ).toString() ) );
 				goal = (GoalMgr)cmService.get( req, goal );
-				
 				
 				goal.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
 				goal.setPrdgrpSeq( 	new PrdgrpMgr( new BigDecimal( map.get( "prdgrpSeq" ).toString() ) ) );

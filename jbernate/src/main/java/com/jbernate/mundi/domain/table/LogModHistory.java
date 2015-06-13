@@ -1,18 +1,15 @@
 package com.jbernate.mundi.domain.table;
 import java.io.Serializable;
-import java.util.Date;
-
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,7 +36,7 @@ public class LogModHistory implements Serializable{
 
 	//
 	@Column( name = "INS_DT" )
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern=ConstUtil.FORMAT_DATE)
 	private Date insDt;
 	public Date getInsDt() {	return insDt;	}
@@ -93,9 +90,16 @@ public class LogModHistory implements Serializable{
 
 	//
 	@ManyToOne
-	@JoinColumn( name = "RESULT_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
-	private ResultAll resultSeq;
-	public ResultAll getResultSeq() {	return resultSeq;	}
-	public void setResultSeq(ResultAll resultSeq) {	this.resultSeq = resultSeq;	}
+	@JoinColumn( name = "ACTUAL_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
+	private ActualMgr actualSeq;
+	public ActualMgr getActualSeq() {	return actualSeq;	}
+	public void setActualSeq(ActualMgr actualSeq) {	this.actualSeq = actualSeq;	}
+
+	//
+	@ManyToOne
+	@JoinColumn( name = "USER_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
+	private UserMgr userSeq;
+	public UserMgr getUserSeq() {	return userSeq;	}
+	public void setUserSeq(UserMgr userSeq) {	this.userSeq = userSeq;	}
 
 }

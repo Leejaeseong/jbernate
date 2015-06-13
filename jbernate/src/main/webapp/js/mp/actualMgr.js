@@ -1,43 +1,52 @@
-app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	// 목표 관리 컨트롤러
+app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {	// 실적 관리 컨트롤러
 	
 	// 변수 선언
-	$scope.yyyy 			= new Date().format("%Y");	// 조회 화면에 출력되는 모델
-	$scope.selRow			= null;						// 선택된 로우를 기억( 사용자 팝업 후 데이터 적용 용도 )
-	$scope.userPop			= null;						// 사용자 조회 팝업 객체
+	$scope.yyyymm 			= new Date().format("%Y-%m");	// 조회 화면에 출력되는 모델
+	$scope.lastYyyymm 		= new Date().format("%Y-%m");	// 마지막 Yyyymm DB데이터
+	$scope.isLast			= true;
+	$scope.modCheckToggle	= true;
+	$scope.conIsAdmin		= con_is_admin;		// 관리자 여부
+	
+	$scope.selRow			= null;				// 선택된 로우를 기억( 사용자 팝업 후 데이터 적용 용도 )
+	$scope.userPop			= null;				// 사용자 조회 팝업 객체
 	
 	$scope.dataTempEntity	= null;				// 임시 저장변수( 그리드 수정 시작/후 비교용 )
 	$scope.max_i_seq		= con_i_max_seq;	// 신규 데이터인 경우 최대 값
 	$scope.gridData			= new Array();		// 그리드 데이터
-	$scope.excelData		= new Array();		// 엑셀 데이터
 	
-	$scope.yyyyDataSelectBox 	= new Array();	// 년도목록
-	$scope.teamDataSelectBox 	= [];			// 팀목록
 	$scope.prdgrpDataSelectBox 	= [];			// 제품그룹목록
+	$scope.prdDataSelectBox 	= [];			// 제품목록
 	$scope.hosptDataSelectBox 	= [];			// 병원목록
 	
-	// 년도목록 설정하기
-	for( var i = 2015; i <= new Date().format("%Y"); i++ ) {
-		$scope.yyyyDataSelectBox.push( { yyyy : i.toString() } );
-	};
-	
-	// 팀목록 가져오기
-	$http.post('../../mp/P00009/load.json'
-			, { "searchType" : "teamSelectBox" }
-	).success(function(data, status, headers, config){
-		// 통신
-		$scope.teamDataSelectBox = data.viewData;	// 데이터 바인딩
-	}).error(function(data, status, headers, config) {
-	    $scope.modalAlert( con_msg_err_load_data );
-	});
 	// 제품그룹목록 가져오기
-	$http.post('../../mp/P00011/load.json'
+	$scope.prdgrpQ = $http.post('../../mp/P00011/load.json'
 			, { "searchType" : "prdgrpSelectBox" }
 	).success(function(data, status, headers, config){
 		// 통신
 		$scope.prdgrpDataSelectBox = data.viewData;	// 데이터 바인딩
+		
+		if( $scope.prdgrpDataSelectBox.length > 0 ) {
+			$scope.searchPrdgrpSeq = $scope.prdgrpDataSelectBox[0].seq;
+			// 제품목록 가져오기
+			$scope.getPrdList();
+		}
 	}).error(function(data, status, headers, config) {
 	    $scope.modalAlert( con_msg_err_load_data );
 	});
+	// 제품목록 가져오기
+	$scope.getPrdList = function() {
+		$http.post('../../mp/P00012/load.json'
+				, {   "searchType" 		: "prdSelectBox"
+					, "searchPrdgrpSeq" : $scope.searchPrdgrpSeq
+				  }
+		).success(function(data, status, headers, config){
+			// 통신
+			$scope.prdDataSelectBox = data.viewData;	// 데이터 바인딩
+			$scope.search();
+		}).error(function(data, status, headers, config) {
+		    $scope.modalAlert( con_msg_err_load_data );
+		});
+	};
 	// 병원목록 가져오기
 	$http.post('../../mp/P00013/load.json'
 			, { "searchType" : "hosptSelectBox" }
@@ -48,24 +57,25 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	    $scope.modalAlert( con_msg_err_load_data );
 	});
 
-	// 팀 컬럼 템플릿
-	$scope.cellTeamTemplate = 		'<select '
-								+ 	'	ng-options="l.seq as l.teamNm for l in teamDataSelectBox" '
+	// 수정가능 여부 선택 창
+	$scope.cellModYnTemplate = '<div style="height:30px;">'
+								+	'<input '
+								+	'	ng-class="\'colt\' + col.index" '
+								+	'	style="margin-top:9px;" '
+								+	'	ng-model="COL_FIELD" '
+								+	'	ng-true-value=\"Y\"  '
+								+	'	ng-false-value=\"N\" '
+								+	'	type="checkbox" '
+								+	'	/></div>';
+	// 제품 컬럼 템플릿
+	$scope.cellPrdTemplate = 	'<select '
+								+ 	'	ng-options="l.seq as l.prdNm for l in prdDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
 								+ 	'	ng-cell-input '
-								+ 	'	style="height:26px;" '
-								+	'	ng-change="emitEndCellEdit()" '
-								+	'></select>';
-	// 제품그룹 컬럼 템플릿
-	$scope.cellPrdgrpTemplate = 	'<select '
-								+ 	'	ng-options="l.seq as l.prdgrpNm for l in prdgrpDataSelectBox" '
-								+ 	'	data-placeholder="-- Select One --" '
-								+ 	'	ng-model="COL_FIELD" '
-								+ 	'	ng-class="\'colt\' + $index" '
-								+ 	'	ng-cell-input '
-								+ 	'	style="height:26px;" '
+								+ 	'	style="height:26px; width:100%" '
+								+	'	ng-disabled="!conIsAdmin" '
 								+	'	ng-change="emitEndCellEdit()" '
 								+	'></select>';
 	// 병원 컬럼 템플릿
@@ -75,43 +85,51 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
 								+ 	'	ng-cell-input '
-								+ 	'	style="height:26px;" '
+								+ 	'	style="height:26px; width:100%;" '
+								+	'	ng-disabled="!conIsAdmin" '
 								+	'	ng-change="emitEndCellEdit()" '
 								+	'></select>';
-	// 사용자 컬럼 템플릿
-	//$scope.cellUserTemplate = '<input ng-class="\'colt\' + col.index" ng-model="COL_FIELD" ng-click="gridUserClick(row)" ng-readonly="true"/>';
+	// 변경이력 컬럼 템플릿
+	$scope.cellHistoryTemplate = '<img src="../../img/history.gif" width="25px" height="25px" style="margin-left:28px; margin-top:2px;" />'
 	
 	// 컬럼 정의
-	$scope.columnDefs = [		{ field: "seq"		, displayName: "No"			, width:  40, pinned: true, enableCellEdit :false }
-							 , 	{ field: "teamSeq"	, displayName: "*팀"		, width: 150
+	$scope.columnDefs = [		{ field: "modYn"	, displayName: "수정"		, width:  50, pinned: true
+									, visible : $scope.conIsAdmin
 									, enableCellEdit :false
-									, cellTemplate : $scope.cellTeamTemplate
+									, cellTemplate : $scope.cellModYnTemplate
+									, headerCellTemplate: "<div style=\"height:30px;vertical-align:bottom;\"> \
+													                {{col.displayName}} \
+													                <input type=\"checkbox\" \
+													                		style=\"margin-top:11px;\" \
+													                		ng-click=\"modToggle()\" \"> \
+													        </div>"
 								}
-							 , 	{ field: "prdgrpSeq"	, displayName: "*제품그룹"		, width: 150
-								, enableCellEdit :false
-								, cellTemplate : $scope.cellPrdgrpTemplate
+	                     	,	{ field: "seq"			, displayName: "No"			, width:  40, pinned: true, enableCellEdit :false }
+	                     	, 	{ field: "loginId"		, displayName: "아이디"		, width: 120, enableCellEdit : false }
+							, 	{ field: "userNm"		, displayName: "*담당자"	, width: 150
+						   	 		, enableCellEdit : false
+						    	}
+							, 	{ field: "history"		, displayName: "변경이력" 	, width: 80
+									, enableCellEdit : false
+									, cellTemplate : $scope.cellHistoryTemplate
 								}
-							 , 	{ field: "hosptSeq"	, displayName: "*병원"		, width: 200
-								, enableCellEdit :false
-								, cellTemplate : $scope.cellHosptTemplate
+							, 	{ field: "wholesalNm"	, displayName: "도매명"		, width: 120, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "prdSeq"		, displayName: "*제품"		, width: 150
+									, enableCellEdit :false
+									, cellTemplate : $scope.cellPrdTemplate
 								}
-						     , 	{ field: "userNm"		, displayName: "*담당자"		, width: 150
-						    	 , enableCellEdit : false
-						    	 //, cellTemplate : $scope.cellUserTemplate
-						     	}
-						     , 	{ field: "mon1"		, displayName: "1월" 	, width: 100 }
-						     , 	{ field: "mon2"		, displayName: "2월" 	, width: 100 }
-						     , 	{ field: "mon3"		, displayName: "3월" 	, width: 100 }
-						     , 	{ field: "mon4"		, displayName: "4월" 	, width: 100 }
-						     , 	{ field: "mon5"		, displayName: "5월" 	, width: 100 }
-						     , 	{ field: "mon6"		, displayName: "6월" 	, width: 100 }
-						     , 	{ field: "mon7"		, displayName: "7월" 	, width: 100 }
-						     , 	{ field: "mon8"		, displayName: "8월" 	, width: 100 }
-						     , 	{ field: "mon9"		, displayName: "9월" 	, width: 100 }
-						     , 	{ field: "mon10"	, displayName: "10월" 	, width: 100 }
-						     , 	{ field: "mon11"	, displayName: "11월" 	, width: 100 }
-						     , 	{ field: "mon12"	, displayName: "12월" 	, width: 100 }
-						     , 	{ field: "remk"		, displayName: "비고"	, width: 120 }
+							, 	{ field: "salLocNm"		, displayName: "매출처"		, width: 120, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "addr"			, displayName: "주소"		, width: 120, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "zipCd"		, displayName: "우편번호"	, width: 120, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "salCnt"		, displayName: "수량" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "unitPrc"		, displayName: "단가" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "salAmt"		, displayName: "금액" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "hosptSeq"		, displayName: "*병원"		, width: 150
+									, enableCellEdit :false
+									, cellTemplate : $scope.cellHosptTemplate
+								}
+							, 	{ field: "branchNm"		, displayName: "지점"		, width: 120, enableCellEdit : $scope.conIsAdmin }
+						    , 	{ field: "remk"			, displayName: "비고"		, width: 120, enableCellEdit : $scope.conIsAdmin }
 						  ];
 	
 	// 그리드 정의
@@ -134,11 +152,30 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 			//, plugins: [new ngGridCsvExportPlugin()]
 	});
 	
+	// 수정 전체 클릭
+	$scope.modToggle = function() {
+		for (var i = 0; i < $scope.gridData.length; i++) {
+			if( $scope.modCheckToggle ) {
+				$scope.gridData[i].modYn = "Y";
+			}else {
+				$scope.gridData[i].modYn = "N";
+			}
+        }
+		$scope.modCheckToggle = !$scope.modCheckToggle;
+	};
+	
 	// 컬럼 클릭
 	$scope.onClickRow = function( rowItem, field ) {
 		if( field == "userNm" ) {	// 담당자
-			$scope.selRow = rowItem.entity;
-			$scope.userPop = $scope.modalTempURL( "../../template/mp/UserPop.html", 1000, 500, null );
+			if( $scope.conIsAdmin ) {	// 관리자인 경우 사용자 조회 팝업
+				$scope.selRow = rowItem.entity;
+				$scope.userPop = $scope.modalTempURL( "../../template/mp/UserPop.html", 1000, 500, null );
+			} else {
+				$scope.selRow = rowItem.entity;
+				$scope.modalConfirmYn( con_msg_conf_appoint_user, 'tpAppointConfirm' );
+			}
+		}else if( field == "history" ) {	// 변경이력
+			$scope.modalTempURL( "../../template/mp/HistoryPop.html", 700, 500, rowItem.entity.seq );
 		}
 	};
 	
@@ -146,29 +183,36 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	$scope.search = function( data, type, res ) {
 		
 		// 통신 시작
-		$http.post('../../mp/P00015/load.json'
+		$http.post('../../mp/P00016/load.json'
 					, { 
-						  "searchYyyy" 		: $scope.yyyy
-						, "searchTeamSeq"	: $scope.searchTeamSeq
-						, "searchPrdgrpSeq"	: $scope.searchPrdgrpSeq
-						, "searchHosptSeq"	: $scope.searchHosptSeq
-						, "searchUserNm"	: $scope.searchUserNm
+						  "searchYyyymm" 		: $scope.dateToYyyymm()
+						, "searchPrdgrpSeq"		: $scope.searchPrdgrpSeq
+						, "searchPrdSeq"		: $scope.searchPrdSeq
+						, "searchHosptSeq"		: $scope.searchHosptSeq
+						, "searchUserNm"		: $scope.searchUserNm
+						, "searchWholesalNm"	: $scope.searchWholesalNm	// 도매명
+						, "searchSalLocNm"		: $scope.searchSalLocNm		// 매출처
+						, "searchBranchNm"		: $scope.searchBranchNm		// 지점
 					}
 			).success(function(data, status, headers, config){
-				$scope.setExcelData( data.viewData );	// 엑셀 데이터 설정
 				
 				// 조회 데이터 가공
 				angular.forEach(data.viewData, function( value, key ) {
 					// 데이터를 리스트박스화
-					value.teamSeq 	= value.teamSeq.seq;
-					value.prdgrpSeq = value.prdgrpSeq.seq;
+					value.prdSeq 	= value.prdSeq.seq;
 					value.hosptSeq 	= value.hosptSeq.seq;
 					value.userNm	= value.userSeq.userNm;
+					value.loginId	= value.userSeq.loginId;
 					value.userSeq	= value.userSeq.seq;
 				});
 				
-				$scope.gridData = data.viewData;	// 데이터 바인딩
-				$scope.initData();					// 초기화
+				$scope.gridData 	= data.viewData;	// 데이터 바인딩
+				$scope.lastYyyymm	= data.lastYyyymm;	// 마지막 DB일자
+				$scope.initData();						// 초기화
+				
+				$scope.yyyymm = $scope.dateToYyyymm();
+				$scope.isLast = $scope.yyyymm >= $scope.lastYyyymm;
+				
 		}).error(function(data, status, headers, config) {	// 오류
 		    $scope.modalAlert( con_msg_err_load_data );	
 		});
@@ -176,10 +220,10 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	
 	// 저장 데이터 전송		
 	$scope.save = function( event, data ) {
-		$http.post( '../../mp/P00015/submit.json'
+		$http.post( '../../mp/P00016/submit.json'
 				, { 
 						"saveData" 	: $scope.getSaveData()
-					, 	"yyyy" 		: $scope.yyyy 
+					, 	"yyyymm" 	: $scope.yyyymm 
 				} 
 		 ).success(function() {
 			$scope.modalAlert( con_msg_save_ok );
@@ -193,14 +237,13 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	$scope.saveValData = function() {
 		var valOk = true;
 		
+		// TODO 필수값 확인 필요
 		angular.forEach($scope.gridData, function( value, key ) {
 			if( (		value.hasOwnProperty( "CRUD" )			// CRUD 플래그가 있는것만 검사
 					&&	value.hasOwnProperty( "CRUD" )!= "D" )	// 삭제는 필수값 검사 불필요
 					&&
 				(
-						chkBlank( value.teamSeq )			// 팀SEQ
-					|| 	chkBlank( value.prdgrpSeq )			// 제품그룹SEQ
-					|| 	chkBlank( value.hosptSeq )			// 병원SEQ
+						chkBlank( value.hosptSeq )			// 병원SEQ
 					|| 	chkBlank( value.userSeq )			// 담당자SEQ
 				)
 			) {	
@@ -214,6 +257,7 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	// 사용자 팝업에서 데이터를 선택
 	$scope.$on('popupSelectRow', function( target, rowItem ){
 		$scope.selRow.userSeq 	= rowItem.entity.seq;
+		$scope.selRow.loginId 	= rowItem.entity.loginId;
 		$scope.selRow.userNm 	= rowItem.entity.userNm;
 		if( !$scope.selRow.hasOwnProperty( "CRUD" ) ) $scope.selRow.CRUD = "U";	// 변경 플래그 체크 후 강제 삽입
 		$q.when( $scope.userPop ).then(function (m) {
@@ -221,25 +265,32 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		});
 	});
 	
-	// 엑셀
-	$scope.getHeader = function () {
-		console.log( "$scope.excelData", $scope.excelData );
-		return ["사용자명", "병원명"];
-	};
-	$scope.setExcelData = function( viewData ) {
-		var tmp = new Object();
-		$scope.excelData = new Array();
-		angular.forEach( viewData, function( value, key ) {
-			tmp = new Object();
-			console.log( value, key );
-			tmp.userNm = value.userSeq.userNm;
-			tmp.hosptNm = value.hosptSeq.hosptNm;
-			$scope.excelData.push( tmp );
-		});
+	// datepicker 반환 형태 고정( object, 즉. 월 변경 시 date형으로 반환 됨 )
+	$scope.dateToYyyymm = function() {
+		if( typeof $scope.yyyymm == "string" )	 	return $scope.yyyymm;
+		else if( typeof $scope.yyyymm == "object" )	return $scope.yyyymm.format("%Y-%m");
 	};
 	
-	// 시작 시에 조회 수행
-	$scope.search();
+	/** 확인 모달 OK 이벤트 listen */
+	$scope.$on( 'modalConfirmYnOk', function( event, data ) {
+		if( data.modalConfirmYnType == "tpSearchConfirm" ) { 			// 검색
+			$scope.search();
+		} else if( data.modalConfirmYnType == "tpSaveConfirm" ) { 		// 저장
+			$scope.save();
+		} else if( data.modalConfirmYnType == "tpAppointConfirm" ) {	// 담당자 지정
+			console.log( $scope.selRow );
+			$scope.selRow.loginId 	= con_user_login_id;
+			$scope.selRow.userNm	= con_user_nm;
+			$scope.selRow.userSeq	= con_user_seq;
+		}
+	});
+	
+	/*
+	// 시작 시에 조회 수행 => 제품셀렉트박스 데이터 가져 온 후 조회 함
+	$q.when( $scope.prdgrpQ ).then(function (m) {
+		$scope.search();
+	});
+	*/
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,16 +364,6 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		$scope.dataTempEntity	= null;	// 임시 저장변수( 그리드 수정 시작/후 비교용 )
 		$scope.grid.selectAll(false);	// 전체 선택 해제
 	};
-	
-	/** 수정 불필요 
-	 	확인 모달 OK 이벤트 listen */
-	$scope.$on( 'modalConfirmYnOk', function( event, data ) {
-		if( data.modalConfirmYnType == "tpSearchConfirm" ) { 		// 검색
-			$scope.search();
-		} else if( data.modalConfirmYnType == "tpSaveConfirm" ) { 	// 저장
-			$scope.save();
-		}
-	});
 	
 	/** 수정 불필요 
 	 	행추가 */

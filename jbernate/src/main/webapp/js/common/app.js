@@ -6,4 +6,6 @@ var app	= angular.module('rootApp', [
 		                              , 'ngRoute'		// 라우터
 		                              , 'ngResource'	// 리소스
 		                              , 'ngEkathuwa'	// 모달창 
+		                              , 'ngSanitize'	// csv파일 다운로드를 위해
+		                              , 'ngCsv'			// csv파일 다운로드
 		                            ] );

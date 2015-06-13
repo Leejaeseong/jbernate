@@ -3,14 +3,15 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	// 변수 선언
 	$scope.dataTeamTempEntity	= null;	// 임시 저장변수( 그리드 수정 시작/후 비교용 )
 	$scope.max_i_seq			= con_i_max_seq;	// 신규 데이터인 경우 최대 값
+	$scope.excelData			= new Array();		// 엑셀 데이터
 	
 	// 그리드 정의
 	$scope.gridTeamMgr = collectProp( con_option_grid ,{
 			  data: 'dataTeamMgr'
 			, selectedItems: []
-			, columnDefs: [		{ field: "seq"		, displayName: "No"		, width: 120, pinned: true, enableCellEdit :false }
+			, columnDefs: [	 //{ field: "seq"		, displayName: "No"		, width: 120, pinned: true, enableCellEdit :false }
 			 	             //, 	{ field: "teamCd"	, displayName: "팀코드"	, width: 120 }
-			                 , 	{ field: "teamNm"	, displayName: "*팀명"	, width: 120 }
+			                  	{ field: "teamNm"	, displayName: "*팀명"	, width: 120 }
 			                 , 	{ field: "remk"		, displayName: "비고"	, width: 120 }
 						  ]
 	});
@@ -53,12 +54,14 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		$http.post('../../mp/P00009/load.json'
 					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm }
 			).success(function(data, status, headers, config){
-			// 통신
-			$scope.dataTeamMgr = data.viewData;	// 데이터 바인딩
-			
-			$scope.initData();
-			
-			console.log($scope.dataTeamMgr);
+				$scope.setExcelData( data.viewData );	// 엑셀 데이터 설정
+				
+				// 통신
+				$scope.dataTeamMgr = data.viewData;	// 데이터 바인딩
+				
+				$scope.initData();
+				
+				console.log($scope.dataTeamMgr);
 		}).error(function(data, status, headers, config) {
 		    $scope.modalAlert( con_msg_err_load_data );
 		});
@@ -173,5 +176,24 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 			  )
 		);
 	};
+	
+	// 엑셀
+	$scope.getHeader = function () {
+		console.log( "$scope.excelData", $scope.excelData );
+		return ["팀명", "비고"];
+	};
+	$scope.setExcelData = function( viewData ) {
+		var tmp = new Object();
+		$scope.excelData = new Array();
+		angular.forEach( viewData, function( value, key ) {
+			tmp = new Object();
+			tmp.userNm = value.userSeq.userNm;
+			tmp.hosptNm = value.hosptSeq.hosptNm;
+			$scope.excelData.push( tmp );
+		});
+	};
+	
+	// 시작 시에 조회 수행
+	$scope.teamMgrSearch();
 	
 });

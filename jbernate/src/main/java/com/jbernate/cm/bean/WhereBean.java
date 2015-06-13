@@ -20,7 +20,7 @@ public class WhereBean {
 	 * IN			: colVal[]
 	 * ISNULL		: isNull
 	 * ISNOTNULL	: isNotNull
-	 * BETWEEN		: between colVal.split( "," )[ 0 ] and colVal.split( "," )[ 1 ]
+	 * BETWEEN		: between LinkedList[0] and LinkedList[1]
 	 */
 	private String clause;	
 	public static enum Clause{ EQ, GT, LT, GE, LE, LIKEANY, LIKEPRE, LIKEPOST, IN, ISNULL, ISNOTNULL, BETWEEN };

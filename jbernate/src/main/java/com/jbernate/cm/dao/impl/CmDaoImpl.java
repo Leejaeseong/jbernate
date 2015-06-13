@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.jbernate.cm.bean.OrderBean;
 import com.jbernate.cm.bean.WhereBean;
@@ -333,7 +335,56 @@ public class CmDaoImpl implements CmDao{
 	 * @return			조건문이 추가된 Criteria
 	 */
 	private Criteria addWhereCriteria( Criteria criteria, List<WhereBean> wbList ) {
+		HashMap<String, String> aliMap = new HashMap<String, String>();
 		for( WhereBean wb : wbList ) {
+			
+			// alias 설정( subclass의 키가 아닌 다른 값 조회 시 필요 )
+			// TODO 3단계를 넘어가면 여전히 안 됨 ( ex. actualSeq.prdSeq.prdgrpSeq.seq )
+			if( StringUtils.countOccurrencesOf( wb.getColNm(), "." ) == 1 ) {
+				if( aliMap.get( wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ) ) != null ) continue;	// protect alias duplication
+				criteria.createAlias( wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ), wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ) );
+				aliMap.put( wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ), wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ) );
+			}else if( StringUtils.countOccurrencesOf( wb.getColNm(), "." ) > 1 ) {
+				int dotIdx = 0;
+				String alias = wb.getColNm().toString();
+				for( int i = 0; i < StringUtils.countOccurrencesOf( alias, "." ); i++ ) {
+					dotIdx = alias.indexOf( ".", dotIdx + 1 );
+					
+					if( aliMap.get( alias.substring( 0, dotIdx ) ) != null ) continue;	// protect alias duplication
+					criteria.createAlias( alias.substring( 0, dotIdx ), alias.substring( 0, dotIdx ) );
+					aliMap.put( alias.substring( 0, dotIdx ), alias.substring( 0, dotIdx ) );
+				}
+				
+				/*
+				criteria.createAlias( "actualSeq", "actualSeq" );
+				criteria.createAlias( "actualSeq.prdSeq", "actualSeq.prdSeq" );
+				criteria.createAlias( "actualSeq.prdSeq.prdgrpSeq", "actualSeq.prdSeq.prdgrpSeq" );
+				criteria.createAlias( "actualSeq.prdSeq.prdgrpSeq", "test" );
+				*/
+				
+				//String alias = wb.getColNm().toString();
+				//criteria.createAlias( alias.substring( 0, alias.lastIndexOf( "." ) ), alias.substring( 0, alias.lastIndexOf( "." ) ) );
+				
+				/*
+				criteria.createAlias( "prdSeq", "prdSeq" );
+				criteria.createAlias( "prdSeq.prdgrpSeq", "prdSeq.prdgrpSeq" );
+				*/
+				
+				//criteria.createAlias( wb.getColNm().substring( wb.getColNm().indexOf( "." ) + 1, wb.getColNm().lastIndexOf( "." ) ), wb.getColNm().substring( wb.getColNm().indexOf( "." ) + 1, wb.getColNm().lastIndexOf( "." ) ) );
+			}
+			/*
+			String alias = wb.getColNm().toString();
+			while( alias.indexOf( "." ) > -1 ) {	// alias 설정( subclass의 키가 아닌 다른 값 조회 시 필요 )
+				//criteria.createAlias( wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ), wb.getColNm().substring( 0, wb.getColNm().lastIndexOf( "." ) ).replace( ".", "_" ) );
+				criteria.createAlias( alias, alias.substring( 0, alias.indexOf( "." ) ) );
+				if( alias.length() > alias.indexOf( "." ) ){
+					if( alias.substring( alias.indexOf( "." ) + 1 ).equals( "seq" ) ) break;
+					alias = alias.substring( alias.indexOf( "." ) + 1 );
+				}
+				//if( alias.indexOf( "." ) > alias.length() ) alias = alias.substring( alias.indexOf( "." ) );
+			}
+			*/
+			
 			if( wb.getClause().equals( "EQ" ) ){ 				criteria.add( Restrictions.eq( 			wb.getColNm(), wb.getColVal() ) 																			);
 			}else if( wb.getColVal() != null 
 					&& wb.getClause().equals( "LIKEANY" ) ){ 	criteria.add( Restrictions.like( 		wb.getColNm(), wb.getColVal().toString(), MatchMode.ANYWHERE ) 												);
@@ -348,8 +399,15 @@ public class CmDaoImpl implements CmDao{
 			}else if( wb.getClause().equals( "IN" ) ) {			criteria.add( Restrictions.in( 			wb.getColNm(), (Object[])wb.getColVal() ) 																	);
 			}else if( wb.getClause().equals( "ISNULL" ) ){ 		criteria.add( Restrictions.isNull( 		wb.getColNm() ) 																							);
 			}else if( wb.getClause().equals( "ISNOTNULL" ) ){ 	criteria.add( Restrictions.isNotNull( 	wb.getColNm() ) 																							);
+			/*
 			}else if( wb.getColVal() != null 
 					&& wb.getClause().equals( "BETWEEN" ) ){ 	criteria.add( Restrictions.between(		wb.getColNm(), wb.getColVal().toString().split( "," )[ 0 ], wb.getColVal().toString().split( "," )[ 1 ] ) 	);
+			}
+			*/
+			}else if( wb.getColVal() != null 
+					&& wb.getClause().equals( "BETWEEN" ) ){
+				List al = (LinkedList)wb.getColVal();
+				criteria.add( Restrictions.between(		wb.getColNm(), al.get( 0 ), al.get( 1 ) ) 	);
 			}
 		}
 		return criteria;

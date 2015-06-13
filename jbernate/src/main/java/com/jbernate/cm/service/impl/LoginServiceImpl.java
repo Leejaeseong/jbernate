@@ -55,6 +55,7 @@ public class LoginServiceImpl implements LoginService{
 			sess.setAttribute( "roleCd"	, user.getRoleCd() );
 			sess.setAttribute( "teamNm"	, user.getTeamSeq().getTeamNm() );
 			sess.setAttribute( "loginId", user.getLoginId() );
+			sess.setAttribute( "userSeq", user.getSeq() 	);
 			sess.setAttribute( "userNm"	, user.getUserNm() 	);
 			
 			// cookie 정보

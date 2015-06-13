@@ -93,11 +93,11 @@ public class ActualMgr implements Serializable{
 
 	//
 	@ManyToOne
-	@JoinColumn( name = "PRDGRP_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
-	private PrdgrpMgr prdgrpSeq;
-	public PrdgrpMgr getPrdgrpSeq() {	return prdgrpSeq;	}
-	public void setPrdgrpSeq(PrdgrpMgr prdgrpSeq) {	this.prdgrpSeq = prdgrpSeq;	}
-
+	@JoinColumn( name = "USER_SEQ", referencedColumnName = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE" )
+	private UserMgr userSeq;
+	public UserMgr getUserSeq() {	return userSeq;	}
+	public void setUserSeq(UserMgr userSeq) {	this.userSeq = userSeq;	}
+	
 	//
 	@Column( name = "WHOLESAL_NM", length = 128, nullable = true ) 
 	private String wholesalNm;

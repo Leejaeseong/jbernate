@@ -20,7 +20,13 @@
 		        		저장
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default"">
+		    		<button type="button" class="btn btn-default"
+		    				ng-csv="excelData" 
+		    				csv-header="getHeader()" 
+		    				filename="team.txt" 
+		    				field-separator="," 
+		    				decimal-separator="."
+		    				>
 		        		엑셀
 		    		</button>
 				</div>

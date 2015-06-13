@@ -163,3 +163,26 @@ footer{
 	top			: 106px;
 	left		: 295px;
 }
+
+/* ng-grid Header grouping css */
+.gridHeaderDiv1 {
+	height : 30px;
+}
+.gridHeaderDiv2 {
+	height : 30px;
+}
+.gridHeaderDiv3 {
+	height : 30px;
+	margin-bottom: -10px;
+}
+.gridHeaderTable {
+	height : 30px;
+	background-color: #eaeaea;
+}
+.gridHeaderTd {
+	border: 1px;
+	border-color: #d4d4d4;
+	border-style: solid;
+	text-align: center;
+	width: 700px;
+}

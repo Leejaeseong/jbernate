@@ -21,8 +21,11 @@
     <script type="text/javascript" src="../../js/resource/angular-1.2.17.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-route.min.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-resource.min.js"></script>
+	<script type="text/javascript" src="../../js/resource/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="../../js/resource/ng-csv.js"></script>
     <script type="text/javascript" src="../../js/resource/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../js/resource/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+
 	<script type="text/javascript" src="../../js/resource/ng-grid.debug.js"></script>
 	<script type="text/javascript" src="../../js/resource/ekathuwa.min.js"></script>
 	

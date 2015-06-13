@@ -20,7 +20,9 @@
     <script type="text/javascript" src="../../js/resource/angular-1.2.17.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-route.min.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-resource.min.js"></script>
-    <script type="text/javascript" src="../../js/resource/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/resource/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="../../js/resource/ng-csv.js"></script>
+	<script type="text/javascript" src="../../js/resource/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../js/resource/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
 	<!--  
 	<script type="text/javascript" src="../../js/resource/ui-grid-unstable.js"></script>
@@ -41,16 +43,21 @@
     <script type="text/javascript" src="../../js/util/arrayUtil.js"></script>
     <script type="text/javascript" src="../../js/util/dateUtil.js"></script>
     
-    <script type="text/javascript" src="../../js/mp/teamMgr.js"></script>	<!-- 팀관리 			-->
-    <script type="text/javascript" src="../../js/mp/userMgr.js"></script>	<!-- 사용자관리 		-->
-    <script type="text/javascript" src="../../js/mp/grpPrdMgr.js"></script>	<!-- 제품그룹관리 		-->
-    <script type="text/javascript" src="../../js/mp/prdMgr.js"></script>	<!-- 제품관리 			-->
-    <script type="text/javascript" src="../../js/mp/hosptMgr.js"></script>	<!-- 병원관리 			-->
+    <script type="text/javascript" src="../../js/mp/teamMgr.js"></script>		<!-- 팀관리 			-->
+    <script type="text/javascript" src="../../js/mp/userMgr.js"></script>		<!-- 사용자관리 		-->
+    <script type="text/javascript" src="../../js/mp/grpPrdMgr.js"></script>		<!-- 제품그룹관리 		-->
+    <script type="text/javascript" src="../../js/mp/prdMgr.js"></script>		<!-- 제품관리 			-->
+    <script type="text/javascript" src="../../js/mp/hosptMgr.js"></script>		<!-- 병원관리 			-->
     
-    <script type="text/javascript" src="../../js/mp/rateMgr.js"></script>	<!-- RATE관리 			-->
-    <script type="text/javascript" src="../../js/mp/goalMgr.js"></script>	<!-- 목표관리 			-->
+    <script type="text/javascript" src="../../js/mp/rateMgr.js"></script>		<!-- RATE관리 			-->
+    <script type="text/javascript" src="../../js/mp/goalMgr.js"></script>		<!-- 목표관리 			-->
+    <script type="text/javascript" src="../../js/mp/actualMgr.js"></script>		<!-- 실적관리 			-->
+    
+    <script type="text/javascript" src="../../js/mp/resultMgr.js"></script>		<!-- 실적조회 			-->    
+    <script type="text/javascript" src="../../js/mp/historyMgr.js"></script>	<!-- 변경이력조회		-->
     
     <script type="text/javascript" src="../../js/mp/userPopMgr.js"></script>	<!-- 사용자관리 팝업 	-->
+    <script type="text/javascript" src="../../js/mp/historyPopMgr.js"></script>	<!-- 변경이력조회 팝업	-->
     
 	<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/ng-grid.css" />

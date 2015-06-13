@@ -28,7 +28,13 @@
 		        		엑셀업로드
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default"">
+		    		<button type="button" class="btn btn-default"
+		    				ng-csv="excelData" 
+		    				csv-header="getHeader()" 
+		    				filename="goal.txt" 
+		    				field-separator="," 
+		    				decimal-separator="."
+		    				>
 		        		엑셀
 		    		</button>
 				</div>
@@ -38,12 +44,12 @@
 				년도 <select 
 						ng-model="yyyy"
 						style="height:27px;">
-						<option ng-repeat="i in yyyyDataSelectBox" value="{{ i.yyyy }}">{{ i.yyyy}}</option>
+						<option ng-repeat="i in yyyyDataSelectBox" value="{{i.yyyy}}">{{i.yyyy}}</option>
 						</select>
 				&nbsp;&nbsp;&nbsp;
 				팀 <select 
 						ng-options="l.seq as l.teamNm for l in teamDataSelectBox"
-						ng-model="userSearchTeam"
+						ng-model="searchTeamSeq"
 						ng-cell-input
 						style="height:27px;">
 						<option value="" selected="selected">==ALL==</option>
@@ -65,7 +71,7 @@
 						<option value="" selected="selected">==ALL==</option>
 						</select>
 				&nbsp;&nbsp;&nbsp;
-				담당자명 <input type="text" maxlength="30" size="10" ng-model="userSearchUserNm"/>
+				담당자명 <input type="text" maxlength="30" size="10" ng-model="searchUserNm"/>
 			</div>
 			
 			<div class="areaGrid gridStyle1" ng-grid="grid">
