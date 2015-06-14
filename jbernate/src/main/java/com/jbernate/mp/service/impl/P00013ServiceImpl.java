@@ -79,6 +79,7 @@ public class P00013ServiceImpl implements P00013Service{
 			if( map.get( "CRUD" ).equals( "I" ) ) {
 				hospt = new HosptMgr();
 				
+				hospt.setHosptCd( map.get( "hosptCd" ).toString() );
 				hospt.setHosptNm( map.get( "hosptNm" ).toString() );
 				hospt.setAddr( map.get( "addr" ).toString() );
 				hospt.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );
@@ -89,6 +90,7 @@ public class P00013ServiceImpl implements P00013Service{
 				hospt = new HosptMgr( new BigDecimal( map.get( "seq" ).toString() ) );
 				hospt = (HosptMgr)cmService.get( req, hospt );
 				
+				hospt.setHosptCd( map.get( "hosptCd" ).toString() );
 				hospt.setHosptNm( map.get( "hosptNm" ).toString() );
 				hospt.setAddr( map.get( "addr" ).toString() );
 				hospt.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );

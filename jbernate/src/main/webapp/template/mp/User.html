@@ -1,6 +1,6 @@
 		<div ng-controller="ctrlUserMgr">
 			<div class="areaButton">
-				<div class="menuTitle">
+				<div class="menuTitle" style="margin-top: 0px;">
 					<i class="fa fa-youtube-play"></i> 사용자 관리
 				</div>
 				<div class="buttons">
@@ -32,7 +32,7 @@
 				아이디 <input type="text" maxlength="30" size="10" ng-model="userSearchLoginId"/>
 				&nbsp;&nbsp;&nbsp;
 				팀 <select 
-						ng-options="l.seq as l.teamNm for l in teamDataSelectBox"
+						ng-options="l.teamCd as l.teamNm for l in teamDataSelectBox"
 						ng-model="userSearchTeam"
 						ng-cell-input
 						style="height:27px;">

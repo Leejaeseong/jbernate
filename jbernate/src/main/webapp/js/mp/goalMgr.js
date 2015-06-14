@@ -50,7 +50,7 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 
 	// 팀 컬럼 템플릿
 	$scope.cellTeamTemplate = 		'<select '
-								+ 	'	ng-options="l.seq as l.teamNm for l in teamDataSelectBox" '
+								+ 	'	ng-options="l.teamCd as l.teamNm for l in teamDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
@@ -70,7 +70,7 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 								+	'></select>';
 	// 병원 컬럼 템플릿
 	$scope.cellHosptTemplate = 	'<select '
-								+ 	'	ng-options="l.seq as l.hosptNm for l in hosptDataSelectBox" '
+								+ 	'	ng-options="l.hosptCd as l.hosptNm for l in hosptDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
@@ -160,11 +160,11 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 				// 조회 데이터 가공
 				angular.forEach(data.viewData, function( value, key ) {
 					// 데이터를 리스트박스화
-					value.teamSeq 	= value.teamSeq.seq;
+					value.teamSeq 	= value.teamSeq.teamCd;
 					value.prdgrpSeq = value.prdgrpSeq.seq;
-					value.hosptSeq 	= value.hosptSeq.seq;
+					value.hosptSeq 	= value.hosptSeq.hosptCd;
 					value.userNm	= value.userSeq.userNm;
-					value.userSeq	= value.userSeq.seq;
+					value.userSeq	= value.userSeq.empCd;
 				});
 				
 				$scope.gridData = data.viewData;	// 데이터 바인딩
@@ -213,7 +213,7 @@ app.controller('ctrlGoalMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	
 	// 사용자 팝업에서 데이터를 선택
 	$scope.$on('popupSelectRow', function( target, rowItem ){
-		$scope.selRow.userSeq 	= rowItem.entity.seq;
+		$scope.selRow.userSeq 	= rowItem.entity.empCd;
 		$scope.selRow.userNm 	= rowItem.entity.userNm;
 		if( !$scope.selRow.hasOwnProperty( "CRUD" ) ) $scope.selRow.CRUD = "U";	// 변경 플래그 체크 후 강제 삽입
 		$q.when( $scope.userPop ).then(function (m) {

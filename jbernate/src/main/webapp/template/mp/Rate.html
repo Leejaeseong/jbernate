@@ -1,6 +1,6 @@
 		<div ng-controller="ctrlRateMgr">
 			<div class="areaButton">
-				<div class="menuTitle">
+				<div class="menuTitle" style="margin-top: 0px;">
 					<i class="fa fa-youtube-play"></i> RATE 관리
 				</div>
 				<div class="buttons">
@@ -20,9 +20,11 @@
 		        		저장
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default"">
-		        		양식다운로드
-		    		</button>
+		    		<a href="../../downTemplate/abc.xlsx" target="_blank">
+			    		<button type="button" class="btn btn-default"">
+			        		양식다운로드
+			    		</button>
+		    		</a>
 		    		
 		    		<button type="button" class="btn btn-default"" ng-show="isLast">
 		        		엑셀업로드

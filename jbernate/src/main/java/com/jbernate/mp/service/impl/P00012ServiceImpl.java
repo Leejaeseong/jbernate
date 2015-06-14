@@ -84,6 +84,7 @@ public class P00012ServiceImpl implements P00012Service{
 				
 				prd.setPrdgrpSeq( new PrdgrpMgr( new BigDecimal( map.get( "prdgrpSeq" ).toString() ) ) );
 				
+				prd.setPrdCd( map.get( "prdCd" ).toString() );
 				prd.setPrdNm( map.get( "prdNm" ).toString() );
 				prd.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );
 				prd.setUseYn( "Y" );
@@ -93,6 +94,7 @@ public class P00012ServiceImpl implements P00012Service{
 				prd = new PrdMgr( new BigDecimal( map.get( "seq").toString() ) );
 				prd = (PrdMgr)cmService.get( req, prd );
 				
+				prd.setPrdCd( map.get( "prdCd" ).toString() );
 				prd.setPrdNm( map.get( "prdNm" ).toString() );
 				prd.setPrdgrpSeq( new PrdgrpMgr( new BigDecimal( map.get( "prdgrpSeq" ).toString() ) ) );
 				prd.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );

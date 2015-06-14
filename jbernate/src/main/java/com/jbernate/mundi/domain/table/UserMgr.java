@@ -134,6 +134,12 @@ public class UserMgr implements Serializable{
 	private String roleCd;
 	public String getRoleCd() {	return roleCd;	}
 	public void setRoleCd(String roleCd) {	this.roleCd = roleCd;	}
+	
+	//
+	@Column( name = "EMP_CD", length = 1, nullable = false ) 
+	private String empCd;
+	public String getEmpCd() {	return empCd;	}
+	public void setEmpCd(String empCd) {	this.empCd = empCd;	}
 
 	//
 	@ManyToOne

@@ -25,6 +25,7 @@ import com.jbernate.cm.util.NumUtil;
 import com.jbernate.cm.util.StrUtil;
 import com.jbernate.mp.service.P00016Service;
 import com.jbernate.mp.util.MpConstUtil;
+import com.jbernate.mp.util.MpSearchUtil;
 import com.jbernate.mundi.domain.table.ActualMgr;
 import com.jbernate.mundi.domain.table.HosptMgr;
 import com.jbernate.mundi.domain.table.LogModHistory;
@@ -63,7 +64,7 @@ public class P00016ServiceImpl implements P00016Service{
 		wbList.add( new WhereBean( "userSeq.userNm"	, map.get( "searchUserNm" )		, Clause.LIKEANY ) );
 		wbList.add( new WhereBean( "wholesalNm"		, map.get( "searchWholesalNm" )	, Clause.LIKEANY ) );
 		wbList.add( new WhereBean( "salLocNm"		, map.get( "searchSalLocNm" )	, Clause.LIKEANY ) );
-		wbList.add( new WhereBean( "branchNm"		, map.get( "searchBrnchNm" )	, Clause.LIKEANY ) );
+		wbList.add( new WhereBean( "branchNm"		, map.get( "searchBranchNm" )	, Clause.LIKEANY ) );
 		
 		List rList = dao.list( req, new ActualMgr(), wbList );
 		
@@ -102,9 +103,12 @@ public class P00016ServiceImpl implements P00016Service{
 				
 				actual.setWholesalNm( StrUtil.nvlNull( map.get( "remk" ) ) );
 				actual.setYyyymm( ltMap.get( "yyyymm" ).toString().replaceAll( "-", "" ) );
-				actual.setPrdSeq( 	new PrdMgr( new BigDecimal( map.get( "prdSeq" ).toString() ) ) );
-				actual.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
-				actual.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				//actual.setPrdSeq( 	new PrdMgr( new BigDecimal( map.get( "prdSeq" ).toString() ) ) );
+				actual.setPrdSeq( MpSearchUtil.getOnePrdByCd( req, cmService, map.get( "prdSeq" ).toString() ) );
+				//actual.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
+				actual.setHosptSeq( MpSearchUtil.getOneHosptByCd( req, cmService, map.get( "hosptSeq" ).toString() ) );
+				//actual.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				actual.setUserSeq( MpSearchUtil.getOneUserByCd( req, cmService, map.get( "userSeq" ).toString() ) );
 				actual.setSalLocNm( StrUtil.nvlNull( map.get( "salLocNm" ) ) );
 				actual.setAddr( StrUtil.nvlNull( map.get( "addr" ) ) );
 				actual.setZipCd( StrUtil.nvlNull( map.get( "zipCd" ) ) );
@@ -123,9 +127,11 @@ public class P00016ServiceImpl implements P00016Service{
 				
 				actual.setWholesalNm( StrUtil.nvlNull( map.get( "wholesalNm" ) ) );
 				actual.setYyyymm( ltMap.get( "yyyymm" ).toString().replaceAll( "-", "" ) );
-				actual.setPrdSeq( 	new PrdMgr( new BigDecimal( map.get( "prdSeq" ).toString() ) ) );
-				actual.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
-				actual.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				//actual.setPrdSeq( 	new PrdMgr( new BigDecimal( map.get( "prdSeq" ).toString() ) ) );
+				actual.setPrdSeq( MpSearchUtil.getOnePrdByCd( req, cmService, map.get( "prdSeq" ).toString() ) );
+				//actual.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
+				actual.setHosptSeq( MpSearchUtil.getOneHosptByCd( req, cmService, map.get( "hosptSeq" ).toString() ) );
+				//actual.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
 				actual.setSalLocNm( StrUtil.nvlNull( map.get( "salLocNm" ) ) );
 				actual.setAddr( StrUtil.nvlNull( map.get( "addr" ) ) );
 				actual.setZipCd( StrUtil.nvlNull( map.get( "zipCd" ) ) );

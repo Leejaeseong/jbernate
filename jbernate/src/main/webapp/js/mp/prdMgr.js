@@ -31,6 +31,7 @@ app.controller('ctrlPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {	//
 	
 	// 컬럼 정의
 	$scope.columnDefs = [		{ field: "seq"			, displayName: "No"				, width:  40, pinned: true, enableCellEdit :false }
+							 , 	{ field: "prdCd"		, displayName: "*제품코드"		, width: 150 }
 						     , 	{ field: "prdNm"		, displayName: "*제품명"		, width: 300 }
 						     , 	{ field: "prdgrpSeq"	, displayName: "*제품그룹"		, width: 200
 						    	 	, enableCellEdit :false
@@ -89,7 +90,8 @@ app.controller('ctrlPrdMgr',function($scope, $http, $ekathuwa, $q, $filter) {	//
 					&&	value.hasOwnProperty( "CRUD" )!= "D" )	// 삭제는 필수값 검사 불필요
 					&&
 				(
-						chkBlank( value.prdNm )				// 제품명
+						chkBlank( value.prdCd )				// 제품코드
+					||	chkBlank( value.prdNm )				// 제품명
 					|| 	chkBlank( value.prdgrpSeq )			// 제품그룹SEQ
 				)
 			) {	

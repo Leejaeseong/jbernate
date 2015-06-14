@@ -25,5 +25,8 @@ var con_msg_save_ok	= "저장되었습니다.";
 /** 메시지 > 알림 > 저장에 실패하였습니다 */
 var con_msg_save_fail	= "저장에 실패하였습니다.";
 
+/** 메시지 > 알림 > 해당 항목은 수정이 불가능 합니다. */
+var con_msg_not_granted_update_row	= "해당 항목은 수정이 불가능 합니다.";
+
 /** 메시지 > 알림 > 담당자를 본인으로 변경하시겠습니까? */
 var con_msg_conf_appoint_user	= "담당자를 본인으로 변경하시겠습니까?";

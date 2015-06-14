@@ -48,7 +48,7 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	*/
 	$scope.cellPwdTemplate = 	'<input ng-class="\'colt\' + col.index" ng-model="COL_FIELD" type="password"/>';
 	$scope.cellSelectEditableTemplate = 	'<select '
-										+ 	'	ng-options="l.seq as l.teamNm for l in teamDataSelectBox" '
+										+ 	'	ng-options="l.teamCd as l.teamNm for l in teamDataSelectBox" '
 										+ 	'	data-placeholder="-- Select One --" '
 										+ 	'	ng-model="COL_FIELD" '
 										+ 	'	ng-class="\'colt\' + $index" '
@@ -64,6 +64,7 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	
 	// 컬럼 정의
 	$scope.columnDefs = [		{ field: "seq"			, displayName: "No"				, width:  40, pinned: true, enableCellEdit :false }
+							 , 	{ field: "empCd"		, displayName: "*사번"			, width: 120 }
 						     , 	{ field: "userNm"		, displayName: "*이름"			, width: 120 }
 						     , 	{ field: "loginId"		
 						    	 	, displayName: "*아이디"		
@@ -164,7 +165,7 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 					
 					// 팀정보 리스트박스화
 					value.teamNm = value.teamSeq.teamNm;
-					value.teamSeq = value.teamSeq.seq;
+					value.teamSeq = value.teamSeq.teamCd;
 					
 				});
 			
@@ -250,7 +251,8 @@ app.controller('ctrlUserMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 					&&	value.hasOwnProperty( "CRUD" )!= "D" )				// 삭제는 필수값 검사 불필요
 					&&
 				(
-						chkBlank( value.userNm )							// 사용자명
+						chkBlank( value.empCd )								// 사번코드
+					||	chkBlank( value.userNm )							// 사용자명
 					||  chkBlank( value.loginId )							// 로그인아이디
 					||	( value.CRUD == "I" && chkBlank( value.loginPwd ) )	// 행추가이고, 로그인 비밀번호
 					||	chkBlank( value.teamSeq )							// 팀

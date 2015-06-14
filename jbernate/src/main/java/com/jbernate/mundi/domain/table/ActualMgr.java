@@ -172,4 +172,33 @@ public class ActualMgr implements Serializable{
 	public HosptMgr getHosptSeq() {	return hosptSeq;	}
 	public void setHosptSeq(HosptMgr hosptSeq) {	this.hosptSeq = hosptSeq;	}
 
+	//
+	@Column( name = "STANDARD", length = 30, nullable = true ) 
+	private String standard;
+	public String getStandard() {	return standard;	}
+	public void setStandard(String standard) {	this.standard = standard;	}
+	
+	//
+	@Column( name = "MFDS_NO", length = 30, nullable = true ) 
+	private String mfdsNo;
+	public String getMfdsNo() {	return mfdsNo;	}
+	public void setMfdsNo(String mfdsNo) {	this.mfdsNo = mfdsNo;	}
+	
+	//
+	@Column( name = "PACK_DESC", length = 30, nullable = true ) 
+	private String packDesc;
+	public String getPackDesc() {	return packDesc;	}
+	public void setPackDesc(String packDesc) {	this.packDesc = packDesc;	}
+	
+	//
+	@Column( name = "BOX_CNT", precision = 22, scale = 3, nullable = true ) 
+	private BigDecimal boxCnt;
+	public BigDecimal getBoxCnt() {	return boxCnt;	}
+	public void setBoxCnt(BigDecimal boxCnt) {	this.boxCnt = boxCnt;	}
+	
+	//
+	@Column( name = "CONV_CNT", precision = 22, scale = 3, nullable = true ) 
+	private BigDecimal convCnt;
+	public BigDecimal getConvCnt() {	return convCnt;	}
+	public void setConvCnt(BigDecimal convCnt) {	this.convCnt = convCnt;	}
 }

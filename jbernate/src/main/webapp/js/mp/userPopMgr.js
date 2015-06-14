@@ -21,8 +21,9 @@ app.controller('ctrlUserPopMgr',function($scope, $http, $ekathuwa, $q, $filter) 
 		+	'	ng-disabled="true"></select>';
 	
 	// 컬럼 정의
-	$scope.columnDefs = [		{ field: "userNm"		, displayName: "*이름"		, width: 120 }
-						     , 	{ field: "loginId" 		, displayName: "*아이디"	, width: 120 }
+	$scope.columnDefs = [		{ field: "empCd"		, displayName: "*사번"		, width: 120 }
+							 ,  { field: "userNm"		, displayName: "*이름"		, width: 80 }
+						     , 	{ field: "loginId" 		, displayName: "*아이디"	, width: 80 }
 						     , 	{ field: "teamSeq"		, displayName: "*팀"		, width: 120
 						    	  	, enableCellEdit :false
 						    	 	, cellTemplate : $scope.cellSelectEditableTemplate

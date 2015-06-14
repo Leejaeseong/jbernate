@@ -24,6 +24,7 @@ import com.jbernate.cm.util.SecuUtil;
 import com.jbernate.cm.util.StrUtil;
 import com.jbernate.mp.service.P00010Service;
 import com.jbernate.mp.util.MpConstUtil;
+import com.jbernate.mp.util.MpSearchUtil;
 import com.jbernate.mundi.domain.table.TeamMgr;
 import com.jbernate.mundi.domain.table.UserMgr;
 
@@ -51,7 +52,8 @@ public class P00010ServiceImpl implements P00010Service{
 		wbList.add( new WhereBean( "userNm"	, map.get( "searchUserNm" )	, Clause.LIKEANY ) );
 		wbList.add( new WhereBean( "loginId", map.get( "searchLoginId" ), Clause.LIKEANY ) );
 		if( StrUtil.chkBlank( map.get( "searchTeam" ) ) ) {
-			wbList.add( new WhereBean( "teamSeq.seq", new BigDecimal( map.get( "searchTeam" ).toString() ), Clause.EQ ) );
+			//wbList.add( new WhereBean( "teamSeq.seq", new BigDecimal( map.get( "searchTeam" ).toString() ), Clause.EQ ) );
+			wbList.add( new WhereBean( "teamSeq.teamCd", map.get( "searchTeam" ).toString(), Clause.EQ ) );
 		}
 		List rList = dao.list( req, new UserMgr(), wbList );
 		
@@ -77,8 +79,10 @@ public class P00010ServiceImpl implements P00010Service{
 			if( map.get( "CRUD" ).equals( "I" ) ) {
 				user = new UserMgr();
 				
-				user.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				//user.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				user.setTeamSeq( MpSearchUtil.getOneTeamByCd( req, cmService, map.get( "teamCd" ).toString() ) );
 				user.setRoleCd( MpConstUtil.MP_ROLE_EMPLOYEE );	// 사용자 권한
+				user.setEmpCd( map.get( "empCd" ).toString() );
 				user.setLoginId( map.get( "loginId" ).toString() );
 				user.setLoginPwd( SecuUtil.getSha256( map.get( "loginPwd" ).toString() ) );
 				user.setUserNm( map.get( "userNm" ).toString() );
@@ -93,8 +97,10 @@ public class P00010ServiceImpl implements P00010Service{
 				user = new UserMgr( new BigDecimal( map.get( "seq").toString() ) );
 				user = (UserMgr)cmService.get( req, user );
 				
-				user.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				//user.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				user.setTeamSeq( MpSearchUtil.getOneTeamByCd( req, cmService, map.get( "teamSeq" ).toString() ) );
 				if( StrUtil.chkBlank( map.get( "loginPwd" ) ) ) { user.setLoginPwd( SecuUtil.getSha256( map.get( "loginPwd" ).toString() ) ); }
+				user.setEmpCd( map.get( "empCd" ).toString() );
 				user.setUserNm( map.get( "userNm" ).toString() );
 				user.setWrkStDt( DateUtil.strToDt( map.get( "wrkStDt" ).toString(), "yyyy-MM-dd" ) );
 				user.setWrkRegion( StrUtil.nvlNull( map.get( "wrkRegion" ) ) );

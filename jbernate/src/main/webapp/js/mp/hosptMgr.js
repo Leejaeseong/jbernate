@@ -7,6 +7,7 @@ app.controller('ctrlHosptMgr',function($scope, $http, $ekathuwa, $q, $filter) {	
 			
 	// 컬럼 정의
 	$scope.columnDefs = [		{ field: "seq"		, displayName: "No"			, width:  40, pinned: true, enableCellEdit :false }
+							 , 	{ field: "hosptCd"	, displayName: "*병원코드"	, width: 200 }
 						     , 	{ field: "hosptNm"	, displayName: "*병원명"	, width: 200 }
 						     , 	{ field: "addr"		, displayName: "주소"		, width: 200 }
 						    , 	{ field: "remk"		, displayName: "비고"		, width: 120 }
@@ -55,7 +56,8 @@ app.controller('ctrlHosptMgr',function($scope, $http, $ekathuwa, $q, $filter) {	
 					&&	value.hasOwnProperty( "CRUD" )!= "D" )	// 삭제는 필수값 검사 불필요
 					&&
 				(
-						chkBlank( value.hosptNm )	// 병원명						
+						chkBlank( value.hosptCd )	// 병원코드						
+					||	chkBlank( value.hosptNm )	// 병원명						
 				)
 			) {	
 				valOk = false;

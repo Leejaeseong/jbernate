@@ -69,7 +69,7 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 								+	'	/></div>';
 	// 제품 컬럼 템플릿
 	$scope.cellPrdTemplate = 	'<select '
-								+ 	'	ng-options="l.seq as l.prdNm for l in prdDataSelectBox" '
+								+ 	'	ng-options="l.prd as l.prdNm for l in prdDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
@@ -80,7 +80,7 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 								+	'></select>';
 	// 병원 컬럼 템플릿
 	$scope.cellHosptTemplate = 	'<select '
-								+ 	'	ng-options="l.seq as l.hosptNm for l in hosptDataSelectBox" '
+								+ 	'	ng-options="l.hospt as l.hosptNm for l in hosptDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
@@ -120,10 +120,15 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 								}
 							, 	{ field: "salLocNm"		, displayName: "매출처"		, width: 120, enableCellEdit : $scope.conIsAdmin }
 							, 	{ field: "addr"			, displayName: "주소"		, width: 120, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "mfdsNo"		, displayName: "식약처번호"	, width: 120, enableCellEdit : $scope.conIsAdmin }
 							, 	{ field: "zipCd"		, displayName: "우편번호"	, width: 120, enableCellEdit : $scope.conIsAdmin }
-							, 	{ field: "salCnt"		, displayName: "수량" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
-							, 	{ field: "unitPrc"		, displayName: "단가" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
-							, 	{ field: "salAmt"		, displayName: "금액" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "standard"		, displayName: "규격" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "unitPrc"		, displayName: "*단가" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "salCnt"		, displayName: "*수량" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "salAmt"		, displayName: "*금액" 		, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "boxCnt"		, displayName: "포장수량"	, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "convCnt"		, displayName: "환산수량"	, width: 100, enableCellEdit : $scope.conIsAdmin }
+							, 	{ field: "packDesc"		, displayName: "완포장/소분", width: 100, enableCellEdit : $scope.conIsAdmin }
 							, 	{ field: "hosptSeq"		, displayName: "*병원"		, width: 150
 									, enableCellEdit :false
 									, cellTemplate : $scope.cellHosptTemplate
@@ -171,8 +176,12 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 				$scope.selRow = rowItem.entity;
 				$scope.userPop = $scope.modalTempURL( "../../template/mp/UserPop.html", 1000, 500, null );
 			} else {
-				$scope.selRow = rowItem.entity;
-				$scope.modalConfirmYn( con_msg_conf_appoint_user, 'tpAppointConfirm' );
+				if( rowItem.entity.modYn == "Y" ) {	// 수정이 가능한 상태라면 
+					$scope.selRow = rowItem.entity;
+					$scope.modalConfirmYn( con_msg_conf_appoint_user, 'tpAppointConfirm' );
+				}else {
+					$scope.modalAlert( con_msg_not_granted_update_row );
+				}
 			}
 		}else if( field == "history" ) {	// 변경이력
 			$scope.modalTempURL( "../../template/mp/HistoryPop.html", 700, 500, rowItem.entity.seq );
@@ -199,11 +208,11 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 				// 조회 데이터 가공
 				angular.forEach(data.viewData, function( value, key ) {
 					// 데이터를 리스트박스화
-					value.prdSeq 	= value.prdSeq.seq;
-					value.hosptSeq 	= value.hosptSeq.seq;
+					value.prdSeq 	= value.prdSeq.prdCd;
+					value.hosptSeq 	= value.hosptSeq.hosptCd;
 					value.userNm	= value.userSeq.userNm;
 					value.loginId	= value.userSeq.loginId;
-					value.userSeq	= value.userSeq.seq;
+					value.userSeq	= value.userSeq.empCd;
 				});
 				
 				$scope.gridData 	= data.viewData;	// 데이터 바인딩
@@ -245,6 +254,10 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 				(
 						chkBlank( value.hosptSeq )			// 병원SEQ
 					|| 	chkBlank( value.userSeq )			// 담당자SEQ
+					|| 	chkBlank( value.prdSeq )			// 제품
+					|| 	chkBlank( value.unitPrc )			// 단가			
+					|| 	chkBlank( value.salCnt )			// 수량
+					|| 	chkBlank( value.salAmt )			// 금액
 				)
 			) {	
 				valOk = false;

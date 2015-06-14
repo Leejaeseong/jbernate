@@ -1,6 +1,6 @@
 		<div ng-controller="ctrlActualMgr">
 			<div class="areaButton">
-				<div class="menuTitle">
+				<div class="menuTitle" style="margin-top: 0px;">
 					<i class="fa fa-youtube-play"></i> 실적 관리
 				</div>
 				<div class="buttons">
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 			
-			<div class="areaSearch" style="height: 85px;">
+			<div class="areaSearch" style="height: 85px; margin-top: 0px;">
 				<div class="col-md-6" style="width:220px; float: left;">
 					<p class="input-group">
 						<input 	type="month" 
@@ -62,7 +62,7 @@
 				<div style="width:180px; float: left;">
 					제품 <select
 							ng-model="searchPrdSeq"
-							ng-options="l.seq as l.prdNm for l in prdDataSelectBox"
+							ng-options="l.prdCd as l.prdNm for l in prdDataSelectBox"
 							ng-cell-input
 							style="height:27px; width:118px;">
 							<option value="" selected="selected">==ALL==</option>
@@ -71,7 +71,7 @@
 				<div style="width:200px; float: left;">
 					병원 <select
 							ng-model="searchHosptSeq"
-							ng-options="l.seq as l.hosptNm for l in hosptDataSelectBox"
+							ng-options="l.hospt as l.hosptNm for l in hosptDataSelectBox"
 							ng-cell-input
 							style="height:27px;">
 							<option value="" selected="selected">==ALL==</option>
@@ -95,7 +95,7 @@
 				</div>
 			</div>
 			
-			<div class="areaGrid gridStyle1" ng-grid="grid">
+			<div class="areaGrid gridStyle1" ng-grid="grid" style="margin-top: 0px;">
 			</div>
 			
 		</div>

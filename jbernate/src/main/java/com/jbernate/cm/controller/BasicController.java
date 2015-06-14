@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -98,7 +99,7 @@ public class BasicController {
 			, Model model
 			, HttpServletRequest request
 			, HttpServletResponse response
-			, @RequestBody String postPayload	// Json 데이터를 받기 위함
+			, @RequestBody String postPayload	// Json 데이터를 받기 위함			
 	) {
 		sbValidator.validate( sb, result );
 		

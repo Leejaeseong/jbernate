@@ -47,6 +47,9 @@ public class ConstUtil {
 	/** 형식 > 컨트롤러 명령어 > 페이지 로딩 */
 	public static final String FORMAT_CONTROLLER_COMMAND_LOAD	= "load";
 	
+	/** 형식 > 컨트롤러 명령어 > 페이지 로딩 */
+	public static final String FORMAT_CONTROLLER_COMMAND_EXCEL	= "excel";
+	
 	/** 형식 > 컨트롤러 명령어 > 전송( submit ) */
 	public static final String FORMAT_CONTROLLER_COMMAND_SUBMIT	= "submit";
 	

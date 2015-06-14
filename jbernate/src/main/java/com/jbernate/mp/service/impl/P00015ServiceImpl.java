@@ -22,6 +22,7 @@ import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.NumUtil;
 import com.jbernate.cm.util.StrUtil;
 import com.jbernate.mp.service.P00015Service;
+import com.jbernate.mp.util.MpSearchUtil;
 import com.jbernate.mundi.domain.table.GoalMgr;
 import com.jbernate.mundi.domain.table.HosptMgr;
 import com.jbernate.mundi.domain.table.PrdgrpMgr;
@@ -51,13 +52,15 @@ public class P00015ServiceImpl implements P00015Service{
 		ArrayList wbList = new ArrayList<WhereBean>();
 		wbList.add( new WhereBean( "yyyy"	, map.get( "searchYyyy" ).toString().replaceAll( "-", "" ) , Clause.EQ ) );
 		if( StrUtil.chkBlank( map.get( "searchTeamSeq" ) ) ) {
-			wbList.add( new WhereBean( "teamSeq.seq", new BigDecimal( map.get( "searchTeamSeq" ).toString() ), Clause.EQ ) );
-		}		
+			//wbList.add( new WhereBean( "teamSeq.seq", new BigDecimal( map.get( "searchTeamSeq" ).toString() ), Clause.EQ ) );
+			wbList.add( new WhereBean( "teamSeq.teamCd", map.get( "searchTeamSeq" ).toString(), Clause.EQ ) );
+		}
 		if( StrUtil.chkBlank( map.get( "searchPrdgrpSeq" ) ) ) {
 			wbList.add( new WhereBean( "prdgrpSeq.seq", new BigDecimal( map.get( "searchPrdgrpSeq" ).toString() ), Clause.EQ ) );
-		}		
+		}
 		if( StrUtil.chkBlank( map.get( "searchHosptSeq" ) ) ) {
-			wbList.add( new WhereBean( "hosptSeq.seq", new BigDecimal( map.get( "searchHosptSeq" ).toString() ), Clause.EQ ) );
+			//wbList.add( new WhereBean( "hosptSeq.seq", new BigDecimal( map.get( "searchHosptSeq" ).toString() ), Clause.EQ ) );
+			wbList.add( new WhereBean( "hosptSeq.hosptCd", map.get( "searchHosptSeq" ).toString(), Clause.EQ ) );
 		}
 		wbList.add( new WhereBean( "userSeq.userNm"	, map.get( "searchUserNm" ), Clause.LIKEANY ) );
 		
@@ -89,10 +92,13 @@ public class P00015ServiceImpl implements P00015Service{
 				
 				goal.setYyyy( ltMap.get( "yyyy" ).toString().replaceAll( "-", "" ) );
 				
-				goal.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				//goal.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				goal.setTeamSeq( MpSearchUtil.getOneTeamByCd( req, cmService, map.get( "teamSeq" ).toString() ) );
 				goal.setPrdgrpSeq( 	new PrdgrpMgr( new BigDecimal( map.get( "prdgrpSeq" ).toString() ) ) );
-				goal.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
-				goal.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				//goal.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
+				goal.setHosptSeq( MpSearchUtil.getOneHosptByCd( req, cmService, map.get( "hosptSeq" ).toString() ) );
+				//goal.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				goal.setUserSeq( MpSearchUtil.getOneUserByCd( req, cmService, map.get( "userSeq" ).toString() ) );
 				goal.setMon1( 		new BigDecimal( NumUtil.intNumVal( map.get( "mon1" 	) ) ) );
 				goal.setMon2( 		new BigDecimal( NumUtil.intNumVal( map.get( "mon2" 	) ) ) );
 				goal.setMon3( 		new BigDecimal( NumUtil.intNumVal( map.get( "mon3" 	) ) ) );
@@ -113,10 +119,13 @@ public class P00015ServiceImpl implements P00015Service{
 				goal = new GoalMgr( new BigDecimal( map.get( "seq" ).toString() ) );
 				goal = (GoalMgr)cmService.get( req, goal );
 				
-				goal.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				//goal.setTeamSeq( new TeamMgr( new BigDecimal( map.get( "teamSeq" ).toString() ) ) );
+				goal.setTeamSeq( MpSearchUtil.getOneTeamByCd( req, cmService, map.get( "teamSeq" ).toString() ) );
 				goal.setPrdgrpSeq( 	new PrdgrpMgr( new BigDecimal( map.get( "prdgrpSeq" ).toString() ) ) );
-				goal.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
-				goal.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				//goal.setHosptSeq( 	new HosptMgr( new BigDecimal( map.get( "hosptSeq" ).toString() ) ) );
+				goal.setHosptSeq( MpSearchUtil.getOneHosptByCd( req, cmService, map.get( "hosptSeq" ).toString() ) );
+				//goal.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				goal.setUserSeq( MpSearchUtil.getOneUserByCd( req, cmService, map.get( "userSeq" ).toString() ) );
 				goal.setMon1( 		new BigDecimal( NumUtil.intNumVal( map.get( "mon1" 	) ) ) );
 				goal.setMon2( 		new BigDecimal( NumUtil.intNumVal( map.get( "mon2" 	) ) ) );
 				goal.setMon3( 		new BigDecimal( NumUtil.intNumVal( map.get( "mon3" 	) ) ) );

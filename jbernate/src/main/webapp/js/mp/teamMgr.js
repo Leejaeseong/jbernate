@@ -9,9 +9,9 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	$scope.gridTeamMgr = collectProp( con_option_grid ,{
 			  data: 'dataTeamMgr'
 			, selectedItems: []
-			, columnDefs: [	 //{ field: "seq"		, displayName: "No"		, width: 120, pinned: true, enableCellEdit :false }
-			 	             //, 	{ field: "teamCd"	, displayName: "팀코드"	, width: 120 }
-			                  	{ field: "teamNm"	, displayName: "*팀명"	, width: 120 }
+			, columnDefs: [	 	{ field: "seq"		, displayName: "No"		, width: 120, pinned: true, enableCellEdit :false }
+			 	             , 	{ field: "teamCd"	, displayName: "팀코드"	, width: 120 }
+			                 , 	{ field: "teamNm"	, displayName: "*팀명"	, width: 120 }
 			                 , 	{ field: "remk"		, displayName: "비고"	, width: 120 }
 						  ]
 	});
@@ -60,8 +60,6 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 				$scope.dataTeamMgr = data.viewData;	// 데이터 바인딩
 				
 				$scope.initData();
-				
-				console.log($scope.dataTeamMgr);
 		}).error(function(data, status, headers, config) {
 		    $scope.modalAlert( con_msg_err_load_data );
 		});
@@ -142,6 +140,7 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		angular.forEach($scope.dataTeamMgr, function( value, key ) {
 			if( 		value.hasOwnProperty( "CRUD" )			// CRUD 플래그가 있는것만 검사
 					&&	value.hasOwnProperty( "CRUD" )!= "D"	// 삭제는 필수값 검사 불필요
+					&&  chkBlank( value.teamCd ) 
 					&&  chkBlank( value.teamNm ) 
 			) {	
 				valOk = false;
@@ -179,16 +178,15 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 	
 	// 엑셀
 	$scope.getHeader = function () {
-		console.log( "$scope.excelData", $scope.excelData );
 		return ["팀명", "비고"];
 	};
 	$scope.setExcelData = function( viewData ) {
 		var tmp = new Object();
 		$scope.excelData = new Array();
 		angular.forEach( viewData, function( value, key ) {
-			tmp = new Object();
-			tmp.userNm = value.userSeq.userNm;
-			tmp.hosptNm = value.hosptSeq.hosptNm;
+			tmp 		= new Object();
+			tmp.teamNm 	= value.teamNm;
+			tmp.remk 	= value.remk;
 			$scope.excelData.push( tmp );
 		});
 	};
