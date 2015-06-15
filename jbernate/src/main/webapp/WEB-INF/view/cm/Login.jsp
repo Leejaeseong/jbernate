@@ -52,6 +52,15 @@
 			border-width	: 1px;
 			border-style	: none;
 		}
+		.browserDownCss{
+			width			: 915px;
+			height			: 150px;
+			position		: absolute;
+			left			: 50%;
+			top				: 50%;
+			margin			: -280px 0 0 140px;
+			z-index			: 9999
+		}
 		.inputIdLabelCss{
 			width			: 915px;
 			height			: 551px;
@@ -123,6 +132,11 @@
 
 <body style="overflow: hidden;" ng-controller="loginController">
 	
+	<div class="browserDownCss">
+		화면이 깔끔하게 보이지 않거나 동작이 안되는 경우<br/>
+		크롬 브라우저를 추천드립니다.(<a href="http://www.google.co.kr/chrome/browser/desktop/" target="_blank">다운로드</a>)
+	</div>
+		
 	<form id="loginFrm" name="loginFrm" method="post" action="/cm/Login/submit">
 		<div class="loginImgCss">
 			<img src="../../img/login.gif"/>
@@ -159,6 +173,5 @@
 			<input type="checkbox" name="cbRemId" style="vertical-align: top;" ng-model="modelCbRemId"/> save id
 		</div>
 	</form>
-
 </body>
 </html>

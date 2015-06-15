@@ -13,5 +13,6 @@
 		
 	</footer>
 	
+	<iframe name="downloadIFrame" style="visibility: hidden;"></iframe>
 </body>
 </html>
