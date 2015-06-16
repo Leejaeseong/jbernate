@@ -27,15 +27,19 @@
 
 	<!-- URL 확장자와 AcceptHeader를 사용하는 ViewResolver -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
 		<property name="mediaTypes">	<!-- 확장자에 따른 Mapping -->
 			<map>
-				<entry key="atom" value="application/atom+xml" />
-				<entry key="html" value="text/html" />
-				<entry key="json" value="application/json" />
+				<entry key="atom"  value="application/atom+xml" />
+				<entry key="html"  value="text/html" />
+				<entry key="json"  value="application/json" />
 				<entry key="jsonp" value="javascript/jsonp" />
+				<entry key="xls"   value="application/vnd.ms-excel" />
+<!-- 				<entry key="xlsx"  value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" /> -->
 			</map>
 		</property>
-		<property name="viewResolvers">	<!-- View를 찾기위해 사용하는 ViewResolver -->
+		<!-- View를 찾기위해 사용하는 ViewResolver -->
+		<property name="viewResolvers">	
 			<list>
 				<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 					<property name="order" value="1" />
@@ -53,9 +57,12 @@
 				<bean class="com.jbernate.cm.resolver.JSONPView">
                 	<property name="contentType" value="javascript/jsonp; charset=utf-8"/>			<!-- Jsonp view -->
             	</bean>
+            	<bean id="excelView"  class="com.jbernate.cm.resolver.ExcelDownView"  />				<!-- Excel View -->
 			</list>
 		</property>
+<!-- 		<property name="ignoreAcceptHeader" value="true" />  -->
 	</bean>
+
 	
 	<!-- Exception resolver -->
 	<bean id="exceptionResolver" class="com.jbernate.cm.resolver.BaseExceptionResolver">

@@ -20,6 +20,9 @@ import com.jbernate.cm.bean.WhereBean.Clause;
 import com.jbernate.cm.dao.CmDao;
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.StrUtil;
+import com.jbernate.cm.util.excel.CellElement;
+import com.jbernate.cm.util.excel.ExcelConfig;
+import com.jbernate.cm.util.excel.ExcelMake;
 import com.jbernate.mp.service.P00009Service;
 import com.jbernate.mundi.domain.table.TeamMgr;
 
@@ -37,7 +40,7 @@ public class P00009ServiceImpl implements P00009Service{
 	@Override
 	@SuppressWarnings("rawtypes")	
 	public Model load( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload ) {
-		
+
 		Gson gson = new Gson();
 		
 		LinkedTreeMap map = new LinkedTreeMap();
@@ -54,7 +57,33 @@ public class P00009ServiceImpl implements P00009Service{
 			wbList.add( new WhereBean( "teamNm", map.get( "searchTeamNm" ), Clause.LIKEANY ) );
 		}
 		List rList = dao.list( req, new TeamMgr(), wbList );
-		
+
+		String reqType = req.getAttribute( "org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping" ).toString();
+				
+		if ( reqType.lastIndexOf( ".xls" ) != -1 ) {
+
+			List<CellElement> cellElements = new ArrayList<CellElement>();
+
+//			cellElements.add( new CellElement( "필드명", "엑셀에 표시할 필드명", 필드폭(정수), new java.text.MessageFormat(format) ) );
+			cellElements.add( new CellElement( "seq"	, "SEQ"		,  40 ) );
+			cellElements.add( new CellElement( "teamCd"	, "팀코드"	, 100 ) );
+			cellElements.add( new CellElement( "teamNm"	, "팀명"	, 200 ) );
+			cellElements.add( new CellElement( "remk"	, "비고"	, 400 ) );
+			cellElements.add( new CellElement( "useYn"	, "사용"	,  40 ) );
+
+			ExcelConfig config = new ExcelConfig();
+
+			config.setFileName( "팀관리.xls" );
+			config.setExcelTitle( "팀관리" );
+			config.setSheetName( "팀관리" );
+			config.setCellElements( cellElements );
+			config.setNumberingCellElement( new CellElement( "", "번호", 10 ) );
+
+			model.addAttribute( "config", config );
+
+			model.addAttribute( "excelMakeType", ExcelMake.PLAIN_XLS );	//	평범한(?) 엑셀을 만듦
+		}
+
 		model.addAttribute( "viewData", rList );
 		
 		return model;
