@@ -192,32 +192,36 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 //		$http.post('../../mp/P00009/load.xls'
 //					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }
 //			);
-//		$http.post('../../mp/P00009/load.xls'
-//					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }
-//			).success(function(data, status, headers, config){
-//				// 통신
-//				console.log($scope.dataTeamMgr);
-//			}).error(function(data, status, headers, config) {
-//			    $scope.modalAlert( con_msg_err_load_data );
-//			})
-//		;
-		$http( {
-			      url			:	'../../mp/P00009/load.xls'
-			    , method		:	"POST"
-			    , data			:	{ "searchTeamNm" : $scope.teamMgrSearchTeamNm }
-			    , headers		:	{ 'Content-type': 'application/json' }
-			    , responseType	:	'arraybuffer'
-			} ).success( function ( data, status, headers, config ) {
+		$http.post('../../mp/P00009/load.xls'												//	url
+					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }		//	data
+					, { "responseType" : 'blob' }											//	config
+			).success( function( data, status, headers, config ) {
+				// 통신
 				if ( status == 200 ) {
-					//var blob = new Blob( [data], { type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } );
-					var blob = new Blob( [data], { type : "application/vnd.ms-excel" } );
-					var objectUrl = URL.createObjectURL( blob );
+					var objectUrl = URL.createObjectURL( data );
 					window.open( objectUrl );
 				}
-			} ).error( function ( data, status, headers, config ) {
-			    //upload failed
-			} )
+			}).error(function(data, status, headers, config) {
+			    $scope.modalAlert( con_msg_err_load_data );
+			})
 		;
+//		$http( {
+//			      url			:	'../../mp/P00009/load.xls'
+//			    , method		:	"POST"
+//			    , data			:	{ "searchTeamNm" : $scope.teamMgrSearchTeamNm }
+//			    , headers		:	{ 'Content-type' : 'application/json' }
+//			    , responseType	:	'arraybuffer'
+//			} ).success( function ( data, status, headers, config ) {
+//				if ( status == 200 ) {
+//					//var blob = new Blob( [data], { type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } );
+//					var blob = new Blob( [data], { type : "application/vnd.ms-excel" } );
+//					var objectUrl = URL.createObjectURL( blob );
+//					window.open( objectUrl );
+//				}
+//			} ).error( function ( data, status, headers, config ) {
+//			    //upload failed
+//			} )
+//		;
 	};
 
 });
