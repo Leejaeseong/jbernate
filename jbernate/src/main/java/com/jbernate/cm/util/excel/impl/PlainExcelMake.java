@@ -42,7 +42,7 @@ public class PlainExcelMake implements ExcelMake {
 		}
 
 		//	시트만들기
-		HSSFSheet sheet = (HSSFSheet) workbook.createSheet( config.getSheetName() );
+		HSSFSheet sheet = ( HSSFSheet ) workbook.createSheet( config.getSheetName() );
 //		sheet.setDefaultColumnWidth(30);
 
 //		//	헤더 스타일
@@ -102,7 +102,7 @@ public class PlainExcelMake implements ExcelMake {
 
 				//	별도의 넘버링을 사용할 경우
 				if ( numberingCellElement != null ) {
-					row.createCell( colIndex++ ).setCellValue( numbering );
+					row.createCell( colIndex++ ).setCellValue( numbering++ );
 			    }
 
 				for ( Method getterMethod : getterMethods ) {
