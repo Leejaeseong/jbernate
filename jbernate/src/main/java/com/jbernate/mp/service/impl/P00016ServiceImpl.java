@@ -27,9 +27,8 @@ import com.jbernate.mp.service.P00016Service;
 import com.jbernate.mp.util.MpConstUtil;
 import com.jbernate.mp.util.MpSearchUtil;
 import com.jbernate.mundi.domain.table.ActualMgr;
-import com.jbernate.mundi.domain.table.HosptMgr;
+import com.jbernate.mundi.domain.table.ConfirmMm;
 import com.jbernate.mundi.domain.table.LogModHistory;
-import com.jbernate.mundi.domain.table.PrdMgr;
 import com.jbernate.mundi.domain.table.UserMgr;
 
 /**
@@ -41,6 +40,8 @@ public class P00016ServiceImpl implements P00016Service{
 
 	@Autowired CmDao dao;
 	@Autowired CmService cmService;
+	
+	private String modFalseQuery = "UPDATE ACTUAL_MGR SET MOD_YN = 'N' WHERE MOD_YN = 'Y'";
 	
 	/** 데이터 로드 */
 	@Override
@@ -78,16 +79,36 @@ public class P00016ServiceImpl implements P00016Service{
 		}
 		model.addAttribute( "lastYyyymm", DateUtil.dtToStr( DateUtil.strToDt( lastYyyymm, "yyyyMM" ), "yyyy-MM" ) );
 		
+		wbList = new ArrayList<WhereBean>();
+		wbList.add( new WhereBean( "yyyymm", map.get( "searchYyyymm" ).toString().replaceAll( "-", "" ), Clause.EQ ) );
+		// 확정 여부 조회
+		model.addAttribute( "confirmMm", dao.list( req, new ConfirmMm(), wbList ) );
+		
 		return model;
 	}
 	
-	/** 데이터 저장 */
+	/** Submit */
 	@Override
 	@SuppressWarnings("rawtypes")	
 	public Model submit( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload, String submitType ) {
 		
 		Gson gson = new Gson();
+		LinkedTreeMap ltMap = (LinkedTreeMap)gson.fromJson(postPayload, new Object().getClass());
 		
+		if( ltMap.get( "submitType" ).equals( "save" ) ) {				// 저장
+			this.save(sess, req, res, model, postPayload, submitType );
+		} else if( ltMap.get( "submitType" ).equals( "pause" ) ) {		// PAUSE 처리
+			this.pause(sess, req, res, model, postPayload, submitType );
+		} else if( ltMap.get( "submitType" ).equals( "confirm" ) ) {	// 확정 처리
+			this.confirm(sess, req, res, model, postPayload, submitType );
+		}
+		
+		return model;
+	}
+	
+	/** 데이터 저장 */
+	public Model save( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload, String submitType ) {
+		Gson gson = new Gson();
 		LinkedTreeMap ltMap = (LinkedTreeMap)gson.fromJson(postPayload, new Object().getClass());
 		
 		List list = new ArrayList();
@@ -165,4 +186,32 @@ public class P00016ServiceImpl implements P00016Service{
 		
 		return model;
 	}
+	
+	/** PAUSE 처리 */
+	public Model pause( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload, String submitType ) {
+		// 수정가능 여부 전부 FALSE
+		cmService.execQuery( req, modFalseQuery );
+		return model;
+	}
+	
+	/** 확정 처리 */
+	public Model confirm( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload, String submitType ) {
+		Gson gson = new Gson();
+		LinkedTreeMap ltMap = (LinkedTreeMap)gson.fromJson(postPayload, new Object().getClass());
+		
+		// 수정가능 여부 전부 FALSE
+		cmService.execQuery( req, modFalseQuery );
+		
+		// 확정 테이블 데이터 삽입
+		ConfirmMm confirmMm = new ConfirmMm();
+		confirmMm.setYyyymm( ltMap.get( "yyyymm" ).toString().replaceAll( "-", "" ) );
+		confirmMm.setUseYn( "Y" );		
+		cmService.create( req, confirmMm );
+		
+		// 확정 처리 프로시저 실행
+		
+		
+		return model;
+	}
+	
 }

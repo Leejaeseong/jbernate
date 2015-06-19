@@ -8,29 +8,38 @@
 		        		조회
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default" ng-click="addRow()" ng-show="conIsAdmin && isLast">
+		    		<button type="button" class="btn btn-default" ng-click="addRow()" ng-show="conIsAdmin && isLast && !isConfirmed">
 		        		행추가
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default" ng-click="delRow()" ng-show="conIsAdmin && isLast">
+		    		<button type="button" class="btn btn-default" ng-click="delRow()" ng-show="conIsAdmin && isLast && !isConfirmed">
 		        		행삭제
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default"" ng-click="chkSave()" ng-show="conIsAdmin && isLast">
+		    		<button type="button" class="btn btn-default"" ng-click="chkSave()" ng-show="conIsAdmin && isLast && !isConfirmed">
 		        		저장
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default"" ng-show="conIsAdmin && isLast">
+		    		<button type="button" class="btn btn-default"" ng-show="conIsAdmin && isLast && !isConfirmed">
 		        		양식다운로드
 		    		</button>
 		    		
-		    		<button type="button" class="btn btn-default"" ng-show="isLast" ng-show="conIsAdmin && isLast">
+		    		<button type="button" class="btn btn-default"" ng-show="isLast" ng-show="conIsAdmin && isLast && !isConfirmed">
 		        		엑셀업로드
 		    		</button>
 		    		
 		    		<button type="button" class="btn btn-default">
 		        		엑셀
 		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="setPause()" ng-show="conIsAdmin && isLast && !isConfirmed">
+		        		PAUSE
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="setConfirm()" ng-show="conIsAdmin && isLast && !isConfirmed">
+		        		확정
+		    		</button>
+		    		
 				</div>
 			</div>
 			

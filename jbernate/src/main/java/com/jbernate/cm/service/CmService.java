@@ -35,6 +35,13 @@ public interface CmService {
 	 */
 	void delete( HttpServletRequest request, Object entity );
 	
+	/**
+	 * Native SQL execute
+	 * @param request	HttpServletRequest
+	 * @param entity	객체
+	 */
+	int execQuery( HttpServletRequest request, String query );
+	
 	// 조회 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**

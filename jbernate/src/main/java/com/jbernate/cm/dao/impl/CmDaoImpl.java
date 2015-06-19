@@ -94,6 +94,12 @@ public class CmDaoImpl implements CmDao{
 		}
 	}
 	
+	@Override
+	@SuppressWarnings("rawtypes")
+	public int execQuery( HttpServletRequest request, String query ) {
+		return DbUtil.getHibernateSession( sessionFactory ).createSQLQuery( query ).executeUpdate();		
+	}
+	
 	/**
 	 * create 시 공통 컬럼 값 설정
 	 * @param request	HttpServletRequest
@@ -130,6 +136,7 @@ public class CmDaoImpl implements CmDao{
 		}
 		return entity;
 	}
+	
 	// 조회 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**

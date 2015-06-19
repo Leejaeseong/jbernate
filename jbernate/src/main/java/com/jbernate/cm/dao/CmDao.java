@@ -35,6 +35,7 @@ public interface CmDao {
 	 */
 	void delete( HttpServletRequest request, Object entity );
 	
+	int execQuery( HttpServletRequest request, String query );
 	// 조회 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**

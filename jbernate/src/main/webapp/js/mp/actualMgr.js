@@ -3,7 +3,8 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	// 변수 선언
 	$scope.yyyymm 			= new Date().format("%Y-%m");	// 조회 화면에 출력되는 모델
 	$scope.lastYyyymm 		= new Date().format("%Y-%m");	// 마지막 Yyyymm DB데이터
-	$scope.isLast			= true;
+	$scope.isLast			= true;	// 마지막 달또는 그 이후에 입력되는 데이터인지 여부
+	$scope.isConfirmed		= true;	// 확정 여부
 	$scope.modCheckToggle	= true;
 	$scope.conIsAdmin		= con_is_admin;		// 관리자 여부
 	
@@ -217,6 +218,7 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 				
 				$scope.gridData 	= data.viewData;	// 데이터 바인딩
 				$scope.lastYyyymm	= data.lastYyyymm;	// 마지막 DB일자
+				$scope.isConfirmed	= ( data.confirmMm.length > 0 ? true : false );
 				$scope.initData();						// 초기화
 				
 				$scope.yyyymm = $scope.dateToYyyymm();
@@ -231,7 +233,8 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	$scope.save = function( event, data ) {
 		$http.post( '../../mp/P00016/submit.json'
 				, { 
-						"saveData" 	: $scope.getSaveData()
+						"submitType": "save"
+					,	"saveData" 	: $scope.getSaveData()
 					, 	"yyyymm" 	: $scope.yyyymm 
 				} 
 		 ).success(function() {
@@ -295,6 +298,30 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 			$scope.selRow.loginId 	= con_user_login_id;
 			$scope.selRow.userNm	= con_user_nm;
 			$scope.selRow.userSeq	= con_user_seq;
+		} else if( data.modalConfirmYnType == "tpPause" ) {				// PAUSE 처리
+			$http.post( '../../mp/P00016/submit.json'
+					, { 
+							"submitType": "pause"						 
+						, 	"yyyymm" 	: $scope.yyyymm 
+					} 
+			 ).success(function() {
+				$scope.modalAlert( con_msg_save_ok );
+				$scope.search();
+			}).error(function() {	// 오류
+				$scope.modalAlert( con_msg_save_fail );
+			});
+		} else if( data.modalConfirmYnType == "tpConfirm" ) {			// 확정 처리
+			$http.post( '../../mp/P00016/submit.json'
+					, { 
+							"submitType": "confirm"						 
+						, 	"yyyymm" 	: $scope.yyyymm 
+					} 
+			).success(function() {
+				$scope.modalAlert( con_msg_save_ok );
+				$scope.search();
+			}).error(function() {	// 오류
+				$scope.modalAlert( con_msg_save_fail );
+			});
 		}
 	});
 	
@@ -304,6 +331,16 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 		$scope.search();
 	});
 	*/
+	
+	// PAUSE 처리 버튼 클릭
+	$scope.setPause = function() {
+		$scope.modalConfirmYn( con_msg_conf_pause_actual, 'tpPause' );
+	};
+	
+	// 확정 처리 버튼 클릭
+	$scope.setConfirm = function() {
+		$scope.modalConfirmYn( con_msg_conf_confirm_actual, 'tpConfirm' );
+	};
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////

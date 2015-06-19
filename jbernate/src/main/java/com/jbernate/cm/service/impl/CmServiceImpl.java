@@ -48,6 +48,14 @@ public class CmServiceImpl implements CmService{
 	@Override
 	public void delete( HttpServletRequest request, Object entity ) {	cmCrudDao.delete( request, entity );	}
 	
+	/**
+	 * Native SQL execute
+	 * @param request	HttpServletRequest
+	 * @param entity	객체
+	 */
+	@Override
+	public int execQuery( HttpServletRequest request, String query ) {	return cmCrudDao.execQuery( request, query );	}
+	
 	// 조회 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
