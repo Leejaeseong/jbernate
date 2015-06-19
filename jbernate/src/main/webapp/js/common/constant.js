@@ -9,6 +9,7 @@ var con_msg_err_load_data	= "데이터 로딩에 실패하였습니다";
 
 /** 메시지 > 알림 > 변경된 데이터가 존재 */
 var con_msg_cof_exist_data_change	= "변경된데이터가 존재합니다.\r\n계속하시겠습니까?";
+var con_msg_cof_exist_data_modified	= "변경된 데이터가 존재합니다.\r\n저장 후 계속하세요.";
 
 /** 메시지 > 알림 > 필수값 입력 필요 */
 var con_msg_val_essential	= "필수값을 입력해 주세요";

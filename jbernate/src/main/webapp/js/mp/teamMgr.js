@@ -175,6 +175,55 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 			  )
 		);
 	};
+	//	엑셀다운로드 버튼
+	$scope.chkTeamMgrExcelDown = function() {
+		// 데이터 변경 여부 확인
+		if( $scope.chkSaveData() ) {
+			$scope.modalAlert( con_msg_cof_exist_data_modified );
+			return;
+		} else {
+			$scope.teamMgrExcelDown();
+		}
+	}
+	// Data 조회 통신 함수
+	$scope.teamMgrExcelDown = function( data, type, res ) {
+		
+		// 통신 시작
+//		$http.post('../../mp/P00009/load.xls?searchTeamNm=' + $scope.teamMgrSearchTeamNm );
+//		$http.post('../../mp/P00009/load.xls'
+//					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }
+//			);
+		$http.post('../../mp/P00009/load.xls'												//	url
+					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }		//	data
+					, { "responseType" : 'blob' }											//	config
+			).success( function( data, status, headers, config ) {
+				// 통신
+				if ( status == 200 ) {
+					var objectUrl = URL.createObjectURL( data );
+					window.open( objectUrl );
+				}
+			}).error(function(data, status, headers, config) {
+			    $scope.modalAlert( con_msg_err_load_data );
+			})
+		;
+//		$http( {
+//			      url			:	'../../mp/P00009/load.xls'
+//			    , method		:	"POST"
+//			    , data			:	{ "searchTeamNm" : $scope.teamMgrSearchTeamNm }
+//			    , headers		:	{ 'Content-type' : 'application/json' }
+//			    , responseType	:	'arraybuffer'
+//			} ).success( function ( data, status, headers, config ) {
+//				if ( status == 200 ) {
+//					//var blob = new Blob( [data], { type : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } );
+//					var blob = new Blob( [data], { type : "application/vnd.ms-excel" } );
+//					var objectUrl = URL.createObjectURL( blob );
+//					window.open( objectUrl );
+//				}
+//			} ).error( function ( data, status, headers, config ) {
+//			    //upload failed
+//			} )
+//		;
+	};
 	
 	// 엑셀
 	$scope.getHeader = function () {
