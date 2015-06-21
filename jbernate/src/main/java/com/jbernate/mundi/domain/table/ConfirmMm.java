@@ -85,7 +85,7 @@ public class ConfirmMm implements Serializable{
 
 	//Sequence
 	@Id
-	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "RESULT_ALL_S" )
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "CONFIRM_MM_S" )
 	@Column( name = "SEQ", columnDefinition = "NUMBER(16) NOT NULL UNIQUE", precision = 16, scale = 0 )
 	private BigDecimal seq;
 	public BigDecimal getSeq() {	return seq;	}

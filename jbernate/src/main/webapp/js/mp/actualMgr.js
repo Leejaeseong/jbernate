@@ -70,7 +70,7 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 								+	'	/></div>';
 	// 제품 컬럼 템플릿
 	$scope.cellPrdTemplate = 	'<select '
-								+ 	'	ng-options="l.prd as l.prdNm for l in prdDataSelectBox" '
+								+ 	'	ng-options="l.prdCd as l.prdNm for l in prdDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
@@ -81,7 +81,7 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 								+	'></select>';
 	// 병원 컬럼 템플릿
 	$scope.cellHosptTemplate = 	'<select '
-								+ 	'	ng-options="l.hospt as l.hosptNm for l in hosptDataSelectBox" '
+								+ 	'	ng-options="l.hosptCd as l.hosptNm for l in hosptDataSelectBox" '
 								+ 	'	data-placeholder="-- Select One --" '
 								+ 	'	ng-model="COL_FIELD" '
 								+ 	'	ng-class="\'colt\' + $index" '
@@ -218,11 +218,13 @@ app.controller('ctrlActualMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 				
 				$scope.gridData 	= data.viewData;	// 데이터 바인딩
 				$scope.lastYyyymm	= data.lastYyyymm;	// 마지막 DB일자
-				$scope.isConfirmed	= ( data.confirmMm.length > 0 ? true : false );
+				$scope.isConfirmed	= ( data.confirmMm && data.confirmMm.length > 0 ? true : false );
 				$scope.initData();						// 초기화
 				
 				$scope.yyyymm = $scope.dateToYyyymm();
 				$scope.isLast = $scope.yyyymm >= $scope.lastYyyymm;
+				
+				console.log( "$scope.searchHosptSeq = " + $scope.searchHosptSeq );
 				
 		}).error(function(data, status, headers, config) {	// 오류
 		    $scope.modalAlert( con_msg_err_load_data );	

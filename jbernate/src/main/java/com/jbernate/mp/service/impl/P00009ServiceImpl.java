@@ -60,6 +60,8 @@ public class P00009ServiceImpl implements P00009Service{
 
 		String reqType = req.getAttribute( "org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping" ).toString();
 				
+		model.addAttribute( "viewData", rList );
+
 		if ( reqType.lastIndexOf( ".xls" ) != -1 ) {
 
 			List<CellElement> cellElements = new ArrayList<CellElement>();
@@ -82,10 +84,9 @@ public class P00009ServiceImpl implements P00009Service{
 			model.addAttribute( "config", config );
 
 			model.addAttribute( "excelMakeType", ExcelMake.PLAIN_XLS );	//	평범한(?) 엑셀을 만듦
+
 		}
 
-		model.addAttribute( "viewData", rList );
-		
 		return model;
 	}
 	

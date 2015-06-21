@@ -57,7 +57,7 @@
 				<bean class="com.jbernate.cm.resolver.JSONPView">
                 	<property name="contentType" value="javascript/jsonp; charset=utf-8"/>			<!-- Jsonp view -->
             	</bean>
-            	<bean id="excelView"  class="com.jbernate.cm.resolver.ExcelDownView"  />				<!-- Excel View -->
+            	<bean id="excelView"  class="com.jbernate.cm.resolver.ExcelDownView"  />			<!-- Excel View -->
 			</list>
 		</property>
 <!-- 		<property name="ignoreAcceptHeader" value="true" />  -->

@@ -23,13 +23,13 @@ import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.DateUtil;
 import com.jbernate.cm.util.NumUtil;
 import com.jbernate.cm.util.StrUtil;
+import com.jbernate.mp.dao.MpPrcdDao;
 import com.jbernate.mp.service.P00016Service;
 import com.jbernate.mp.util.MpConstUtil;
 import com.jbernate.mp.util.MpSearchUtil;
 import com.jbernate.mundi.domain.table.ActualMgr;
 import com.jbernate.mundi.domain.table.ConfirmMm;
 import com.jbernate.mundi.domain.table.LogModHistory;
-import com.jbernate.mundi.domain.table.UserMgr;
 
 /**
  * 먼디파마 > 실적 관리
@@ -40,6 +40,7 @@ public class P00016ServiceImpl implements P00016Service{
 
 	@Autowired CmDao dao;
 	@Autowired CmService cmService;
+	@Autowired MpPrcdDao mpPrcdDao;	
 	
 	private String modFalseQuery = "UPDATE ACTUAL_MGR SET MOD_YN = 'N' WHERE MOD_YN = 'Y'";
 	
@@ -132,11 +133,16 @@ public class P00016ServiceImpl implements P00016Service{
 				actual.setUserSeq( MpSearchUtil.getOneUserByCd( req, cmService, map.get( "userSeq" ).toString() ) );
 				actual.setSalLocNm( StrUtil.nvlNull( map.get( "salLocNm" ) ) );
 				actual.setAddr( StrUtil.nvlNull( map.get( "addr" ) ) );
+				actual.setMfdsNo( StrUtil.nvlNull( map.get( "mfdsNo" ) ) );
 				actual.setZipCd( StrUtil.nvlNull( map.get( "zipCd" ) ) );
+				actual.setStandard( StrUtil.nvlNull( map.get( "standard" ) ) );
 				actual.setSalCnt( new BigDecimal( NumUtil.intNumVal( map.get( "salCnt" ) ) ) );
 				actual.setUnitPrc( new BigDecimal( NumUtil.intNumVal( map.get( "unitPrc" ) ) ) );
 				actual.setSalAmt( new BigDecimal( NumUtil.intNumVal( map.get( "salAmt" ) ) ) );
 				actual.setBranchNm( StrUtil.nvlNull( map.get( "branchNm" ) ) );
+				actual.setPackDesc( StrUtil.nvlNull( map.get( "packDesc" ) ) );
+				actual.setBoxCnt( NumUtil.bigDecimalNumVal( map.get( "boxCnt" ) ) );
+				actual.setConvCnt( NumUtil.bigDecimalNumVal( map.get( "convCnt" ) ) );
 				actual.setModYn( "Y" );
 				actual.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );
 				actual.setUseYn( "Y" );
@@ -155,11 +161,16 @@ public class P00016ServiceImpl implements P00016Service{
 				//actual.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
 				actual.setSalLocNm( StrUtil.nvlNull( map.get( "salLocNm" ) ) );
 				actual.setAddr( StrUtil.nvlNull( map.get( "addr" ) ) );
+				actual.setMfdsNo( StrUtil.nvlNull( map.get( "mfdsNo" ) ) );
 				actual.setZipCd( StrUtil.nvlNull( map.get( "zipCd" ) ) );
+				actual.setStandard( StrUtil.nvlNull( map.get( "standard" ) ) );
 				actual.setSalCnt( new BigDecimal( NumUtil.intNumVal( map.get( "salCnt" ) ) ) );
 				actual.setUnitPrc( new BigDecimal( NumUtil.intNumVal( map.get( "unitPrc" ) ) ) );
 				actual.setSalAmt( new BigDecimal( NumUtil.intNumVal( map.get( "salAmt" ) ) ) );
 				actual.setBranchNm( StrUtil.nvlNull( map.get( "branchNm" ) ) );
+				actual.setPackDesc( StrUtil.nvlNull( map.get( "packDesc" ) ) );
+				actual.setBoxCnt( NumUtil.bigDecimalNumVal( map.get( "boxCnt" ) ) );
+				actual.setConvCnt( NumUtil.bigDecimalNumVal( map.get( "convCnt" ) ) );
 				actual.setModYn( StrUtil.nvlNull( map.get( "modYn" ) ) );
 				actual.setRemk( StrUtil.nvlNull( map.get( "remk" ) ) );
 				cmService.update( req, actual );
@@ -167,7 +178,8 @@ public class P00016ServiceImpl implements P00016Service{
 				// 변경 로그 기록
 				history = new LogModHistory();
 				history.setActualSeq( new ActualMgr( new BigDecimal( map.get( "seq" ).toString() ) ) );
-				history.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				//history.setUserSeq( 	new UserMgr( new BigDecimal( map.get( "userSeq" ).toString() ) ) );
+				actual.setUserSeq( MpSearchUtil.getOneUserByCd( req, cmService, map.get( "userSeq" ).toString() ) );
 				history.setUseYn( "Y" );
 				if( StrUtil.chkStrIn( sess.getAttribute( "roleCd" ).toString()
 						, MpConstUtil.MP_ROLE_ADMIN		// 관리자 계정	 
@@ -209,7 +221,7 @@ public class P00016ServiceImpl implements P00016Service{
 		cmService.create( req, confirmMm );
 		
 		// 확정 처리 프로시저 실행
-		
+		Object[] rData = mpPrcdDao.execMakeResult( ltMap.get( "yyyymm" ).toString().replaceAll( "-", "" ) );
 		
 		return model;
 	}

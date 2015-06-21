@@ -32,18 +32,6 @@ public class ResultAll implements Serializable{
 	public ResultAll( BigDecimal seq ){	this.seq = seq;	}
 
 	//
-	@Column( name = "PRD_CD", length = 30, nullable = true ) 
-	private String prdCd;
-	public String getPrdCd() {	return prdCd;	}
-	public void setPrdCd(String prdCd) {	this.prdCd = prdCd;	}
-
-	//
-	@Column( name = "PRD_NM", length = 128, nullable = true ) 
-	private String prdNm;
-	public String getPrdNm() {	return prdNm;	}
-	public void setPrdNm(String prdNm) {	this.prdNm = prdNm;	}
-
-	//
 	@Column( name = "REMK", length = 256, nullable = true ) 
 	private String remk;
 	public String getRemk() {	return remk;	}

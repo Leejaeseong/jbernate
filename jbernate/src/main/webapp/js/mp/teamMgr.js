@@ -184,28 +184,28 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		} else {
 			$scope.teamMgrExcelDown();
 		}
-	}
+	};
 	// Data 조회 통신 함수
 	$scope.teamMgrExcelDown = function( data, type, res ) {
 		
 		// 통신 시작
 //		$http.post('../../mp/P00009/load.xls?searchTeamNm=' + $scope.teamMgrSearchTeamNm );
-//		$http.post('../../mp/P00009/load.xls'
-//					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }
-//			);
-		$http.post('../../mp/P00009/load.xls'												//	url
-					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }		//	data
-					, { "responseType" : 'blob' }											//	config
-			).success( function( data, status, headers, config ) {
-				// 통신
-				if ( status == 200 ) {
-					var objectUrl = URL.createObjectURL( data );
-					window.open( objectUrl );
-				}
-			}).error(function(data, status, headers, config) {
-			    $scope.modalAlert( con_msg_err_load_data );
-			})
-		;
+		$http.post('../../mp/P00009/load.xls'
+					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls", responseType : 'text' }
+			);
+//		$http.post('../../mp/P00009/load.xls'												//	url
+//					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls" }		//	data
+//					, { "responseType" : 'blob' }											//	config
+//			).success( function( data, status, headers, config ) {
+//				// 통신
+//				if ( status == 200 ) {
+//					var objectUrl = URL.createObjectURL( data );
+//					window.open( objectUrl );
+//				}
+//			}).error(function(data, status, headers, config) {
+//			    $scope.modalAlert( con_msg_err_load_data );
+//			})
+//		;
 //		$http( {
 //			      url			:	'../../mp/P00009/load.xls'
 //			    , method		:	"POST"
