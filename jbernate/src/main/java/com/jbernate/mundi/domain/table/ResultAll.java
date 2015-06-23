@@ -1,18 +1,13 @@
 package com.jbernate.mundi.domain.table;
 import java.io.Serializable;
-import java.util.Date;
-
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -128,27 +123,33 @@ public class ResultAll implements Serializable{
 	public void setActual(BigDecimal actual) {	this.actual = actual;	}
 
 	//
-	@Column( name = "PERCENTAGE", precision = 22, scale = 3, nullable = true ) 
-	private BigDecimal percentage;
-	public BigDecimal getPercentage() {	return percentage;	}
-	public void setPercentage(BigDecimal percentage) {	this.percentage = percentage;	}
-
-	//
 	@Column( name = "HOSPT_SEQ", precision = 16, scale = 0, nullable = true ) 
 	private BigDecimal hosptSeq;
 	public BigDecimal getHosptSeq() {	return hosptSeq;	}
 	public void setHosptSeq(BigDecimal hosptSeq) {	this.hosptSeq = hosptSeq;	}
-
+	
 	//
-	@Column( name = "RATE", precision = 22, scale = 3, nullable = true ) 
-	private BigDecimal rate;
-	public BigDecimal getRate() {	return rate;	}
-	public void setRate(BigDecimal rate) {	this.rate = rate;	}
-
+	@Column( name = "PER_RATE", precision = 22, scale = 3, nullable = true ) 
+	private BigDecimal perRate;
+	public BigDecimal getPerRate() {	return perRate;	}
+	public void setPerRate(BigDecimal perRate) {	this.perRate = perRate;	}
+	
 	//
-	@Column( name = "PAYROLL", precision = 22, scale = 3, nullable = true ) 
-	private BigDecimal payroll;
-	public BigDecimal getPayroll() {	return payroll;	}
-	public void setPayroll(BigDecimal payroll) {	this.payroll = payroll;	}
+	@Column( name = "PER_WRK", precision = 22, scale = 3, nullable = true ) 
+	private BigDecimal perWrk;
+	public BigDecimal getPerWrk() {	return perWrk;	}
+	public void setPerWrk(BigDecimal perWrk) {	this.perWrk = perWrk;	}
+	
+	//
+	@Column( name = "PER_GRP", precision = 22, scale = 3, nullable = true ) 
+	private BigDecimal perGrp;
+	public BigDecimal getPerGrp() {	return perGrp;	}
+	public void setPerGrp(BigDecimal perGrp) {	this.perGrp = perGrp;	}
+	
+	//
+	@Column( name = "PER_YEAR", precision = 22, scale = 3, nullable = true ) 
+	private BigDecimal perYear;
+	public BigDecimal getPerYear() {	return perYear;	}
+	public void setPerYear(BigDecimal perYear) {	this.perYear = perYear;	}
 
 }

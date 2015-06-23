@@ -40,4 +40,15 @@ function loginController( $scope, $location, $window, $element ) {
 	
 	//$scope.modelLoginId.focus();
 	//$scope.modelCbRemId = false;
+	
+	clickSubmit = function() {
+		if( $scope.modelLoginId == "" ) {
+			alert( "아이디를 입력해 주세요" );
+			return;
+		} else if( $scope.modelPwd == "" ) {
+			alert( "비밀번호를 입력해 주세요" );
+			return;
+		}
+		
+	};
 }

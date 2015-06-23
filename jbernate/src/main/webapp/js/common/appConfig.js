@@ -11,6 +11,8 @@ app.config(function ($routeProvider, $httpProvider) {
 		.when('/Hospt'		, {templateUrl: '/template/mp/Hospt.html'})
 		.when('/Rate'		, {templateUrl: '/template/mp/Rate.html'})
 		.when('/Goal'		, {templateUrl: '/template/mp/Goal.html'})
+		.when('/PerBrand'	, {templateUrl: '/template/mp/PerBrand.html'})
+		.when('/PerYear'	, {templateUrl: '/template/mp/PerYear.html'})
 		.when('/Actual'		, {templateUrl: '/template/mp/Actual.html'})
 		.when('/Result'		, {templateUrl: '/template/mp/Result.html'})
 		.when('/ResultTeam'	, {templateUrl: '/template/mp/ResultTeam.html'})

@@ -1,0 +1,54 @@
+		<div ng-controller="ctrlPerYearMgr">
+			<div class="areaButton">
+				<div class="menuTitle" style="margin-top: 0px;">
+					<i class="fa fa-youtube-play"></i> 년별 요율 관리
+				</div>
+				<div class="buttons">
+					<button type="button" class="btn btn-default" ng-click="chkSearch()">
+		        		조회
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="addRow()">
+		        		행추가
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default" ng-click="delRow()">
+		        		행삭제
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"" ng-click="chkSave()">
+		        		저장
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		양식다운로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"">
+		        		엑셀업로드
+		    		</button>
+		    		
+		    		<button type="button" class="btn btn-default"
+		    				ng-csv="excelData" 
+		    				csv-header="getHeader()" 
+		    				filename="perBrand.txt" 
+		    				field-separator="," 
+		    				decimal-separator="."
+		    				>
+		        		엑셀
+		    		</button>
+				</div>
+			</div>
+			
+			<div class="areaSearch">
+				년도 <select 
+						ng-model="yyyy"
+						style="height:27px;">
+						<option ng-repeat="i in yyyyDataSelectBox" value="{{i.yyyy}}">{{i.yyyy}}</option>
+						</select>
+			</div>
+			
+			<div class="areaGrid gridStyle1" ng-grid="grid">
+			</div>
+			
+		</div>

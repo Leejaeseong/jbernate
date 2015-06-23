@@ -51,6 +51,8 @@
     
     <script type="text/javascript" src="../../js/mp/rateMgr.js"></script>		<!-- RATE관리 			-->
     <script type="text/javascript" src="../../js/mp/goalMgr.js"></script>		<!-- 목표관리 			-->
+    <script type="text/javascript" src="../../js/mp/perBrandMgr.js"></script>	<!-- 팀/브랜드/분기별 요율관리 -->
+    <script type="text/javascript" src="../../js/mp/perYearMgr.js"></script>	<!-- 분기별 요율관리 -->
     <script type="text/javascript" src="../../js/mp/actualMgr.js"></script>		<!-- 실적관리 			-->
     
     <script type="text/javascript" src="../../js/mp/resultMgr.js"></script>		<!-- 실적조회 			-->    

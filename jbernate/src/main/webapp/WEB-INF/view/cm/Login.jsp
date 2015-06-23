@@ -112,6 +112,7 @@
 	</style>
 	
 	<script language="javascript">
+	/*
 		function clickSubmit(){
 			if( $( "#loginId" ).val() == "" ) {
 				alert( "아이디를 입력해 주세요" );
@@ -122,7 +123,7 @@
 			}
 			$( "#loginFrm" ).submit();
 		}
-		
+	*/	
 		if( "<c:out value='${successMsg}' />" != "" && "<c:out value='${successMsg}' />" == "false" ) {
 			alert( "계정 정보가 올바르지 않습니다" );
 		}
@@ -164,7 +165,9 @@
 		</div>
 		<div class="buttonLoginCss">
 			<h2>
-				<button type="button" class="btn btn-info btn-lg" onclick="clickSubmit();">
+				<button type="submit" class="btn btn-info btn-lg"
+						ng-disabled="modelLoginId == '' || modelPwd == ''"
+				>
 		        	LOGIN
 		    	</button>
 			</h2>
