@@ -61,6 +61,19 @@ public class StrUtil {
 	}
 	
 	/**
+	 * 널이면 "0" 으로 치환
+	 * @param str	대상 문자
+	 * @return		null 일 경우 "" 으로 치환
+	 */
+	public static String nvlZero( Object str ) {
+		if( str == null ){
+			return "0";
+		} else{
+			return str.toString();
+		}
+	}
+	
+	/**
 	 * null 또는 스트링 반환
 	 * @param str	대상 문자
 	 * @return		null 일 경우 "" 으로 치환
@@ -158,5 +171,16 @@ public class StrUtil {
 	public static String cutString( String str, int size ) {
 		if( !chkBlank( str ) || str.length() <= size ) 	return str;
 		else											return str.substring( 0, size );
+	}
+	
+	/**
+	 * 소수점 자르기
+	 * @param str
+	 * @return
+	 */
+	public static String trimDot( String str ) {
+		if( str.indexOf( "." ) > -1 ) {
+			return str.substring( 0, str.indexOf( "." ) );
+		}else return str;
 	}
 }

@@ -1,14 +1,42 @@
 app.controller('ctrlResultMgr',function($scope, $http, $ekathuwa, $q, $filter) {	// 변경이력 관리 컨트롤러
 	
 	// 변수 선언
-	$scope.stYyyymmdd 		= new Date().format("%Y-%m-%d");	// 조회 시작 일자
-	$scope.edYyyymmdd 		= new Date().format("%Y-%m-%d");	// 조회 종료 일자
+	$scope.yyyy 			= new Date().format("%Y");	// 조회 화면에 출력되는 모델
 	
 	$scope.gridData			= new Array();		// 그리드 데이터
 	
 	$scope.prdgrpDataSelectBox 	= [];			// 제품그룹목록
 	$scope.prdDataSelectBox 	= [];			// 제품목록
 	$scope.hosptDataSelectBox 	= [];			// 병원목록
+	
+	$scope.yyyyDataSelectBox 	= new Array();	// 년도목록
+	$scope.teamDataSelectBox 	= [];			// 팀목록
+	$scope.hosptDataSelectBox 	= [];			// 병원목록
+	
+	// 년도목록 설정하기
+	for( var i = 2015; i <= new Date().format("%Y"); i++ ) {
+		$scope.yyyyDataSelectBox.push( { yyyy : i.toString() } );
+	};
+	
+	// 팀목록 가져오기
+	$http.post('../../mp/P00009/load.json'
+			, { "searchType" : "teamSelectBox" }
+	).success(function(data, status, headers, config){
+		// 통신
+		$scope.teamDataSelectBox = data.viewData;	// 데이터 바인딩
+		$scope.searchTeamSeq = data.viewData[0].seq;		
+	}).error(function(data, status, headers, config) {
+	    $scope.modalAlert( con_msg_err_load_data );
+	});
+	// 병원목록 가져오기
+	$http.post('../../mp/P00013/load.json'
+			, { "searchType" : "hosptSelectBox" }
+	).success(function(data, status, headers, config){
+		// 통신
+		$scope.hosptDataSelectBox = data.viewData;	// 데이터 바인딩
+	}).error(function(data, status, headers, config) {
+	    $scope.modalAlert( con_msg_err_load_data );
+	});
 	
 	// datepicker
 	$scope.disabled = function(date, mode) {
@@ -30,7 +58,7 @@ app.controller('ctrlResultMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	//$scope.aggregateTemplate = "<div ng-click="row.toggleExpand()" ng-style="{'left': row.offsetleft}" class="ngAggregate"><span class="ngAggregateText">{{row.label CUSTOM_FILTERS}} ({{row.totalChildren()}} {{AggItemsLabel}})</span><div class="{{row.aggClass()}}"></div></div>
 	
 	var myHeaderCellTemplate = '<div class="ngHeaderSortColumn {{col.headerClass}}" ng-style="{\'cursor\': col.cursor}" ng-class="{ \'ngSorted\': !noSortVisible }">' +
-							    '<div ng-click="col.sort($event)" ng-class="\'colt\' + col.index" class="ngHeaderText"><table><tr><td></td>{{col.displayName.split(",")[0]}}</tr><tr><td>{{col.displayName.split(",")[1]}}</td></tr><tr><td>{{col.displayName.split(",")[2]}}</td></tr></table></div>' +
+							    '<div ng-click="col.sort($event)" ng-class="\'colt\' + col.index" class="ngHeaderText"><table><tr><td></td>{{col.displayName.split(";")[0]}}</tr><tr><td>{{col.displayName.split(";")[1]}}</td></tr><tr><td>{{col.displayName.split(";")[2]}}</td></tr></table></div>' +
 							    '<div class="ngSortButtonDown" ng-show="col.showSortButtonDown()"></div>' +
 							    '<div class="ngSortButtonUp" ng-show="col.showSortButtonUp()"></div>' +
 							    '<div class="ngSortPriority">{{col.sortPriority}}</div>' +
@@ -54,10 +82,10 @@ app.controller('ctrlResultMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 						  ];
 	
 	// 그리드 정의
-	$scope.grid = collectProp(  {
+	$scope.grid = collectProp( {
 			  data: 'gridData'
 			, columnDefs: 'columnDefs'
-			, headerRowHeight : 80
+			, headerRowHeight : 70
 			, showSelectionCheckbox	: false
 			, selectWithCheckboxOnly: false
 			, enableCellEditOnFocus	: false
@@ -68,25 +96,35 @@ app.controller('ctrlResultMgr',function($scope, $http, $ekathuwa, $q, $filter) {
 	$scope.search = function( data, type, res ) {
 		
 		// 통신 시작
-		$http.post('../../mp/P00019/load.json'
+		$http.post('../../mp/P00017/load.json'
 					, { 
-						  "searchStYyyymm" 		: $scope.dateToStYyyymmdd()
-						, "searchEdYyyymm" 		: $scope.dateToEdYyyymmdd()
+							"searchYyyy" 		: $scope.yyyy
+						,	"searchTeamSeq" 	: $scope.searchTeamSeq
+						,	"searchHosptSeq"	: $scope.searchHosptSeq
+						,	"searchUserSeq"		: con_user_seq
+						,	"isAdmin"			: con_is_admin
 					}
 			).success(function(data, status, headers, config){
-				$scope.gridData 	= data.viewData;	// 데이터 바인딩
+				//$scope.gridData 	= data.viewData;		// 데이터 바인딩
+				
+				// 컬럼 바인딩
+				$scope.columnDefs = new Array();
+				for( var i = 0; i < data.cData.length; i++ ) {
+					var obj = new Object();
+					obj.field = "field" + ( i + 1 );
+					//obj.field = data.cData[i];
+					obj.displayName = data.cData[i];
+					obj.width = "150px";
+					obj.headerCellTemplate = myHeaderCellTemplate;
+					$scope.columnDefs.push( obj );
+				}
+				console.log( data.cData );
+				console.log( data.data );
+				$scope.gridData = data.data;				
+				
 		}).error(function(data, status, headers, config) {	// 오류
 		    $scope.modalAlert( con_msg_err_load_data );	
 		});
-	};
-	
-	$scope.dateToStYyyymmdd = function() {
-		if( typeof $scope.stYyyymmdd == "string" )	 	return $scope.stYyyymmdd;
-		else if( typeof $scope.stYyyymmdd == "object" )	return $scope.stYyyymmdd.format("%Y-%m-%d");
-	};
-	$scope.dateToEdYyyymmdd = function() {
-		if( typeof $scope.edYyyymmdd == "string" )	 	return $scope.edYyyymmdd;
-		else if( typeof $scope.edYyyymmdd == "object" )	return $scope.edYyyymmdd.format("%Y-%m-%d");
 	};
 	
 });

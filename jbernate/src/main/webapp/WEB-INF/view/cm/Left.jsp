@@ -42,10 +42,10 @@
 											<a href="#Goal" ng-class="getLeftMenuClass('/Goal')"><span class="fa fa-line-chart"></span> 목표관리</a>
 										</li>
 										<li>
-											<a href="#PerBrand" ng-class="getLeftMenuClass('/PerBrand')"><span class="fa fa-line-chart"></span> 팀/브랜드/분기별 요율 관리</a>
+											<a href="#PerBrand" ng-class="getLeftMenuClass('/PerBrand')"><span class="fa fa-th-large"></span> 팀/브랜드/분기별 요율 관리</a>
 										</li>
 										<li>
-											<a href="#PerYear" ng-class="getLeftMenuClass('/PerYear')"><span class="fa fa-line-chart"></span> 년별 요율 관리</a>
+											<a href="#PerYear" ng-class="getLeftMenuClass('/PerYear')"><span class="fa fa-calendar"></span> 년별 요율 관리</a>
 										</li>
 										<li>
 											<a href="#Actual" ng-class="getLeftMenuClass('/Actual')"><span class="fa fa-pie-chart"></span> 실적관리</a>

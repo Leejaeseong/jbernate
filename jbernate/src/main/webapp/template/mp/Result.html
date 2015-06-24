@@ -14,6 +14,29 @@
 				</div>
 			</div>
 			
+			<div class="areaSearch">
+				년도 <select 
+						ng-model="yyyy"
+						style="height:27px;">
+						<option ng-repeat="i in yyyyDataSelectBox" value="{{i.yyyy}}">{{i.yyyy}}</option>
+						</select>
+				&nbsp;&nbsp;&nbsp;
+				팀 <select 
+						ng-options="l.seq as l.teamNm for l in teamDataSelectBox"
+						ng-model="searchTeamSeq"
+						ng-cell-input
+						style="height:27px;">
+						</select>
+				&nbsp;&nbsp;&nbsp;
+				병원 <select
+						ng-model="searchHosptSeq"
+						ng-options="l.seq as l.hosptNm for l in hosptDataSelectBox"
+						ng-cell-input
+						style="height:27px;">
+						<option value="" selected="selected">==ALL==</option>
+						</select>				
+			</div>
+			
 			<!--  
 			<div class="areaSearch" style="height: 52px;">
 				<div class="col-md-6" style="float: left; width:646px;">
@@ -43,7 +66,7 @@
 			<!--  
 			<div category-header="grid"></div>			
 			-->
-			<div>&nbsp;</div>
+			
 			
 			<!--  
 			<div class="gridHeaderDiv1">
