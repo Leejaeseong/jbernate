@@ -36,25 +36,25 @@ public class ConstUtil {
 	
 	// ▣ 형식 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	/** 형식 > 날짜 */
-	public static final String FORMAT_DATE						= "yyyy-MM-dd HH:mm:ss";
+	public static final String FORMAT_DATE							= "yyyy-MM-dd HH:mm:ss";
 	
 	/** 형식 > 페이지 길이 */
-	public static final int FORMAT_PAGE_LEN						= 6; // ex) P12345
+	public static final int FORMAT_PAGE_LEN							= 6; // ex) P12345
 	
 	/** 형식 > 컨트롤러 명령어 > 목록 */
-	public static final String FORMAT_CONTROLLER_COMMAND_LIST	= "list";
+	public static final String FORMAT_CONTROLLER_COMMAND_LIST		= "list";
 	
 	/** 형식 > 컨트롤러 명령어 > 페이지 로딩 */
-	public static final String FORMAT_CONTROLLER_COMMAND_LOAD	= "load";
+	public static final String FORMAT_CONTROLLER_COMMAND_LOAD		= "load";
 	
 	/** 형식 > 컨트롤러 명령어 > 페이지 로딩 */
-	public static final String FORMAT_CONTROLLER_COMMAND_EXCEL	= "excel";
+	public static final String FORMAT_CONTROLLER_COMMAND_DOWNLOAD	= "down";
 	
 	/** 형식 > 컨트롤러 명령어 > 전송( submit ) */
-	public static final String FORMAT_CONTROLLER_COMMAND_SUBMIT	= "submit";
+	public static final String FORMAT_CONTROLLER_COMMAND_SUBMIT		= "submit";
 	
 	/** 형식 > Model > return type */
-	public static final String FORMAT_MODEL_SUCCESS = "SUCCESS";
+	public static final String FORMAT_MODEL_SUCCESS 				= "SUCCESS";
 	
 	// ▣ 제약 ▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣▣
 	/** 제약 > 자바스크립트 Alert 함수 출력 시 긴 글 자르기 크기 */

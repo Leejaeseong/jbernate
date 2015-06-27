@@ -20,10 +20,12 @@
     <script type="text/javascript" src="../../js/resource/angular-1.2.17.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-route.min.js"></script>
     <script type="text/javascript" src="../../js/resource/angular-resource.min.js"></script>
-    <script type="text/javascript" src="../../js/resource/angular-sanitize.min.js"></script>
-    <script type="text/javascript" src="../../js/resource/ng-csv.js"></script>
+    <script type="text/javascript" src="../../js/resource/angular-sanitize.min.js"></script>	<!-- CSV 다운로드 용도 -->
+    <script type="text/javascript" src="../../js/resource/ng-csv.js"></script>					<!-- CSV 다운로드 용도 -->
 	<script type="text/javascript" src="../../js/resource/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../js/resource/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+	<script type="text/javascript" src="../../js/resource/ng-file-upload-shim.js"></script>		<!-- FILE UPLOAD( 1 / 2 ) -->
+	<script type="text/javascript" src="../../js/resource/ng-file-upload.js"></script>			<!-- FILE UPLOAD( 2 / 2 ) -->
 	<!--  
 	<script type="text/javascript" src="../../js/resource/ui-grid-unstable.js"></script>
 	-->

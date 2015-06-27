@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.jbernate.cm.bean.WhereBean;
 import com.jbernate.cm.bean.WhereBean.Clause;
 import com.jbernate.cm.dao.CmDao;
+import com.jbernate.cm.resolver.ExcelDownView;
 import com.jbernate.cm.service.CmService;
 import com.jbernate.cm.util.StrUtil;
 import com.jbernate.cm.util.excel.CellElement;
@@ -88,6 +90,61 @@ public class P00009ServiceImpl implements P00009Service{
 		}
 
 		return model;
+	}
+	
+	/** 데이터 다운 */
+	@Override
+	@SuppressWarnings("rawtypes")	
+	public ModelAndView down( HttpSession sess, HttpServletRequest req, HttpServletResponse res, Model model, String postPayload ) {
+
+		Gson gson = new Gson();
+		
+		LinkedTreeMap map = new LinkedTreeMap();
+		map = (LinkedTreeMap) gson.fromJson(postPayload, map.getClass());
+		
+		List<WhereBean> wbList = new ArrayList<WhereBean>();
+		
+		// 리스트박스 목록조회
+		if( StrUtil.chkStrEqual( map.get( "searchType" ), "teamSelectBox" ) ) {
+			
+		}
+		// 팀관리 화면 조회
+		else {
+			wbList.add( new WhereBean( "teamNm", map.get( "searchTeamNm" ), Clause.LIKEANY ) );
+		}
+		List rList = dao.list( req, new TeamMgr(), wbList );
+
+		String reqType = req.getAttribute( "org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping" ).toString();
+				
+		model.addAttribute( "viewData", rList );
+
+		if ( reqType.lastIndexOf( ".xls" ) != -1 ) {
+
+			List<CellElement> cellElements = new ArrayList<CellElement>();
+
+//			cellElements.add( new CellElement( "필드명", "엑셀에 표시할 필드명", 필드폭(정수), new java.text.MessageFormat(format) ) );
+			cellElements.add( new CellElement( "seq"	, "SEQ"		,  40 ) );
+			cellElements.add( new CellElement( "teamCd"	, "팀코드"	, 100 ) );
+			cellElements.add( new CellElement( "teamNm"	, "팀명"	, 200 ) );
+			cellElements.add( new CellElement( "remk"	, "비고"	, 400 ) );
+			cellElements.add( new CellElement( "useYn"	, "사용"	,  40 ) );
+
+			ExcelConfig config = new ExcelConfig();
+
+			config.setFileName( "팀관리.xls" );
+			config.setExcelTitle( "팀관리" );
+			config.setSheetName( "팀관리" );
+			config.setCellElements( cellElements );
+			config.setNumberingCellElement( new CellElement( "", "번호", 10 ) );
+
+			model.addAttribute( "config", config );
+
+			model.addAttribute( "excelMakeType", ExcelMake.PLAIN_XLS );	//	평범한(?) 엑셀을 만듦
+
+		}
+		ExcelDownView excelView = new ExcelDownView();
+		//return model;
+		return null;
 	}
 	
 	/** 데이터 저장 */

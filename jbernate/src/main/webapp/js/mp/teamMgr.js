@@ -190,7 +190,7 @@ app.controller('ctrlTeamMgr',function($scope, $http, $ekathuwa, $q, $filter) {	/
 		
 		// 통신 시작
 //		$http.post('../../mp/P00009/load.xls?searchTeamNm=' + $scope.teamMgrSearchTeamNm );
-		$http.post('../../mp/P00009/load.xls'
+		$http.post('../../mp/P00009/down.xls'
 					, { "searchTeamNm" : $scope.teamMgrSearchTeamNm, "target" : "xls", responseType : 'text' }
 			);
 //		$http.post('../../mp/P00009/load.xls'												//	url

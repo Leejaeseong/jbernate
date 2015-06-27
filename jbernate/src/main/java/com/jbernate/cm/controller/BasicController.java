@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jbernate.cm.bean.Sb;
 import com.jbernate.cm.service.CmService;
@@ -76,6 +76,41 @@ public class BasicController {
 		model = BeanUtil.getCommonModel( session, model, request );
 		
 		return ControllerUtil.getViewName( request );
+	}
+	
+	/**
+	 * 데이터 다운로드
+	 * @param pgmId		프로그램 ID
+	 * @param model		Model
+	 * @param request	HttpServletRequest
+	 * @return			/domain/pageId 페이지
+	 */
+	@RequestMapping( value = "/{pgmId}/" + ConstUtil.FORMAT_CONTROLLER_COMMAND_DOWNLOAD )
+	public ModelAndView down( 
+			@PathVariable( "pgmId" ) String pgmId
+			, HttpSession session
+			, Model model
+			, HttpServletRequest request 
+			, HttpServletResponse response 
+			, @RequestBody String postPayload	// Json 데이터를 받기 위함
+		) throws Exception {
+		
+		LogUtil.trace( pgmId + " program : loaded( By BasicController > load method )" );	// Log
+		
+		// 해당 프로그램 Service의 load 함수 호출
+		try{
+			Object sBean = appContext.getBean( Class.forName( ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" ) );
+			Method m = sBean.getClass().getDeclaredMethod( "down", HttpSession.class, HttpServletRequest.class, HttpServletResponse.class, Model.class, String.class );
+			return (ModelAndView)m.invoke( sBean, session, request, response, model, postPayload );
+		}catch( Exception e ) {
+			LogUtil.trace( "Service( " + ControllerUtil.getClassPathByUrl( request, "service" ) + "Service" + ") has not method of down" );
+		}
+		
+		return null;
+		// 모델 공통부분 설정
+		//model = BeanUtil.getCommonModel( session, model, request );
+		
+		//return ControllerUtil.getViewName( request );
 	}
 	
 	/**
